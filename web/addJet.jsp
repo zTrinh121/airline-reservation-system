@@ -28,43 +28,29 @@
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
     </head>
     <body>
         <h1>Enter the jet details</h1>
-        <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
-            <div class="container">
-                <div class="row g-2">
-                    <div class="col-md-10">
-                        <div class="row g-2">
-                            <div class="col-md-4">
-                                <input type="text" class="form-control border-0 py-3" placeholder="Search Keyword">
-                            </div>
-                            <div class="col-md-4">
-                                <select class="form-select border-0 py-3">
-                                    <option selected>Property Type</option>
-                                    <option value="1">Property Type 1</option>
-                                    <option value="2">Property Type 2</option>
-                                    <option value="3">Property Type 3</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <select class="form-select border-0 py-3">
-                                    <option selected>Location</option>
-                                    <option value="1">Location 1</option>
-                                    <option value="2">Location 2</option>
-                                    <option value="3">Location 3</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-dark border-0 w-100 py-3">Search</button>
-                    </div>
-                </div>
+        <form action="add-jet" method="post">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Enter jet ID</label>
+                <input type="text" class="form-control" nam="jetId" aria-describedby="emailHelp" placeholder="Ex:VN101">
             </div>
-        </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Enter jet type</label>
+                <input type="text" class="form-control" nam="jetType" placeholder="Jet type">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Enter total capacity</label>
+                <input type="text" class="form-control" nam="capacity" placeholder="Total capacity">
+            </div>
+            <button type="submit" class="btn btn-primary" >Submit</button>
+        </form>
+
     </body>
 </html>
