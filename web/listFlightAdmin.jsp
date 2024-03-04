@@ -37,7 +37,7 @@
         <script type="text/javascript">
             function doDelete(flightID){
                 if(confirm("Are you sure to delete "+ flightID )){
-                    window.location="delete-flight?flightID="+flightID+"?";
+                    window.location="delete-flight?flightID="+flightID;
                 }
             }
         </script>

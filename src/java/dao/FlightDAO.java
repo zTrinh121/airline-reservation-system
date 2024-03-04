@@ -96,7 +96,7 @@ public class FlightDAO {
         }
     }
 
-    public Flight getFlightById(int id) {
+    public Flight getFlightById(String id) {
         String sql = "Select * from Flight where flightID=?";
         ConnectDB db = ConnectDB.getInstance();
         Connection con = null;
@@ -105,7 +105,7 @@ public class FlightDAO {
         try {
             con = db.openConnection();
             statement = con.prepareStatement(sql);
-            statement.setInt(1, id);
+            statement.setString(1, id);
             rs = statement.executeQuery();
             if (rs.next()) {
                 Flight b = new Flight(rs.getString(1), rs.getString(2),
@@ -165,7 +165,7 @@ public class FlightDAO {
         return list;
     }
 
-    public void delete(int id) {
+    public void delete(String id) {
         ConnectDB db = ConnectDB.getInstance();
         Connection con = null;
         PreparedStatement statement = null;
@@ -175,7 +175,7 @@ public class FlightDAO {
         try {
             con = db.openConnection();
             statement = con.prepareStatement(sql);
-            statement.setInt(1, id);
+            statement.setString(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);

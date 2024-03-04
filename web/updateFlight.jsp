@@ -37,53 +37,53 @@
         <link href="css/style.css" rel="stylesheet">
     </head>
     <body>
-        <h1>Find the flight </h1>
-        <h5 style="color: red;">${msg}</h5>
-        <h5 style="color: green">${err}</h5>
-
-        <form action="update-flight" method="get">
+        <h1>Update the flight </h1>
+        <c:set var="flight" value="${requestScope.flight}" />
+        <form action="update-flight" method="POST">
             <div class="form-group">
                 <label for="exampleInputEmail1">Flight ID</label>
-                <input type="text" class="form-control" name="flightID" placeholder="Ex:VN101">
+                <input type="text" class="form-control" name="flightID" value="${flight.flightID}" readonly="">
             </div>
             <div class="row">
                 <div class="col">
                     <label for="fromCity">From City</label>
-                    <select id="inputState" class="form-control" name="fromCity">
+                    <select id="fromCity" class="form-control" name="fromCity">
                         <c:forEach var="f" items="${flightList.getAll()}">
-                            <option>${f.fromCity}</option>
+                            <option value="${f.fromCity}" ${f.fromCity eq flight.fromCity ? 'selected' : ''}>${f.fromCity}</option>
                         </c:forEach>
                     </select>
                 </div>
                 <div class="col">
-                    <label for="fromCity">To City</label>
-                    <select id="inputState" class="form-control" name="toCity">
+                    <label for="toCity">To City</label>
+                    <select id="toCity" class="form-control" name="toCity">
                         <c:forEach var="f" items="${flightList.getAll()}">
-                            <option>${f.toCity}</option>
+                            <option value="${f.toCity}" ${f.toCity eq flight.toCity ? 'selected' : ''}>${f.toCity}</option>
                         </c:forEach>
                     </select>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col">
                     <label for="exampleInputEmail1">Departure Date:</label>
-                    <input type="date" class="form-control" name="departureDate">
+                    <input type="date" class="form-control" name="departureDate" value="${flight.departureDate}">
                 </div>
                 <div class="col">
                     <label for="exampleInputEmail1">Arrival Date:</label>
-                    <input type="date" class="form-control" name="arrivalDate">
+                    <input type="date" class="form-control" name="arrivalDate" value="${flight.arrivalDate}">
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                     <label for="exampleInputEmail1">Departure Time:</label>
-                    <input type="time" class="form-control" name="departureTime">
+                    <input type="time" class="form-control" name="departureTime" value="${flight.departureTime}">
                 </div>
                 <div class="col">
                     <label for="exampleInputEmail1">Arrival Time:</label>
-                    <input type="time" class="form-control" name="arrivalTime">
+                    <input type="time" class="form-control" name="arrivalTime" value="${flight.arrivalTime}">
                 </div>
             </div>
+
             <div class="form-group">
                 <label for="exampleInputEmail1">Jet ID</label>
                 <select id="inputState" class="form-control" name="jetID">
@@ -92,7 +92,7 @@
                     </c:forEach>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary" >Add new flight</button>
+            <button type="submit" class="btn btn-primary" >Update flight</button>
         </form>
 
     </body>

@@ -38,8 +38,8 @@
     </head>
     <body>
         <h1>Enter the flight details</h1>
-        <h5 style="color: red;">${msg}</h5>
-        <h5 style="color: green">${err}</h5>
+        <h5 style="color: red;">${err}</h5>
+        <h5 style="color: green">${msg}</h5>
 
         <form action="add-flight" method="post>"
             <div class="form-group">
