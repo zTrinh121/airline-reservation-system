@@ -4,9 +4,25 @@
         <servlet-name>AddFlightServlet</servlet-name>
         <servlet-class>controller.flight.AddFlightServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SearchFlightServlet</servlet-name>
+        <servlet-class>controller.flight.SearchFlightServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateFlightServlet</servlet-name>
+        <servlet-class>controller.flight.UpdateFlightServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AddFlightServlet</servlet-name>
         <url-pattern>/add-flight</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchFlightServlet</servlet-name>
+        <url-pattern>/search-flight</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateFlightServlet</servlet-name>
+        <url-pattern>/update-flight</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

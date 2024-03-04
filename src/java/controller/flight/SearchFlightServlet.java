@@ -7,14 +7,8 @@ package controller.flight;
 import dao.FlightDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URLDecoder;
 import java.sql.Date;
-import java.sql.Time;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +19,7 @@ import model.Flight;
  *
  * @author Trinh
  */
-public class AddFlightServlet extends HttpServlet {
+public class SearchFlightServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,10 +38,10 @@ public class AddFlightServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddFlightServlet</title>");
+            out.println("<title>Servlet SearchFlightServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddFlightServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet SearchFlightServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -65,7 +59,21 @@ public class AddFlightServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        String flightID = request.getParameter("flightID");
+        String fromCity = request.getParameter("fromCity");
+        String toCity = request.getParameter("toCity");
+        String departureDate = request.getParameter("departureDate");
+        String arrivalDate = request.getParameter("arrivalDate");
+
+        FlightDAO flightDAO = new FlightDAO();
+        ArrayList<Flight> flightList = flightDAO.searchFlight(fromCity, toCity, departureDate, arrivalDate);
+        if (flightList.size() == 0) {
+            request.setAttribute("error", "Sorry, cannot find an approriate flight");
+            request.getRequestDispatcher("searchFlight.jsp").forward(request, response);
+        }
+        request.setAttribute("list", flightList);
+        request.getRequestDispatcher("listFlightAdmin.jsp").forward(request, response);
+
     }
 
     /**
@@ -79,50 +87,7 @@ public class AddFlightServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String flightID = request.getParameter("flightID");
-        String fromCity = request.getParameter("fromCity");
-        String toCity = request.getParameter("toCity");
-        String departureDate_raw = request.getParameter("departureDate");
-        String arrivalDate_raw = request.getParameter("arrivalDate");
-        String departureTime_raw = request.getParameter("departureTime");
-        String arrivalTime_raw = request.getParameter("arrivalTime");
-        String seatEconomy_raw = request.getParameter("seatEconomy");
-        String seatBusiness_raw = request.getParameter("seatBusiness");
-        String priceEconomy_raw = request.getParameter("priceEconomy");
-        String priceBusiness_raw = request.getParameter("priceBusiness");
-        String jetID = request.getParameter("jetID");
-
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-        Date departureDate, arrivalDate;
-        Time departureTime, arrivalTime;
-        int seatEconomy, seatBusiness;
-        double priceEconomy, priceBusiness;
-
-        try {
-            seatEconomy = Integer.parseInt(seatEconomy_raw);
-            seatBusiness = Integer.parseInt(seatBusiness_raw);
-
-            departureDate = Date.valueOf(departureDate_raw);
-            arrivalDate = Date.valueOf(arrivalDate_raw);
-
-            departureTime = new Time(timeFormat.parse(request.getParameter("departureTime")).getTime());
-            arrivalTime = new Time(timeFormat.parse(request.getParameter("arrivalTime")).getTime());
-
-
-            priceEconomy = Double.parseDouble(priceEconomy_raw);
-            priceBusiness = Double.parseDouble(priceBusiness_raw);
-
-            FlightDAO flightDAO = new FlightDAO();
-            flightDAO.addFlight(new Flight(flightID, fromCity, toCity, departureDate, arrivalDate, departureTime, arrivalTime, seatEconomy, seatBusiness, priceEconomy, priceBusiness, jetID));
-
-        } catch (NumberFormatException e) {
-            request.setAttribute("err", "Invalid Format");
-        } catch (ParseException ex) {
-            Logger.getLogger(AddFlightServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        request.setAttribute("msg", "Add flight successfully!!!");
-        request.getRequestDispatcher("addFlight.jsp").forward(request, response);
-
+        processRequest(request, response);
     }
 
     /**

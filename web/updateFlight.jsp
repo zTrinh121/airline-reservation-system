@@ -1,6 +1,6 @@
 <%-- 
-    Document   : addJet
-    Created on : Mar 2, 2024, 10:33:44 PM
+    Document   : updateFlight
+    Created on : Mar 3, 2024, 8:43:30 PM
     Author     : Trinh
 --%>
 
@@ -11,7 +11,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Add Jet Page</title>
+        <title>Update Jet Page</title>
         <!-- Favicon -->
         <link href="img/favicon.ico" rel="icon">
 
@@ -37,14 +37,14 @@
         <link href="css/style.css" rel="stylesheet">
     </head>
     <body>
-        <h1>Enter the flight details</h1>
+        <h1>Find the flight </h1>
         <h5 style="color: red;">${msg}</h5>
         <h5 style="color: green">${err}</h5>
 
-        <form action="add-flight" method="post>"
+        <form action="update-flight" method="get">
             <div class="form-group">
                 <label for="exampleInputEmail1">Flight ID</label>
-                <input type="text" class="form-control" name="flightID" aria-describedby="emailHelp" placeholder="Ex:VN101">
+                <input type="text" class="form-control" name="flightID" placeholder="Ex:VN101">
             </div>
             <div class="row">
                 <div class="col">
@@ -84,26 +84,6 @@
                     <input type="time" class="form-control" name="arrivalTime">
                 </div>
             </div>
-            <div class="row">
-                <div class="col">
-                    <label for="exampleInputEmail1">Seat Economy:</label>
-                    <input type="number" class="form-control" name="seatEconomy">
-                </div>
-                <div class="col">
-                    <label for="exampleInputEmail1">Seat Business</label>
-                    <input type="number" class="form-control" name="seatBusiness">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <label for="exampleInputEmail1">Price Economy:</label>
-                    <input type="text" class="form-control" name="priceEconomy">
-                </div>
-                <div class="col">
-                    <label for="exampleInputEmail1">Price Business</label>
-                    <input type="text" class="form-control" name="priceBusiness">
-                </div>
-            </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">Jet ID</label>
                 <select id="inputState" class="form-control" name="jetID">
@@ -117,3 +97,4 @@
 
     </body>
 </html>
+

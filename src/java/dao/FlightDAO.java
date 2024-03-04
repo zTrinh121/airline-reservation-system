@@ -122,18 +122,24 @@ public class FlightDAO {
     }
 
     //Tìm kiếm theo flightID, jetID, địa điểm đi, địa điểm đến
-    public ArrayList<Flight> searchFlight(int id, String key) {
+    public ArrayList<Flight> searchFlight(String fromCity, String toCity, String departureTime, String arrivalTime) {
         ArrayList<Flight> list = new ArrayList<>();
         ConnectDB db = ConnectDB.getInstance();
         Connection con = null;
         PreparedStatement statement = null;
         ResultSet rs = null;
         String sql = "Select * from Flight where 1=1";
-        if (id != 0) {
-            sql += " and flightID=" + id;
+        if (fromCity != null && !fromCity.equals("")) {
+            sql += " and fromCity like '%" + fromCity + "%'";
         }
-        if (key != null && !key.equals("")) {
-            sql += " and fromCity like '%" + key + "%' or toCity like '%" + key + "%' or jetID like '%" + key + "%'";
+        if (toCity != null && !toCity.equals("")) {
+            sql += " and toCity like '%" + toCity + "%'";
+        }
+        if (departureTime != null && !departureTime.equals("")) {
+            sql += " and departureTime like '%" + departureTime + "%'";
+        }
+        if (arrivalTime != null && !arrivalTime.equals("")) {
+            sql += " and arrivalTime like '%" + arrivalTime + "%'";
         }
         try {
             con = db.openConnection();
