@@ -83,12 +83,31 @@
                     <input type="time" class="form-control" name="arrivalTime" value="${flight.arrivalTime}">
                 </div>
             </div>
-
+            <div class="row">
+                <div class="col">
+                    <label for="exampleInputEmail1">Seat Economy:</label>
+                    <input type="number" class="form-control" name="seatEconomy" value="${flight.seatEconomy}">
+                </div>
+                <div class="col">
+                    <label for="exampleInputEmail1">Seat Business</label>
+                    <input type="number" class="form-control" name="seatBusiness" value="${flight.seatBusiness}">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="exampleInputEmail1">Price Economy:</label>
+                    <input type="text" class="form-control" name="priceEconomy" value="${flight.priceEconomy}">
+                </div>
+                <div class="col">
+                    <label for="exampleInputEmail1">Price Business</label>
+                    <input type="text" class="form-control" name="priceBusiness" value="${flight.priceBusiness}">
+                </div>
+            </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">Jet ID</label>
                 <select id="inputState" class="form-control" name="jetID">
                     <c:forEach var="f" items="${flightList.getAll()}">
-                        <option>${f.jetID}</option>
+                        <option value="${f.jetID}"  ${f.jetID eq flight.jetID ? 'selected' : ''}>${f.jetID}</option>
                     </c:forEach>
                 </select>
             </div>

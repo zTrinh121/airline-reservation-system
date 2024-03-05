@@ -64,7 +64,7 @@ public class DeleteFlightServlet extends HttpServlet {
         flightDAO.delete(flightID);
 
         request.setAttribute("msg", "Delete successfully!!!");
-        response.sendRedirect("searchFLight.jsp");
+        request.getRequestDispatcher("listFlightAdmin.jsp").forward(request, response);
     }
 
     /**

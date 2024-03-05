@@ -1,17 +1,16 @@
 <%-- 
-    Document   : listFlightAdmin
-    Created on : Mar 5, 2024, 9:34:47 AM
+    Document   : listFlight
+    Created on : Mar 3, 2024, 9:13:45 PM
     Author     : Trinh
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:useBean id="list" class="dao.FlightDAO" />
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Flight List Page</title>
+        <title>Flight List Search Page</title>
         <link href="img/favicon.ico" rel="icon">
 
         <!-- Google Web Fonts -->
@@ -44,8 +43,7 @@
         </script>
     </head>
     <body>
-        <h4 style="color: green">${msg}</h4>
-        <c:forEach var="f" items="${list.getAll()}">
+        <c:forEach var="f" items="${list}">
             <div class="card">
                 <div class="card-header">
                     ${f.flightID}

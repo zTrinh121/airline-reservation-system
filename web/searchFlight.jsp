@@ -37,6 +37,7 @@
     </head>
     <body>
         <h4 style="color: red;">${error}</h4>
+        <h4 style="color: green;">${msg}</h4>
         <form action="search-flight" method="get>"
               <div class="row">
             <div class="col">

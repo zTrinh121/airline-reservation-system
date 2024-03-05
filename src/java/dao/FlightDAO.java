@@ -177,39 +177,72 @@ public class FlightDAO {
             statement = con.prepareStatement(sql);
             statement.setString(1, id);
             statement.executeUpdate();
+            if (rs != null) {
+                rs.close();
+            }
+            con.close();
+            statement.close();
         } catch (SQLException e) {
             System.out.println(e);
         } catch (ClassNotFoundException e) {
             System.out.println(e);
-        } finally {
-            try {
-                rs.close();
-                con.close();
-                statement.close();
-            } catch (SQLException e) {
-            }
         }
     }
 
+//    public void update(Flight b) {
+//        ConnectDB db = ConnectDB.getInstance();
+//        Connection con = null;
+//        PreparedStatement statement = null;
+//        String sql = "UPDATE [dbo].[Flight]\n"
+//                + "   SET [fromCity] = ?\n"
+//                + "      ,[toCity] = ?\n"
+//                + "      ,[departureDate] = ?\n"
+//                + "      ,[arrivalDate] = ?\n"
+//                + "      ,[departureTime] = ?\n"
+//                + "      ,[arrivalTime] = ?\n"
+//                + "      ,[seatEconomy] = ?\n"
+//                + "      ,[seatBusiness] = ?\n"
+//                + "      ,[priceEconomy] = ?\n"
+//                + "      ,[priceBusiness] = ?\n"
+//                + "      ,[jetID] = ?\n"
+//                + " WHERE flightID=?";
+//        try {
+//            con = db.openConnection();
+//            statement = con.prepareStatement(sql);
+//            statement.setString(1, b.getFromCity());
+//            statement.setString(2, b.getToCity());
+//            statement.setDate(3, new java.sql.Date(b.getDepartureDate().getTime()));
+//            statement.setDate(4, new java.sql.Date(b.getArrivalDate().getTime()));
+//            statement.setTime(5, new java.sql.Time(b.getDepartureTime().getTime()));
+//            statement.setTime(6, new java.sql.Time(b.getArrivalTime().getTime()));
+//            statement.setInt(7, b.getSeatEconomy());
+//            statement.setInt(8, b.getSeatBusiness());
+//            statement.setDouble(9, b.getPriceEconomy());
+//            statement.setDouble(10, b.getPriceBusiness());
+//            statement.setString(11, b.getJetID());
+//            statement.setString(12, b.getFlightID());
+//
+//            statement.executeUpdate();
+//        } catch (SQLException e) {
+//            System.out.println(e);
+//        } catch (ClassNotFoundException e) {
+//            System.out.println(e);
+//        } finally {
+//            try {
+//                con.close();
+//                statement.close();
+//            } catch (SQLException e) {
+//            }
+//        }
+//    }
     public void update(Flight b) {
         ConnectDB db = ConnectDB.getInstance();
         Connection con = null;
         PreparedStatement statement = null;
-        String sql = "UPDATE [dbo].[Flight]\n"
-                + "   SET [fromCity] = ?\n"
-                + "      ,[toCity] = ?\n"
-                + "      ,[departureDate] = ?\n"
-                + "      ,[arrivalDate] = ?\n"
-                + "      ,[departureTime] = ?\n"
-                + "      ,[arrivalTime] = ?\n"
-                + "      ,[seatEconomy] = ?\n"
-                + "      ,[seatBusiness] = ?\n"
-                + "      ,[priceEconomy] = ?\n"
-                + "      ,[priceBusiness] = ?\n"
-                + "      ,[jetID] = ?\n"
-                + " WHERE flightID=?";
+        String sql = "UPDATE [dbo].[Flight] SET [fromCity] = ?, [toCity] = ?, [departureDate] = ?, [arrivalDate] = ?, [departureTime] = ?, [arrivalTime] = ?, [seatEconomy] = ?, [seatBusiness] = ?, [priceEconomy] = ?, [priceBusiness] = ?, [jetID] = ? WHERE flightID=?";
         try {
             con = db.openConnection();
+            statement = con.prepareStatement(sql);
             statement.setString(1, b.getFromCity());
             statement.setString(2, b.getToCity());
             statement.setDate(3, new java.sql.Date(b.getDepartureDate().getTime()));
@@ -223,17 +256,28 @@ public class FlightDAO {
             statement.setString(11, b.getJetID());
             statement.setString(12, b.getFlightID());
 
-            statement.executeUpdate();
+            int rowsUpdated = statement.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Update successful");
+            } else {
+                System.out.println("Update failed");
+            }
         } catch (SQLException e) {
-            System.out.println(e);
+            e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            System.out.println(e);
+            e.printStackTrace();
         } finally {
             try {
-                con.close();
-                statement.close();
+                if (statement != null) {
+                    statement.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
             } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
     }
+
 }
