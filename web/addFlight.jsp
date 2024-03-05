@@ -41,7 +41,8 @@
         <h5 style="color: red;">${err}</h5>
         <h5 style="color: green">${msg}</h5>
 
-        <form action="add-flight" method="post>"
+        <form action="flightController" method="get">
+            <input type="hidden" value="add" name="command" />
             <div class="form-group">
                 <label for="exampleInputEmail1">Flight ID</label>
                 <input type="text" class="form-control" name="flightID" aria-describedby="emailHelp" placeholder="Ex:VN101">
@@ -114,6 +115,6 @@
             </div>
             <button type="submit" class="btn btn-primary" >Add new flight</button>
         </form>
-
+        <a href="flightController" class="btn btn-primary" >Back to Flight List</a>
     </body>
 </html>

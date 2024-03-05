@@ -38,8 +38,9 @@
     </head>
     <body>
         <h1>Update the flight </h1>
-        <c:set var="flight" value="${requestScope.flight}" />
-        <form action="update-flight" method="POST">
+        <c:set var="flightController" value="${requestScope.flight}" />
+        <form action="flightController" method="get">
+            <input type="hidden" value="update" name="command" />
             <div class="form-group">
                 <label for="exampleInputEmail1">Flight ID</label>
                 <input type="text" class="form-control" name="flightID" value="${flight.flightID}" readonly="">
@@ -111,6 +112,13 @@
                     </c:forEach>
                 </select>
             </div>
+            <button type="submit" class="btn btn-primary" >Update flight</button>
+        </form>
+        <a href="flightController" class="btn btn-primary" >Back to Flight List</a>
+    </body>
+</html>
+
+
             <button type="submit" class="btn btn-primary" >Update flight</button>
         </form>
 

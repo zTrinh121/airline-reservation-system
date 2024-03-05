@@ -20,6 +20,10 @@
         <servlet-name>DeleteFlightServlet</servlet-name>
         <servlet-class>controller.DeleteFlightServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FlightServlet</servlet-name>
+        <servlet-class>controller.FlightServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AddFlightServlet</servlet-name>
         <url-pattern>/add-flight</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>DeleteFlightServlet</servlet-name>
         <url-pattern>/delete-flight</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FlightServlet</servlet-name>
+        <url-pattern>/flightController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -6,7 +6,6 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:useBean id="list" class="dao.FlightDAO" />
 <!DOCTYPE html>
 <html>
     <head>
@@ -35,17 +34,20 @@
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
 
-        <script type="text/javascript">
-            function doDelete(flightID) {
-                if (confirm("Are you sure to delete " + flightID)) {
-                    window.location = "delete-flight?flightID=" + flightID;
-                }
-            }
-        </script>
+        
     </head>
     <body>
         <h4 style="color: green">${msg}</h4>
-        <c:forEach var="f" items="${list.getAll()}">
+      <a href="addFlight.jsp" class="btn btn-primary">Add Flight</a>
+        <c:forEach var="f" items="${list}">
+            <c:url value="flightController" var="loadLink">
+                <c:param name="command" value="load"></c:param>
+                <c:param name="flightID" value="${f.flightID}"></c:param>
+            </c:url>
+            <c:url value="flightController" var="deleteLink">
+                <c:param name="command" value="delete"></c:param>
+                <c:param name="flightID" value="${f.flightID}"></c:param>
+            </c:url>
             <div class="card">
                 <div class="card-header">
                     ${f.flightID}
@@ -54,8 +56,9 @@
                     <p class="card-text">From ${f.fromCity} - To ${f.toCity}</h5>
                     <p class="card-text">${f.departureDate} - ${f.arrivalDate}</p>
                     <p class="card-text">${f.departureTime} - ${f.arrivalTime}</p>
-                    <a href="#" onclick="doDelete('${f.flightID}')" class="btn btn-primary">Delete</a>
-                    <a href="update-flight?flightID=${f.flightID}" class="btn btn-primary">Update</a>
+                    <a href="${deleteLink}"  onclick="if(!(confirm('Sure?'))) return false" class="btn btn-primary">Delete</a>
+
+                    <a href="${loadLink}" class="btn btn-primary">Update</a>
 
                 </div>
             </div>
