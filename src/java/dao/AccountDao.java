@@ -78,5 +78,40 @@ public class AccountDao {
         }
         return false;
     }
+    public boolean addUser(String fullname, String username, String password, String email, String phoneNumber, String address) {
+    ConnectDB db = ConnectDB.getInstance();
+    Connection connection = null;
+    PreparedStatement pre = null;
+
+    try {
+        connection = db.openConnection();
+        String sql = "INSERT INTO Account (fullName, username, password, email, phoneNumber, address) VALUES (?, ?, ?, ?, ?, ?)";
+        pre = connection.prepareStatement(sql);
+        pre.setString(1, fullname);
+        pre.setString(2, username);
+        pre.setString(3, password);
+        pre.setString(4, email);
+        pre.setString(5, phoneNumber);
+        pre.setString(6, address);
+
+        int rowsAffected = pre.executeUpdate();
+        return rowsAffected > 0;
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        try {
+            if (pre != null) {
+                pre.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    return false;
+}
+
 
 }
