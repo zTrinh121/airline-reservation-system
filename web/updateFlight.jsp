@@ -119,9 +119,3 @@
 </html>
 
 
-            <button type="submit" class="btn btn-primary" >Update flight</button>
-        </form>
-
-    </body>
-</html>
-

@@ -121,8 +121,7 @@ public class FlightDAO {
         return null;
     }
 
-    //Tìm kiếm theo flightID, jetID, địa điểm đi, địa điểm đến
-    public ArrayList<Flight> searchFlight(String fromCity, String toCity, String departureTime, String arrivalTime) {
+    public ArrayList<Flight> searchFlight(String fromCity, String toCity, String departureDate, String ticketType, int numPassenger) {
         ArrayList<Flight> list = new ArrayList<>();
         ConnectDB db = ConnectDB.getInstance();
         Connection con = null;
@@ -135,12 +134,16 @@ public class FlightDAO {
         if (toCity != null && !toCity.equals("")) {
             sql += " and toCity like '%" + toCity + "%'";
         }
-        if (departureTime != null && !departureTime.equals("")) {
-            sql += " and departureTime like '%" + departureTime + "%'";
+        if (departureDate != null && !departureDate.equals("")) {
+            sql += " and departureDate like '%" + departureDate + "%'";
         }
-        if (arrivalTime != null && !arrivalTime.equals("")) {
-            sql += " and arrivalTime like '%" + arrivalTime + "%'";
+        if((ticketType != null && !ticketType.equals("")) && ticketType.equalsIgnoreCase("Economy")){
+            sql += " and seatEconomy>="+numPassenger;
         }
+        else if((ticketType != null && !ticketType.equals("")) && ticketType.equalsIgnoreCase("Business")){
+            sql += " and seatBusiness>="+numPassenger;
+        }
+        System.out.println(sql);
         try {
             con = db.openConnection();
             statement = con.prepareStatement(sql);
@@ -277,6 +280,13 @@ public class FlightDAO {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+        }
+    }
+    public static void main(String[] args) {
+        FlightDAO flightDAO = new FlightDAO();
+        ArrayList<Flight> list = flightDAO.getAll();
+        for (Flight flight : list) {
+            System.out.println(flight);
         }
     }
 

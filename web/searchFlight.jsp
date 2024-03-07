@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="flightList" class="dao.FlightDAO" />
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -38,7 +39,8 @@
     <body>
         <h4 style="color: red;">${error}</h4>
         <h4 style="color: green;">${msg}</h4>
-        <form action="search-flight" method="get>"
+        <form action="flightController" method="get">
+            <input type="hidden" name="command" value="search" />
               <div class="row">
             <div class="col">
                 <label for="fromCity">From City</label>
@@ -60,17 +62,26 @@
         <div class="row">
             <div class="col">
                 <label for="exampleInputEmail1">Departure Date:</label>
-                <input type="date" class="form-control" name="departureDate">
+                <input type="date" class="form-control" name="departureDate" required>
             </div>
+        </div>
+        <div class="row">
             <div class="col">
-                <label for="exampleInputEmail1">Arrival Date:</label>
-                <input type="date" class="form-control" name="arrivalDate">
+                <label for="exampleInputEmail1">Number of passengers:</label>
+                <input type="number" class="form-control" name="numPassenger" placeholder="Ex:5" required>
             </div>
+        </div>
+        <div class="col">
+            <label for="fromCity">Type of ticket</label>
+            <select id="inputState" class="form-control" name="ticketType">
+                <option value="Economy">Economy</option>
+                <option value="Business">Business</option>
+            </select>
         </div>
 
         <button type="submit" class="btn btn-primary mb-2" >Search flight</button>
     </form>
 
-    
+
 </body>
 </html>
