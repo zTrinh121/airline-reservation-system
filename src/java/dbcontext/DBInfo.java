@@ -9,8 +9,14 @@ package dbcontext;
  * @author Trinh
  */
 public interface DBInfo {
+//    public static String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+//    public static String url = "jdbc:sqlserver://localhost:1433;encrypt=true;trustServerCertificate=true;databaseName=airline_reservation";
+//    public static String user = "sa";
+//    public static String pass = "123";
+
     public static String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     public static String url = "jdbc:sqlserver://localhost:1433;encrypt=true;trustServerCertificate=true;databaseName=airline_reservation";
     public static String user = "sa";
-    public static String pass = "123";
+    public static String pass = "123456";
+
 }
