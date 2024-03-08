@@ -13,4 +13,6 @@ public interface DBInfo {
     public static String url = "jdbc:sqlserver://localhost:1433;encrypt=true;trustServerCertificate=true;databaseName=airline_reservation";
     public static String user = "sa";
     public static String pass = "123";
+
+
 }
