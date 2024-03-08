@@ -282,12 +282,6 @@ public class FlightDAO {
             }
         }
     }
-    public static void main(String[] args) {
-        FlightDAO flightDAO = new FlightDAO();
-        ArrayList<Flight> list = flightDAO.getAll();
-        for (Flight flight : list) {
-            System.out.println(flight);
-        }
-    }
+
 
 }
