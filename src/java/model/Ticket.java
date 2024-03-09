@@ -4,13 +4,13 @@
  * and open the template in the editor.
  */
 package model;
+
 import java.util.Date;
 
 /**
  *
  * @author ThanhThuy
  */
-
 public class Ticket {
     private String pNameRecord;
     private Date dateReservation;
@@ -19,13 +19,14 @@ public class Ticket {
     private String ticketClass;
     private String bookingStatus;
     private int noPassengers;
-    private String payID;
+    private String payAmount;
     private int accountID;
+
     public Ticket() {
     }
 
     public Ticket(String pNameRecord, Date dateReservation, String flightID, Date journeyDate, String ticketClass,
-                  String bookingStatus, int noPassengers, String payID, int accountID) {
+                  String bookingStatus, int noPassengers, String payAmount, int accountID) {
         this.pNameRecord = pNameRecord;
         this.dateReservation = dateReservation;
         this.flightID = flightID;
@@ -33,9 +34,18 @@ public class Ticket {
         this.ticketClass = ticketClass;
         this.bookingStatus = bookingStatus;
         this.noPassengers = noPassengers;
-        this.payID = payID;
+        this.payAmount = payAmount;
         this.accountID = accountID;
     }
+
+    public String getPayAmount() {
+        return payAmount;
+    }
+
+    public void setPayAmount(String payAmount) {
+        this.payAmount = payAmount;
+    }
+
 
     public String getpNameRecord() {
         return pNameRecord;
@@ -93,14 +103,6 @@ public class Ticket {
         this.noPassengers = noPassengers;
     }
 
-    public String getPayID() {
-        return payID;
-    }
-
-    public void setPayID(String payID) {
-        this.payID = payID;
-    }
-
     public int getAccountID() {
         return accountID;
     }
@@ -111,7 +113,9 @@ public class Ticket {
 
     @Override
     public String toString() {
-        return "Ticket{" + "pNameRecord=" + pNameRecord + ", dateReservation=" + dateReservation + ", flightID=" + flightID + ", journeyDate=" + journeyDate + ", ticketClass=" + ticketClass + ", bookingStatus=" + bookingStatus + ", noPassengers=" + noPassengers + ", payID=" + payID + ", accountID=" + accountID + '}';
+        return "Ticket{" + "pNameRecord=" + pNameRecord + ", dateReservation=" + dateReservation + ", flightID=" + flightID + ", journeyDate=" + journeyDate + ", ticketClass=" + ticketClass + ", bookingStatus=" + bookingStatus + ", noPassengers=" + noPassengers + ", payAmount=" + payAmount + ", accountID=" + accountID + '}';
     }
+
+  
 
 }
