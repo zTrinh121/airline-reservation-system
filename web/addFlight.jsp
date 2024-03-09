@@ -45,7 +45,7 @@
             <input type="hidden" value="add" name="command" />
             <div class="form-group">
                 <label for="exampleInputEmail1">Flight ID</label>
-                <input type="text" class="form-control" name="flightID" aria-describedby="emailHelp" placeholder="Ex:VN101">
+                <input type="text" class="form-control" name="flightID" aria-describedby="emailHelp" placeholder="Ex:VN101" required>
             </div>
             <div class="row">
                 <div class="col">
@@ -68,41 +68,41 @@
             <div class="row">
                 <div class="col">
                     <label for="exampleInputEmail1">Departure Date:</label>
-                    <input type="date" class="form-control" name="departureDate">
+                    <input type="date" class="form-control" name="departureDate" required>
                 </div>
                 <div class="col">
                     <label for="exampleInputEmail1">Arrival Date:</label>
-                    <input type="date" class="form-control" name="arrivalDate">
+                    <input type="date" class="form-control" name="arrivalDate" required>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                     <label for="exampleInputEmail1">Departure Time:</label>
-                    <input type="time" class="form-control" name="departureTime">
+                    <input type="time" class="form-control" name="departureTime" required>
                 </div>
                 <div class="col">
                     <label for="exampleInputEmail1">Arrival Time:</label>
-                    <input type="time" class="form-control" name="arrivalTime">
+                    <input type="time" class="form-control" name="arrivalTime" required>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                     <label for="exampleInputEmail1">Seat Economy:</label>
-                    <input type="number" class="form-control" name="seatEconomy">
+                    <input type="number" class="form-control" name="seatEconomy" required>
                 </div>
                 <div class="col">
                     <label for="exampleInputEmail1">Seat Business</label>
-                    <input type="number" class="form-control" name="seatBusiness">
+                    <input type="number" class="form-control" name="seatBusiness" required>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                     <label for="exampleInputEmail1">Price Economy:</label>
-                    <input type="text" class="form-control" name="priceEconomy">
+                    <input type="number" class="form-control" name="priceEconomy" required>
                 </div>
                 <div class="col">
                     <label for="exampleInputEmail1">Price Business</label>
-                    <input type="text" class="form-control" name="priceBusiness">
+                    <input type="number" class="form-control" name="priceBusiness" required>
                 </div>
             </div>
             

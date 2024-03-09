@@ -133,6 +133,12 @@ public class FlightServlet extends HttpServlet {
         int seatEconomy, seatBusiness;
         double priceEconomy, priceBusiness;
 
+        if(validate(flightID, fromCity, toCity)!=""){
+                System.out.println(validate(flightID, fromCity, toCity));
+                request.setAttribute("err", validate(flightID, fromCity, toCity));
+                request.getRequestDispatcher("addFlight.jsp").forward(request, response);
+            }
+        
         try {
             seatEconomy = Integer.parseInt(seatEconomy_raw);
             seatBusiness = Integer.parseInt(seatBusiness_raw);
@@ -145,6 +151,7 @@ public class FlightServlet extends HttpServlet {
 
             priceEconomy = Double.parseDouble(priceEconomy_raw);
             priceBusiness = Double.parseDouble(priceBusiness_raw);
+            
             Flight f = new Flight(flightID, fromCity, toCity, departureDate, arrivalDate, departureTime, arrivalTime, seatEconomy, seatBusiness, priceEconomy, priceBusiness);
             flightDAO.addFlight(f);
             
@@ -181,6 +188,7 @@ public class FlightServlet extends HttpServlet {
         Time departureTime, arrivalTime;
         int seatEconomy, seatBusiness;
         double priceEconomy, priceBusiness;
+ 
         try {
 
             seatEconomy = Integer.parseInt(seatEconomy_raw);
@@ -239,4 +247,11 @@ public class FlightServlet extends HttpServlet {
         request.getRequestDispatcher("addFlightPassenger.jsp").forward(request, response);
     }
     
+    private String validate(String flightID, String fromCity, String toCity){
+        if(!flightID.matches("^VN\\d{3}$")){
+            return "FlightID must follow VN+3digits";
+        }
+        if(fromCity.equalsIgnoreCase(toCity)) return "From City and To City cannot be the same";
+        return "";
+    }   
 }
