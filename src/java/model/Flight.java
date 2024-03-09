@@ -18,12 +18,11 @@ public class Flight {
     private Time departureTime, arrivalTime;
     private int seatEconomy, seatBusiness;
     private double priceEconomy, priceBusiness;
-    private String jetID;
 
     public Flight() {
     }
 
-    public Flight(String flightID, String fromCity, String toCity, Date departureDate, Date arrivalDate, Time departureTime, Time arrivalTime, int seatEconomy, int seatBusiness, double priceEconomy, double priceBusiness, String jetID) {
+    public Flight(String flightID, String fromCity, String toCity, Date departureDate, Date arrivalDate, Time departureTime, Time arrivalTime, int seatEconomy, int seatBusiness, double priceEconomy, double priceBusiness) {
         this.flightID = flightID;
         this.fromCity = fromCity;
         this.toCity = toCity;
@@ -35,7 +34,6 @@ public class Flight {
         this.seatBusiness = seatBusiness;
         this.priceEconomy = priceEconomy;
         this.priceBusiness = priceBusiness;
-        this.jetID = jetID;
     }
 
     public String getFlightID() {
@@ -126,17 +124,11 @@ public class Flight {
         this.priceBusiness = priceBusiness;
     }
 
-    public String getJetID() {
-        return jetID;
-    }
 
-    public void setJetID(String jetID) {
-        this.jetID = jetID;
-    }
 
     @Override
     public String toString() {
-        return "Flight{" + "flightID=" + flightID + ", fromCity=" + fromCity + ", toCity=" + toCity + ", departureDate=" + departureDate + ", arrivalDate=" + arrivalDate + ", departureTime=" + departureTime + ", arrivalTime=" + arrivalTime + ", seatEconomy=" + seatEconomy + ", seatBusiness=" + seatBusiness + ", priceEconomy=" + priceEconomy + ", priceBusiness=" + priceBusiness + ", jetID=" + jetID + '}';
+        return "Flight{" + "flightID=" + flightID + ", fromCity=" + fromCity + ", toCity=" + toCity + ", departureDate=" + departureDate + ", arrivalDate=" + arrivalDate + ", departureTime=" + departureTime + ", arrivalTime=" + arrivalTime + ", seatEconomy=" + seatEconomy + ", seatBusiness=" + seatBusiness + ", priceEconomy=" + priceEconomy + ", priceBusiness=" + priceBusiness +'}';
     }
     
     

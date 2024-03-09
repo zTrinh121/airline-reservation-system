@@ -105,14 +105,7 @@
                     <input type="text" class="form-control" name="priceBusiness">
                 </div>
             </div>
-            <div class="form-group">
-                <label for="exampleInputEmail1">Jet ID</label>
-                <select id="inputState" class="form-control" name="jetID">
-                    <c:forEach var="f" items="${flightList.getAll()}">
-                        <option>${f.jetID}</option>
-                    </c:forEach>
-                </select>
-            </div>
+            
             <button type="submit" class="btn btn-primary" >Add new flight</button>
         </form>
         <a href="flightController" class="btn btn-primary" >Back to Flight List</a>

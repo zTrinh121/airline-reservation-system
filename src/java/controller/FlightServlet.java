@@ -126,7 +126,6 @@ public class FlightServlet extends HttpServlet {
         String seatBusiness_raw = request.getParameter("seatBusiness");
         String priceEconomy_raw = request.getParameter("priceEconomy");
         String priceBusiness_raw = request.getParameter("priceBusiness");
-        String jetID = request.getParameter("jetID");
 
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
         Date departureDate, arrivalDate;
@@ -146,8 +145,9 @@ public class FlightServlet extends HttpServlet {
 
             priceEconomy = Double.parseDouble(priceEconomy_raw);
             priceBusiness = Double.parseDouble(priceBusiness_raw);
-
-            flightDAO.addFlight(new Flight(flightID, fromCity, toCity, departureDate, arrivalDate, departureTime, arrivalTime, seatEconomy, seatBusiness, priceEconomy, priceBusiness, jetID));
+            Flight f = new Flight(flightID, fromCity, toCity, departureDate, arrivalDate, departureTime, arrivalTime, seatEconomy, seatBusiness, priceEconomy, priceBusiness);
+            flightDAO.addFlight(f);
+            
             listFlight(request, response);
         } catch (NumberFormatException e) {
             request.setAttribute("err", "Invalid Format");
@@ -176,7 +176,6 @@ public class FlightServlet extends HttpServlet {
         String seatBusiness_raw = request.getParameter("seatBusiness");
         String priceEconomy_raw = request.getParameter("priceEconomy");
         String priceBusiness_raw = request.getParameter("priceBusiness");
-        String jetID = request.getParameter("jetID");
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
         Date departureDate, arrivalDate;
         Time departureTime, arrivalTime;
@@ -192,12 +191,11 @@ public class FlightServlet extends HttpServlet {
 
             departureTime = new Time(timeFormat.parse(request.getParameter("departureTime")).getTime());
             arrivalTime = new Time(timeFormat.parse(request.getParameter("arrivalTime")).getTime());
-            System.out.println(arrivalTime);
             priceEconomy = Double.parseDouble(priceEconomy_raw);
             priceBusiness = Double.parseDouble(priceBusiness_raw);
 
-            Flight f = new Flight(flightID, fromCity, toCity, departureDate, arrivalDate, departureTime, arrivalTime, seatEconomy, seatBusiness, priceEconomy, priceBusiness, jetID);
-
+            Flight f = new Flight(flightID, fromCity, toCity, departureDate, arrivalDate, departureTime, arrivalTime, seatEconomy, seatBusiness, priceEconomy, priceBusiness);
+            System.out.println(f);
             flightDAO.update(f);
             listFlight(request, response);
         } catch (NumberFormatException e) {

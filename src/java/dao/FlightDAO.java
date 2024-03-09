@@ -11,7 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Flight;
-import model.Jet;
 
 /**
  *
@@ -35,7 +34,7 @@ public class FlightDAO {
                         rs.getString(3), rs.getDate(4),
                         rs.getDate(5), rs.getTime(6), rs.getTime(7),
                         rs.getInt(8), rs.getInt(9), rs.getDouble(10),
-                        rs.getDouble(11), rs.getString(12));
+                        rs.getDouble(11));
                 list.add(b);
             }
             rs.close();
@@ -62,9 +61,9 @@ public class FlightDAO {
                 + "           ,[seatEconomy]\n"
                 + "           ,[seatBusiness]\n"
                 + "           ,[priceEconomy]\n"
-                + "           ,[priceBusiness]\n"
-                + "           ,[jetID])\n"
-                + "     VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+                + "           ,[priceBusiness])\n" // Closing parenthesis was missing here
+                + "     VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+
         ConnectDB db = ConnectDB.getInstance();
         Connection con = null;
         PreparedStatement statement = null;
@@ -83,10 +82,9 @@ public class FlightDAO {
             statement.setInt(9, b.getSeatBusiness());
             statement.setDouble(10, b.getPriceEconomy());
             statement.setDouble(11, b.getPriceBusiness());
-            statement.setString(12, b.getJetID());
-
             statement.execute();
         } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             try {
                 con.close();
@@ -112,7 +110,7 @@ public class FlightDAO {
                         rs.getString(3), rs.getDate(4),
                         rs.getDate(5), rs.getTime(6), rs.getTime(7),
                         rs.getInt(8), rs.getInt(9), rs.getDouble(10),
-                        rs.getDouble(11), rs.getString(12));
+                        rs.getDouble(11));
                 return b;
             }
 
@@ -137,11 +135,10 @@ public class FlightDAO {
         if (departureDate != null && !departureDate.equals("")) {
             sql += " and departureDate like '%" + departureDate + "%'";
         }
-        if((ticketType != null && !ticketType.equals("")) && ticketType.equalsIgnoreCase("Economy")){
-            sql += " and seatEconomy>="+numPassenger;
-        }
-        else if((ticketType != null && !ticketType.equals("")) && ticketType.equalsIgnoreCase("Business")){
-            sql += " and seatBusiness>="+numPassenger;
+        if ((ticketType != null && !ticketType.equals("")) && ticketType.equalsIgnoreCase("Economy")) {
+            sql += " and seatEconomy>=" + numPassenger;
+        } else if ((ticketType != null && !ticketType.equals("")) && ticketType.equalsIgnoreCase("Business")) {
+            sql += " and seatBusiness>=" + numPassenger;
         }
         System.out.println(sql);
         try {
@@ -153,7 +150,7 @@ public class FlightDAO {
                         rs.getString(3), rs.getDate(4),
                         rs.getDate(5), rs.getTime(6), rs.getTime(7),
                         rs.getInt(8), rs.getInt(9), rs.getDouble(10),
-                        rs.getDouble(11), rs.getString(12));
+                        rs.getDouble(11));
                 list.add(b);
             }
             rs.close();
@@ -242,7 +239,7 @@ public class FlightDAO {
         ConnectDB db = ConnectDB.getInstance();
         Connection con = null;
         PreparedStatement statement = null;
-        String sql = "UPDATE [dbo].[Flight] SET [fromCity] = ?, [toCity] = ?, [departureDate] = ?, [arrivalDate] = ?, [departureTime] = ?, [arrivalTime] = ?, [seatEconomy] = ?, [seatBusiness] = ?, [priceEconomy] = ?, [priceBusiness] = ?, [jetID] = ? WHERE flightID=?";
+        String sql = "UPDATE [dbo].[Flight] SET [fromCity] = ?, [toCity] = ?, [departureDate] = ?, [arrivalDate] = ?, [departureTime] = ?, [arrivalTime] = ?, [seatEconomy] = ?, [seatBusiness] = ?, [priceEconomy] = ?, [priceBusiness] = ? WHERE flightID=?";
         try {
             con = db.openConnection();
             statement = con.prepareStatement(sql);
@@ -256,8 +253,7 @@ public class FlightDAO {
             statement.setInt(8, b.getSeatBusiness());
             statement.setDouble(9, b.getPriceEconomy());
             statement.setDouble(10, b.getPriceBusiness());
-            statement.setString(11, b.getJetID());
-            statement.setString(12, b.getFlightID());
+            statement.setString(11, b.getFlightID());
 
             int rowsUpdated = statement.executeUpdate();
             if (rowsUpdated > 0) {
@@ -283,5 +279,10 @@ public class FlightDAO {
         }
     }
 
-
+    public static void main(String[] args) {
+        ArrayList<Flight> list = new FlightDAO().getAll();
+        for (Flight flight : list) {
+            System.out.println(flight);
+        }
+    }
 }
