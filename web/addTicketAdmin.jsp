@@ -44,60 +44,64 @@
         <h5 style="color: red;">${err}</h5>
         <h5 style="color: green">${msg}</h5>
 
-        <form action="ticketController">
+        <form action="ticketController" method="get">
             <input type="hidden" value="add" name="command" />
 
             <div class="form-group">
                 <label for="pNameRecord">Passenger Name Record</label>
-                <input type="text" class="form-control" name="pNameRecord"  placeholder="Enter pNameRecord"
-                       >
+                <input type="text" class="form-control" name="pNameRecord" placeholder="Enter Passenger Name Record" value="${param.pNameRecord}">
+            </div>
+
+            <div class="form-group">
+                <label for="dateReservation">Date Reservation</label>
+                <input type="date" class="form-control" name="dateReservation" value="${param.dateReservation}">
             </div>
 
             <div class="form-group">
                 <label for="flightID">Flight ID</label>
-                <input type="text" class="form-control" name="flightID"  placeholder="Enter flightID">
+                <input type="text" class="form-control" name="flightID" placeholder="Enter Flight ID" value="${param.flightID}">
             </div>
 
             <div class="form-group">
                 <label for="journeyDate">Journey Date</label>
-                <input type="date" class="form-control" name="journeyDate">
+                <input type="date" class="form-control" name="journeyDate" value="${param.journeyDate}">
             </div>
 
             <div class="form-group">
                 <label for="ticketClass">Ticket Class</label>
                 <select class="form-control" name="ticketClass">
-                    <option value="Economy" ${ticket.ticketClass=='Economy' ? 'selected' : '' }>Economy</option>
-                    <option value="Business" ${ticket.ticketClass=='Business' ? 'selected' : '' }>Business
-                    </option>
+                    <option value="Economy" ${param.ticketClass == 'Economy' ? 'selected' : ''}>Economy</option>
+                    <option value="Business" ${param.ticketClass == 'Business' ? 'selected' : ''}>Business</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="bookingStatus">Booking Status</label>
                 <select class="form-control" name="bookingStatus">
-                    <option value="Confirmed">Confirmed
-                    </option>
-                    <option value="Pending"}>Pending
-                    </option>
+                    <option value="Confirmed" ${param.bookingStatus == 'Confirmed' ? 'selected' : ''}>Confirmed</option>
+                    <option value="Pending" ${param.bookingStatus == 'Pending' ? 'selected' : ''}>Pending</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="noPassengers">Number of Passengers</label>
-                <input type="number" class="form-control" name="noPassengers" placeholder="Enter number passengers">
+                <input type="number" class="form-control" name="noPassengers" placeholder="Enter Number of Passengers" value="${param.noPassengers}">
+            </div>
+
+            <div class="form-group">
+                <label for="accountID">Account ID</label>
+                <input type="number" class="form-control" name="accountID" placeholder="Enter Account ID" value="${param.accountID}">
             </div>
 
             <div class="form-group">
                 <label for="payAmount">Pay Amount</label>
-                <input type="text" class="form-control" name="payAmount"  placeholder="Enter payAmount">
+                <input type="text" class="form-control" name="payAmount" placeholder="Enter Pay Amount" value="${param.payAmount}">
             </div>
-            <div class="form-group">
-                <label for="accountID">Account ID</label>
-                <input type="text" class="form-control" name="accountID"  placeholder="Enter accountID">
-            </div>
-            <button type="submit" class="btn btn-primary">Update Ticket</button>
+
+            <button type="submit" class="btn btn-primary">Add new ticket</button>
         </form>
 
         <a href="ticketController" class="btn btn-secondary">Back to Ticket List</a>
     </body>
+
 </html>
