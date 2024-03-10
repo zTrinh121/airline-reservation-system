@@ -1,6 +1,9 @@
 package dao;
 
 import dbcontext.ConnectDB;
+import model.PaymentDetails;
+import model.Ticket;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,11 +11,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import model.PaymentDetails;
-import model.Ticket;
 
 public class TicketDAO {
 
+    // Private constructor to prevent instantiation
+    public TicketDAO() {
+    }
+
+    // Add ticket
     public static void addTicket(Ticket newTicket) throws ClassNotFoundException {
         // Extract values from the newTicket object
         String pNameRecord = newTicket.getpNameRecord();
@@ -22,20 +28,25 @@ public class TicketDAO {
         String ticketClass = newTicket.getTicketClass();
         String bookingStatus = newTicket.getBookingStatus();
         int noPassengers = newTicket.getNoPassengers();
-        String payID = newTicket.getPayID();
+        float payAmount = newTicket.getPayAmount();
         int accountID = newTicket.getAccountID();
 
         // Call the existing addTicket method with the extracted values
-        addTicket(pNameRecord, dateReservation, flightID, journeyDate, ticketClass, bookingStatus, noPassengers, payID, accountID);
-    }
-
-    // Private constructor to prevent instantiation
-    private TicketDAO() {
+        addTicket(pNameRecord, dateReservation, flightID, journeyDate, ticketClass, bookingStatus, noPassengers, accountID, payAmount);
     }
 
     // Add ticket
-    public static void addTicket(String pNameRecord, Date dateReservation, String flightID, Date journeyDate, String ticketClass, String bookingStatus, int noPassengers, String payID, int accountID) throws ClassNotFoundException {
-        String sql = "INSERT INTO ticketDetails (pNameRecord, dateReservation, flightID, journeyDate, class, bookingStatus, noPassengers, payID, accountID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public static void addTicket(String pNameRecord, Date dateReservation, String flightID, Date journeyDate, String ticketClass, String bookingStatus, int noPassengers, int accountID, float payAmount) throws ClassNotFoundException {
+        String sql = "INSERT INTO [dbo].[ticketDetails]\n"
+                + "           ([pNameRecord]\n"
+                + "           ,[dateReservation]\n"
+                + "           ,[flightID]\n"
+                + "           ,[journeyDate]\n"
+                + "           ,[class]\n"
+                + "           ,[bookingStatus]\n"
+                + "           ,[noPassengers]\n"
+                + "           ,[accountID]\n"
+                + "           ,[payAmount]) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection con = ConnectDB.getInstance().openConnection(); PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, pNameRecord);
@@ -45,9 +56,8 @@ public class TicketDAO {
             st.setString(5, ticketClass);
             st.setString(6, bookingStatus);
             st.setInt(7, noPassengers);
-            st.setString(8, payID);
-            st.setInt(9, accountID);
-
+            st.setInt(8, accountID);
+            st.setFloat(9, payAmount);
             st.executeUpdate();
 
             System.out.println("Add ticket " + pNameRecord + " success!");
@@ -57,25 +67,27 @@ public class TicketDAO {
     }
 
     // Update ticket
-    public static void updateTicket(String pNameRecord, String newFlightID, Date newJourneyDate, String newTicketClass, String newBookingStatus, int newNoPassengers, String newPayID, int newAccountID) throws ClassNotFoundException {
-        String sql = "UPDATE ticketDetails SET flightID = ?, journeyDate = ?, class = ?, bookingStatus = ?, noPassengers = ?, payID = ?, accountID = ? WHERE pNameRecord = ?";
+    public static void updateTicket(String pNameRecord, String newFlightID, Date newJourneyDate, String newTicketClass, String newBookingStatus, int newNoPassengers, float newPayAmount, int newAccountID, Date newDateReservation) throws ClassNotFoundException {
+        String sql = "UPDATE ticketDetails SET pNameRecord = ?, dateReservation = ?, flightID = ?, journeyDate = ?, class = ?, bookingStatus = ?, noPassengers = ?, accountID = ?, payAmount = ? WHERE pNameRecord = ?";
 
         try (Connection con = ConnectDB.getInstance().openConnection(); PreparedStatement st = con.prepareStatement(sql)) {
-            st.setString(1, newFlightID);
-            st.setDate(2, new java.sql.Date(newJourneyDate.getTime()));
-            st.setString(3, newTicketClass);
-            st.setString(4, newBookingStatus);
-            st.setInt(5, newNoPassengers);
-            st.setString(6, newPayID);
-            st.setInt(7, newAccountID);
-            st.setString(8, pNameRecord);
+            st.setString(1, pNameRecord);
+            st.setDate(2, new java.sql.Date(newDateReservation.getTime()));
+            st.setString(3, newFlightID);
+            st.setDate(4, new java.sql.Date(newJourneyDate.getTime()));
+            st.setString(5, newTicketClass);
+            st.setString(6, newBookingStatus);
+            st.setInt(7, newNoPassengers);
+            st.setInt(8, newAccountID);
+            st.setFloat(9, newPayAmount);
+            st.setString(10, pNameRecord);
 
             int rowsUpdated = st.executeUpdate();
 
             if (rowsUpdated > 0) {
                 System.out.println("Update successful!");
             } else {
-                System.out.println("No find ticket with Name Record is " + pNameRecord);
+                System.out.println("No ticket found with Name Record: " + pNameRecord);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -138,21 +150,6 @@ public class TicketDAO {
         return tickets;
     }
 
-    // Map result set to Ticket object
-    private static Ticket mapResultSetToTicket(ResultSet resultSet) throws SQLException {
-        String pNameRecord = resultSet.getString("pNameRecord");
-        Date dateReservation = resultSet.getDate("dateReservation");
-        String flightID = resultSet.getString("flightID");
-        Date journeyDate = resultSet.getDate("journeyDate");
-        String ticketClass = resultSet.getString("class");
-        String bookingStatus = resultSet.getString("bookingStatus");
-        int noPassengers = resultSet.getInt("noPassengers");
-        String payID = resultSet.getString("payID");
-        int accountID = resultSet.getInt("accountID");
-
-        return new Ticket(pNameRecord, dateReservation, flightID, journeyDate, ticketClass, bookingStatus, noPassengers, payID, accountID);
-    }
-
     // Order ticket
     public static boolean orderTicket(Ticket ticket, PaymentDetails paymentDetails) {
         Connection con = null;
@@ -160,7 +157,7 @@ public class TicketDAO {
         try {
             con = ConnectDB.getInstance().openConnection();
             con.setAutoCommit(false);
-            saveTicketToDatabase(con, ticket);
+            addTicket(ticket);
             savePaymentDetailsToDatabase(con, paymentDetails);
             con.commit();
             return true;
@@ -185,31 +182,25 @@ public class TicketDAO {
         }
     }
 
-    // Save ticket to database
-    private static void saveTicketToDatabase(Connection connection, Ticket ticket) throws SQLException {
-        String sql = "INSERT INTO ticketDetails (pNameRecord, dateReservation, flightID, journeyDate, class, bookingStatus, noPassengers, payID, accountID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-        try (PreparedStatement st = connection.prepareStatement(sql)) {
-            st.setString(1, ticket.getpNameRecord());
-            st.setDate(2, new java.sql.Date(ticket.getDateReservation().getTime()));
-            st.setString(3, ticket.getFlightID());
-            st.setDate(4, new java.sql.Date(ticket.getJourneyDate().getTime()));
-            st.setString(5, ticket.getTicketClass());
-            st.setString(6, ticket.getBookingStatus());
-            st.setInt(7, ticket.getNoPassengers());
-            st.setString(8, ticket.getPayID());
-            st.setInt(9, ticket.getAccountID());
-
-            st.executeUpdate();
-        }
-    }
-
     // Save payment details to database
     private static void savePaymentDetailsToDatabase(Connection connection, PaymentDetails paymentDetails) throws SQLException {
         // Implement this method based on your requirements
     }
 
-    // Get all tickets
+    private static Ticket mapResultSetToTicket(ResultSet resultSet) throws SQLException {
+        String pNameRecord = resultSet.getString("pNameRecord");
+        Date dateReservation = resultSet.getDate("dateReservation");
+        String flightID = resultSet.getString("flightID");
+        Date journeyDate = resultSet.getDate("journeyDate");
+        String ticketClass = resultSet.getString("class");
+        String bookingStatus = resultSet.getString("bookingStatus");
+        int noPassengers = resultSet.getInt("noPassengers");
+        Float payAmount = resultSet.getFloat("payAmount");
+        int accountID = resultSet.getInt("accountID");
+
+        return new Ticket(pNameRecord, dateReservation, flightID, journeyDate, ticketClass, bookingStatus, noPassengers, accountID, payAmount);
+    }
+
     public static ArrayList<Ticket> getAllTickets() throws ClassNotFoundException {
         ArrayList<Ticket> tickets = new ArrayList<>();
         String sql = "SELECT * FROM ticketDetails";
@@ -246,8 +237,8 @@ public class TicketDAO {
 
         return null;
     }
-    // Search tickets based on specified criteria
 
+    // Search tickets based on specified criteria
     public static List<Ticket> searchTicket(String fromCity, String toCity, Date departureDate, String ticketType, int numPassenger) throws ClassNotFoundException {
         List<Ticket> tickets = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT * FROM ticketDetails WHERE 1=1");
@@ -301,8 +292,8 @@ public class TicketDAO {
     public static void main(String[] args) throws ClassNotFoundException {
         // Test the getAllTickets method
         ArrayList<Ticket> a = getAllTickets();
-            System.out.println(a);        
+        System.out.println(a);
 
+//        addTicket("21", 27 - 03 - 2003, "dd", 7 - 03 - 2004, "Economic", "Confirmed", 4, 23, 150.000);
     }
-
 }

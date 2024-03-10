@@ -4,14 +4,15 @@
  * and open the template in the editor.
  */
 package model;
+
 import java.util.Date;
 
 /**
  *
  * @author ThanhThuy
  */
-
 public class Ticket {
+
     private String pNameRecord;
     private Date dateReservation;
     private String flightID;
@@ -19,13 +20,15 @@ public class Ticket {
     private String ticketClass;
     private String bookingStatus;
     private int noPassengers;
-    private String payID;
     private int accountID;
-    public Ticket() {
+    private float payAmount;
+
+    @Override
+    public String toString() {
+        return "Ticket{" + "pNameRecord=" + pNameRecord + ", dateReservation=" + dateReservation + ", flightID=" + flightID + ", journeyDate=" + journeyDate + ", ticketClass=" + ticketClass + ", bookingStatus=" + bookingStatus + ", noPassengers=" + noPassengers + ", accountID=" + accountID + ", payAmount=" + payAmount + '}';
     }
 
-    public Ticket(String pNameRecord, Date dateReservation, String flightID, Date journeyDate, String ticketClass,
-                  String bookingStatus, int noPassengers, String payID, int accountID) {
+    public Ticket(String pNameRecord, Date dateReservation, String flightID, Date journeyDate, String ticketClass, String bookingStatus, int noPassengers, int accountID, float payAmount) {
         this.pNameRecord = pNameRecord;
         this.dateReservation = dateReservation;
         this.flightID = flightID;
@@ -33,8 +36,11 @@ public class Ticket {
         this.ticketClass = ticketClass;
         this.bookingStatus = bookingStatus;
         this.noPassengers = noPassengers;
-        this.payID = payID;
         this.accountID = accountID;
+        this.payAmount = payAmount;
+    }
+
+    public Ticket() {
     }
 
     public String getpNameRecord() {
@@ -93,14 +99,6 @@ public class Ticket {
         this.noPassengers = noPassengers;
     }
 
-    public String getPayID() {
-        return payID;
-    }
-
-    public void setPayID(String payID) {
-        this.payID = payID;
-    }
-
     public int getAccountID() {
         return accountID;
     }
@@ -109,9 +107,12 @@ public class Ticket {
         this.accountID = accountID;
     }
 
-    @Override
-    public String toString() {
-        return "Ticket{" + "pNameRecord=" + pNameRecord + ", dateReservation=" + dateReservation + ", flightID=" + flightID + ", journeyDate=" + journeyDate + ", ticketClass=" + ticketClass + ", bookingStatus=" + bookingStatus + ", noPassengers=" + noPassengers + ", payID=" + payID + ", accountID=" + accountID + '}';
+    public float getPayAmount() {
+        return payAmount;
+    }
+
+    public void setPayAmount(float payAmount) {
+        this.payAmount = payAmount;
     }
 
 }
