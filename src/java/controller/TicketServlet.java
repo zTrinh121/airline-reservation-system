@@ -96,7 +96,7 @@ public class TicketServlet extends HttpServlet {
         String ticketClass = request.getParameter("ticketClass");
         String bookingStatus = request.getParameter("bookingStatus");
         String noPassengers_raw = request.getParameter("noPassengers");
-        String payAmount = request.getParameter("payAmount");
+        String payAmount_raw = request.getParameter("payAmount");
         String accountID_raw = request.getParameter("accountID");
         if (passengerName == null || passengerName.isEmpty()
                 || dateReservation_raw == null || dateReservation_raw.isEmpty()
@@ -105,7 +105,7 @@ public class TicketServlet extends HttpServlet {
                 || ticketClass == null || ticketClass.isEmpty()
                 || bookingStatus == null || bookingStatus.isEmpty()
                 || noPassengers_raw == null || noPassengers_raw.isEmpty()
-                || payAmount == null || payAmount.isEmpty()
+                || payAmount_raw == null || payAmount_raw.isEmpty()
                 || accountID_raw == null || accountID_raw.isEmpty()) {
             request.setAttribute("err", "All fields are required.");
             request.getRequestDispatcher("addTicketAdmin.jsp").forward(request, response);
@@ -117,10 +117,10 @@ public class TicketServlet extends HttpServlet {
             Date journeyDate = Date.valueOf(journeyDate_raw);
             int noPassengers = Integer.parseInt(noPassengers_raw);
             int accountID = Integer.parseInt(accountID_raw);
-
-            Ticket newTicket = new Ticket(passengerName, dateReservation, flightID, journeyDate, ticketClass, bookingStatus, noPassengers, payAmount, accountID);
-
+            float payAmount = Float.parseFloat(payAmount_raw);
+            Ticket newTicket = new Ticket(passengerName, dateReservation, flightID, journeyDate, ticketClass, bookingStatus, noPassengers, accountID, payAmount);
             TicketDAO.addTicket(newTicket);
+            System.out.println(newTicket);
             listTickets(request, response);
         } catch (NumberFormatException e) {
             e.printStackTrace();
@@ -158,7 +158,7 @@ public class TicketServlet extends HttpServlet {
         String newTicketClass = request.getParameter("ticketClass");
         String newBookingStatus = request.getParameter("bookingStatus");
         String newNoPassengers_raw = request.getParameter("noPassengers");
-        String newPayAmount = request.getParameter("payAmount");
+        String newPayAmount_raw = request.getParameter("payAmount");
         String newAccountID_raw = request.getParameter("accountID");
         String newDateReservation_raw = request.getParameter("dateReservation");
 
@@ -170,6 +170,7 @@ public class TicketServlet extends HttpServlet {
             newDateReservation = Date.valueOf(newDateReservation_raw);
             int newNoPassengers = Integer.parseInt(newNoPassengers_raw);
             int newAccountID = Integer.parseInt(newAccountID_raw);
+            float newPayAmount = Float.parseFloat(newPayAmount_raw);
             TicketDAO.updateTicket(pNameRecord, newFlightID, newJourneyDate, newTicketClass, newBookingStatus, newNoPassengers, newPayAmount, newAccountID, newDateReservation);
             listTickets(request, response);
         } catch (NumberFormatException e) {

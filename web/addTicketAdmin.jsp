@@ -4,7 +4,6 @@
     Author     : ThanhThuy
 --%>
 
-<%@page import="java.time.ZoneId"%>
 <%@page import="java.time.LocalDate"%>
 <%@page import="dao.TicketDAO"%>
 <%@page import="model.Ticket"%>
@@ -95,7 +94,7 @@
 
             <div class="form-group">
                 <label for="payAmount">Pay Amount</label>
-                <input type="text" class="form-control" name="payAmount" placeholder="Enter Pay Amount" value="${param.payAmount}">
+                <input type="number" class="form-control" name="payAmount" placeholder="Enter Pay Amount" value="${param.payAmount}">
             </div>
 
             <button type="submit" class="btn btn-primary">Add new ticket</button>

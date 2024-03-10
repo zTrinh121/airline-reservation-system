@@ -12,6 +12,7 @@ import java.util.Date;
  * @author ThanhThuy
  */
 public class Ticket {
+
     private String pNameRecord;
     private Date dateReservation;
     private String flightID;
@@ -19,14 +20,15 @@ public class Ticket {
     private String ticketClass;
     private String bookingStatus;
     private int noPassengers;
-    private String payAmount;
     private int accountID;
+    private float payAmount;
 
-    public Ticket() {
+    @Override
+    public String toString() {
+        return "Ticket{" + "pNameRecord=" + pNameRecord + ", dateReservation=" + dateReservation + ", flightID=" + flightID + ", journeyDate=" + journeyDate + ", ticketClass=" + ticketClass + ", bookingStatus=" + bookingStatus + ", noPassengers=" + noPassengers + ", accountID=" + accountID + ", payAmount=" + payAmount + '}';
     }
 
-    public Ticket(String pNameRecord, Date dateReservation, String flightID, Date journeyDate, String ticketClass,
-                  String bookingStatus, int noPassengers, String payAmount, int accountID) {
+    public Ticket(String pNameRecord, Date dateReservation, String flightID, Date journeyDate, String ticketClass, String bookingStatus, int noPassengers, int accountID, float payAmount) {
         this.pNameRecord = pNameRecord;
         this.dateReservation = dateReservation;
         this.flightID = flightID;
@@ -34,18 +36,12 @@ public class Ticket {
         this.ticketClass = ticketClass;
         this.bookingStatus = bookingStatus;
         this.noPassengers = noPassengers;
-        this.payAmount = payAmount;
         this.accountID = accountID;
-    }
-
-    public String getPayAmount() {
-        return payAmount;
-    }
-
-    public void setPayAmount(String payAmount) {
         this.payAmount = payAmount;
     }
 
+    public Ticket() {
+    }
 
     public String getpNameRecord() {
         return pNameRecord;
@@ -111,11 +107,12 @@ public class Ticket {
         this.accountID = accountID;
     }
 
-    @Override
-    public String toString() {
-        return "Ticket{" + "pNameRecord=" + pNameRecord + ", dateReservation=" + dateReservation + ", flightID=" + flightID + ", journeyDate=" + journeyDate + ", ticketClass=" + ticketClass + ", bookingStatus=" + bookingStatus + ", noPassengers=" + noPassengers + ", payAmount=" + payAmount + ", accountID=" + accountID + '}';
+    public float getPayAmount() {
+        return payAmount;
     }
 
-  
+    public void setPayAmount(float payAmount) {
+        this.payAmount = payAmount;
+    }
 
 }
