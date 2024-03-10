@@ -1,10 +1,11 @@
 <%-- 
-    Document   : home
-    Created on : Mar 6, 2024, 9:13:23 AM
+    Document   : admin
+    Created on : Mar 8, 2024, 1:23:07 PM
     Author     : HP
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -48,8 +49,8 @@
                                     </ul>
                                 </div>
                                 <div class="user_box ml-auto">
-                                    <div class="user_box_login user_box_link"><a href="login.jsp">login</a></div>
-                                    <div class="user_box_register user_box_link"><a href="register.jsp">register</a></div>
+                                    <div  ><a  style="font-size: 20px;color: #CC00FF;font-weight: bold" >HI ADMIN!</a></div>
+                                   
                                 </div>
                             </div>
                         </div>
@@ -67,11 +68,11 @@
                                 </div>
                                 <div class="main_nav_container ml-auto">
                                     <ul class="main_nav_list">
-                                        <li class="main_nav_item"><a href="home.jsp">home</a></li>
-                                    
-                                        <li class="main_nav_item"><a href="offers.jsp">offers</a></li>
+                                        <li class="main_nav_item"><a href="admin.jsp">home</a></li>
+                                        <li class="main_nav_item"><a href="flight.jsp">Flight</a></li>
+                                        <li class="main_nav_item"><a href="customer.jsp">Customer</a></li>
 
-                                        <li class="main_nav_item"><a href="contact.jsp">contact</a></li>
+                                        <li class="main_nav_item"><a href="ticket.jsp">Ticket</a></li>
                                     </ul>
                                 </div>
                                 <div class="content_search ml-lg-0 ml-auto">
@@ -145,7 +146,7 @@
                                 <div class="home_slider_content_inner" data-animation-in="flipInX" data-animation-out="animate-out fadeOut">
                                     <h1>discover</h1>
                                     <h1>the world</h1>
-                                   
+                                  
                                 </div>
                             </div>
                         </div>
@@ -158,7 +159,7 @@
                                 <div class="home_slider_content_inner" data-animation-in="flipInX" data-animation-out="animate-out fadeOut">
                                     <h1>discover</h1>
                                     <h1>the world</h1>
-                                    <div class="button home_slider_button"><div class="button_bcg"></div><a href="#">explore now<span></span><span></span><span></span></a></div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -228,71 +229,7 @@
 
             </div>
 
-            <!-- Search -->
-
-            <div class="search">
-
-
-                <!-- Search Contents -->
-
-                <div class="container fill_height">
-                    <div class="row fill_height">
-                        <div class="col fill_height">
-
-                            <!-- Search Tabs -->
-
-                            <div class="search_tabs_container">
-                                <div class="search_tabs d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
-
-                                    <div class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><img src="images/departure.png" alt="">Trips</div>
-                                    <div class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start">
-                                        <div style="width: 50px; height: 50px; overflow: hidden;"> <!-- Khung có kích thước cố định 80x80px và ẩn tràn ra ngoài -->
-                                            <img src="images/ticket3.png" style="max-width: 100%; max-height: 100%; display: block;"> <!-- Hình ảnh tự động thu nhỏ để vừa với khung -->
-                                        </div>
-                                        <span style="margin-left: 10px;">Tickets Booked</span> <!-- Chèn "Ticket" cạnh hình ảnh với khoảng cách là 10px -->
-                                    </div>
-
-
-                                </div>		
-                            </div>
-
-                            <!-- Search Panel -->
-
-                            <div class="search_panel active">
-                                <form action="#" id="search_form_1" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
-                                    <div class="search_item">
-                                        <div>From City</div>
-                                        <input type="text" class="destination search_input" required="required">
-                                    </div>
-                                    <div class="search_item">
-                                        <div>To City</div>
-                                        <input type="text" class="check_in search_input" placeholder="">
-                                    </div>
-                                    <div class="search_item">
-                                        <div>Departure Time</div>
-                                        <input type="text" class="check_out search_input" placeholder="">
-                                    </div>
-                                    <div class="search_item">
-                                        <div>Arrival Time</div>
-                                        <input type="text" class="check_out search_input" placeholder="">
-                                    </div>
-                                    
-                                   
-                                    <button class="button search_button">search<span></span><span></span><span></span></button>
-                                </form>
-                            </div>
-
-                            <!-- Search Panel -->
-
-                           
-                            <!-- Search Panel -->
-
             
-                        </div>
-                    </div>
-                </div>		
-            </div>
-
             <!-- Intro -->
 
             <div class="intro">
@@ -416,7 +353,7 @@
                                             <i></i>
                                         </div>
                                         <p class="cta_text">Travel makes one modest. You see what a tiny place you occupy in the world!!!</p>
-                                        <div class="button cta_button"><div class="button_bcg"></div><a href="#">book now<span></span><span></span><span></span></a></div>
+                                       
                                     </div>
 
                                     <!-- CTA Slider Item -->
@@ -828,3 +765,4 @@
     </body>
 
 </html>
+
