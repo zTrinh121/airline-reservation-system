@@ -15,7 +15,7 @@ import java.util.List;
 public class TicketDAO {
 
     // Private constructor to prevent instantiation
-    private TicketDAO() {
+    public TicketDAO() {
     }
 
     // Add ticket
@@ -60,7 +60,7 @@ public class TicketDAO {
 
     // Update ticket
     public static void updateTicket(String pNameRecord, String newFlightID, Date newJourneyDate, String newTicketClass, String newBookingStatus, int newNoPassengers, String newPayAmount, int newAccountID) throws ClassNotFoundException {
-        String sql = "UPDATE ticketDetails SET flightID = ?, journeyDate = ?, class = ?, bookingStatus = ?, noPassengers = ?, payAmount = ?, accountID = ? WHERE pNameRecord = ?";
+        String sql = "UPDATE ticketDetails SET flightID = ?, journeyDate = ?, ticketClass = ?, bookingStatus = ?, noPassengers = ?, payAmount = ?, accountID = ? WHERE pNameRecord = ?";
 
         try (Connection con = ConnectDB.getInstance().openConnection(); PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, newFlightID);
@@ -77,7 +77,7 @@ public class TicketDAO {
             if (rowsUpdated > 0) {
                 System.out.println("Update successful!");
             } else {
-                System.out.println("No find ticket with Name Record is " + pNameRecord);
+                System.out.println("No ticket found with Name Record: " + pNameRecord);
             }
         } catch (SQLException e) {
             e.printStackTrace();

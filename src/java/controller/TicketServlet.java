@@ -24,6 +24,8 @@ import java.util.List;
 @WebServlet(name = "TicketServlet", urlPatterns = {"/ticketController"})
 public class TicketServlet extends HttpServlet {
 
+    TicketDAO TicketDAO = new TicketDAO();
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -157,17 +159,19 @@ public class TicketServlet extends HttpServlet {
         String newTicketClass = request.getParameter("newTicketClass");
         String newBookingStatus = request.getParameter("newBookingStatus");
         String newNoPassengers_raw = request.getParameter("newNoPassengers");
-        String newPayID = request.getParameter("newPayID");
+        String newPayAmount = request.getParameter("newPayAmount");
         String newAccountID_raw = request.getParameter("newAccountID");
 
         try {
             Date newJourneyDate = Date.valueOf(newJourneyDate_raw);
             int newNoPassengers = Integer.parseInt(newNoPassengers_raw);
             int newAccountID = Integer.parseInt(newAccountID_raw);
-            TicketDAO.updateTicket(pNameRecord, newFlightID, newJourneyDate, newTicketClass, newBookingStatus, newNoPassengers, newPayID, newAccountID);
+            TicketDAO.updateTicket(pNameRecord, newFlightID, newJourneyDate, newTicketClass, newBookingStatus, newNoPassengers, newPayAmount, newAccountID);
             listTickets(request, response);
-        } catch ( NumberFormatException e) {
+        } catch (NumberFormatException e) {
             e.printStackTrace();
+            request.setAttribute("err", "Invalid Format");
+
         }
     }
 
