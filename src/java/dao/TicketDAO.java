@@ -59,18 +59,20 @@ public class TicketDAO {
     }
 
     // Update ticket
-    public static void updateTicket(String pNameRecord, String newFlightID, Date newJourneyDate, String newTicketClass, String newBookingStatus, int newNoPassengers, String newPayAmount, int newAccountID) throws ClassNotFoundException {
-        String sql = "UPDATE ticketDetails SET flightID = ?, journeyDate = ?, ticketClass = ?, bookingStatus = ?, noPassengers = ?, payAmount = ?, accountID = ? WHERE pNameRecord = ?";
+    public static void updateTicket(String pNameRecord, String newFlightID, Date newJourneyDate, String newTicketClass, String newBookingStatus, int newNoPassengers, String newPayAmount, int newAccountID, Date newDateReservation) throws ClassNotFoundException {
+        String sql = "UPDATE ticketDetails SET pNameRecord = ?, dateReservation = ?, flightID = ?, journeyDate = ?, class = ?, bookingStatus = ?, noPassengers = ?, accountID = ?, payAmount = ? WHERE pNameRecord = ?";
 
         try (Connection con = ConnectDB.getInstance().openConnection(); PreparedStatement st = con.prepareStatement(sql)) {
-            st.setString(1, newFlightID);
-            st.setDate(2, new java.sql.Date(newJourneyDate.getTime()));
-            st.setString(3, newTicketClass);
-            st.setString(4, newBookingStatus);
-            st.setInt(5, newNoPassengers);
-            st.setString(6, newPayAmount);
-            st.setInt(7, newAccountID);
-            st.setString(8, pNameRecord);
+            st.setString(1, pNameRecord);
+            st.setDate(2, new java.sql.Date(newDateReservation.getTime()));
+            st.setString(3, newFlightID);
+            st.setDate(4, new java.sql.Date(newJourneyDate.getTime()));
+            st.setString(5, newTicketClass);
+            st.setString(6, newBookingStatus);
+            st.setInt(7, newNoPassengers);
+            st.setInt(8, newAccountID);
+            st.setString(9, newPayAmount);
+            st.setString(10, pNameRecord);
 
             int rowsUpdated = st.executeUpdate();
 

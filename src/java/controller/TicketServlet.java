@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -88,25 +89,23 @@ public class TicketServlet extends HttpServlet {
     }
 
     private void addTicket(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException {
-        String pNameRecord = request.getParameter("passengerName");
+        String passengerName = request.getParameter("pNameRecord");
         String dateReservation_raw = request.getParameter("dateReservation");
         String flightID = request.getParameter("flightID");
         String journeyDate_raw = request.getParameter("journeyDate");
         String ticketClass = request.getParameter("ticketClass");
         String bookingStatus = request.getParameter("bookingStatus");
         String noPassengers_raw = request.getParameter("noPassengers");
-        String payID = request.getParameter("payID");
+        String payAmount = request.getParameter("payAmount");
         String accountID_raw = request.getParameter("accountID");
-
-        // Basic form validation
-        if (pNameRecord == null || pNameRecord.isEmpty()
+        if (passengerName == null || passengerName.isEmpty()
                 || dateReservation_raw == null || dateReservation_raw.isEmpty()
                 || flightID == null || flightID.isEmpty()
                 || journeyDate_raw == null || journeyDate_raw.isEmpty()
                 || ticketClass == null || ticketClass.isEmpty()
                 || bookingStatus == null || bookingStatus.isEmpty()
                 || noPassengers_raw == null || noPassengers_raw.isEmpty()
-                || payID == null || payID.isEmpty()
+                || payAmount == null || payAmount.isEmpty()
                 || accountID_raw == null || accountID_raw.isEmpty()) {
             request.setAttribute("err", "All fields are required.");
             request.getRequestDispatcher("addTicketAdmin.jsp").forward(request, response);
@@ -119,7 +118,7 @@ public class TicketServlet extends HttpServlet {
             int noPassengers = Integer.parseInt(noPassengers_raw);
             int accountID = Integer.parseInt(accountID_raw);
 
-            Ticket newTicket = new Ticket(pNameRecord, dateReservation, flightID, journeyDate, ticketClass, bookingStatus, noPassengers, payID, accountID);
+            Ticket newTicket = new Ticket(passengerName, dateReservation, flightID, journeyDate, ticketClass, bookingStatus, noPassengers, payAmount, accountID);
 
             TicketDAO.addTicket(newTicket);
             listTickets(request, response);
@@ -154,24 +153,28 @@ public class TicketServlet extends HttpServlet {
 
     private void updateTicket(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException {
         String pNameRecord = request.getParameter("pNameRecord");
-        String newFlightID = request.getParameter("newFlightID");
-        String newJourneyDate_raw = request.getParameter("newJourneyDate");
-        String newTicketClass = request.getParameter("newTicketClass");
-        String newBookingStatus = request.getParameter("newBookingStatus");
-        String newNoPassengers_raw = request.getParameter("newNoPassengers");
-        String newPayAmount = request.getParameter("newPayAmount");
-        String newAccountID_raw = request.getParameter("newAccountID");
+        String newFlightID = request.getParameter("flightID");
+        String newJourneyDate_raw = request.getParameter("journeyDate");
+        String newTicketClass = request.getParameter("ticketClass");
+        String newBookingStatus = request.getParameter("bookingStatus");
+        String newNoPassengers_raw = request.getParameter("noPassengers");
+        String newPayAmount = request.getParameter("payAmount");
+        String newAccountID_raw = request.getParameter("accountID");
+        String newDateReservation_raw = request.getParameter("dateReservation");
+
+        Date newJourneyDate;
+        Date newDateReservation;
 
         try {
-            Date newJourneyDate = Date.valueOf(newJourneyDate_raw);
+            newJourneyDate = Date.valueOf(newJourneyDate_raw);
+            newDateReservation = Date.valueOf(newDateReservation_raw);
             int newNoPassengers = Integer.parseInt(newNoPassengers_raw);
             int newAccountID = Integer.parseInt(newAccountID_raw);
-            TicketDAO.updateTicket(pNameRecord, newFlightID, newJourneyDate, newTicketClass, newBookingStatus, newNoPassengers, newPayAmount, newAccountID);
+            TicketDAO.updateTicket(pNameRecord, newFlightID, newJourneyDate, newTicketClass, newBookingStatus, newNoPassengers, newPayAmount, newAccountID, newDateReservation);
             listTickets(request, response);
         } catch (NumberFormatException e) {
             e.printStackTrace();
             request.setAttribute("err", "Invalid Format");
-
         }
     }
 

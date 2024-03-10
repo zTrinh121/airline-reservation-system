@@ -44,22 +44,18 @@
         <h5 style="color: red;">${err}</h5>
         <h5 style="color: green">${msg}</h5>
 
-        <form action="ticketController" method="get">
+        <form action="ticketController">
             <input type="hidden" value="add" name="command" />
 
             <div class="form-group">
-                <label for="passengerName">Passenger Name</label>
-                <input type="text" class="form-control" name="passengerName" placeholder="Enter passenger name">
-            </div>
-
-            <div class="form-group">
-                <label for="dateReservation">Date Reservation</label>
-                <input type="date" class="form-control" name="dateReservation">
+                <label for="pNameRecord">Passenger Name Record</label>
+                <input type="text" class="form-control" name="pNameRecord"  placeholder="Enter pNameRecord"
+                       >
             </div>
 
             <div class="form-group">
                 <label for="flightID">Flight ID</label>
-                <input type="text" class="form-control" name="flightID" placeholder="Enter flight ID">
+                <input type="text" class="form-control" name="flightID"  placeholder="Enter flightID">
             </div>
 
             <div class="form-group">
@@ -69,32 +65,39 @@
 
             <div class="form-group">
                 <label for="ticketClass">Ticket Class</label>
-                <input type="text" class="form-control" name="ticketClass" placeholder="Enter ticket class">
+                <select class="form-control" name="ticketClass">
+                    <option value="Economy" ${ticket.ticketClass=='Economy' ? 'selected' : '' }>Economy</option>
+                    <option value="Business" ${ticket.ticketClass=='Business' ? 'selected' : '' }>Business
+                    </option>
+                </select>
             </div>
 
             <div class="form-group">
                 <label for="bookingStatus">Booking Status</label>
-                <input type="text" class="form-control" name="bookingStatus" placeholder="Enter booking status">
+                <select class="form-control" name="bookingStatus">
+                    <option value="Confirmed">Confirmed
+                    </option>
+                    <option value="Pending"}>Pending
+                    </option>
+                </select>
             </div>
 
             <div class="form-group">
                 <label for="noPassengers">Number of Passengers</label>
-                <input type="number" class="form-control" name="noPassengers" placeholder="Enter number of passengers">
+                <input type="number" class="form-control" name="noPassengers" placeholder="Enter number passengers">
             </div>
 
             <div class="form-group">
-                <label for="payID">Pay ID</label>
-                <input type="text" class="form-control" name="payID" placeholder="Enter pay ID">
+                <label for="payAmount">Pay Amount</label>
+                <input type="text" class="form-control" name="payAmount"  placeholder="Enter payAmount">
             </div>
-
             <div class="form-group">
                 <label for="accountID">Account ID</label>
-                <input type="number" class="form-control" name="accountID" placeholder="Enter account ID">
+                <input type="text" class="form-control" name="accountID"  placeholder="Enter accountID">
             </div>
-
-            <button type="submit" class="btn btn-primary">Add new ticket</button>
+            <button type="submit" class="btn btn-primary">Update Ticket</button>
         </form>
 
-        <a href="ticketController" class="btn btn-primary" >Back to Ticket List</a>
+        <a href="ticketController" class="btn btn-secondary">Back to Ticket List</a>
     </body>
 </html>
