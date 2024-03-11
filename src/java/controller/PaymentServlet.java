@@ -4,14 +4,18 @@
  */
 package controller;
 
+import com.paypal.base.rest.PayPalRESTException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.PaymentDetails;
+import model.PaymentServices;
 
 /**
  *
@@ -95,12 +99,24 @@ public class PaymentServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    public void authorizePayment(HttpServletRequest request, HttpServletResponse response) {
-        String subtotal = request.getParameter("subtotal");
-        String tax = request.getParameter("tax");
+    public void authorizePayment(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String total = request.getParameter("total");
-
-        PaymentDetails paymentDetails = new PaymentDetails();
+        java.util.Date today = new java.util.Date();
+        java.sql.Date sqlToday = new java.sql.Date(today.getTime());
+        double sum = Double.parseDouble(total);
+        PaymentDetails paymentDetails = new PaymentDetails("PAY001", "PNR001", sqlToday, sum, "paypal");
+        System.out.println("ahiahi");
+        System.out.println(paymentDetails);
+        try {
+            PaymentServices paymentServices = new PaymentServices();
+            String approvalLink = paymentServices.authorizePayment(paymentDetails);
+            response.sendRedirect(approvalLink);
+        } catch (PayPalRESTException ex) {
+            request.setAttribute("error", "Invalid Payment Details");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+        } catch (IOException ex) {
+            Logger.getLogger(PaymentServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
