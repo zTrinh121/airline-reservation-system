@@ -1,14 +1,11 @@
-<%-- 
-    Document   : addFlightPassenger
-    Created on : Mar 7, 2024, 7:55:19 AM
-    Author     : Trinh
---%>
+<%-- Document : addFlightPassenger Created on : Mar 7, 2024, 7:55:19 AM Author : Trinh --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
+
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
@@ -18,11 +15,15 @@
         <!-- Google Web Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap" rel="stylesheet">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap"
+            rel="stylesheet">
 
         <!-- Icon Font Stylesheet -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+              rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
+              rel="stylesheet">
 
         <!-- Libraries Stylesheet -->
         <link href="lib/animate/animate.min.css" rel="stylesheet">
@@ -36,20 +37,24 @@
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
     </head>
+
     <body>
         <h1>Add passenger information</h1>
         <c:set var="numPass" value="${sessionScope.numPass}"></c:set>
-            <form action="TicketServlet" method="addPassenger">
+            <form action="ticketController" method="get">
+                <input type="hidden" value="addPassenger" name="command" />
             <c:forEach var="count" begin="1" end="${numPass}">
                 <p><strong>PASSENGER ${count}</strong></p>
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
                         <label for="validationTooltip03">Passenger's Name</label>
-                        <input type="text" class="form-control" id="validationTooltip03" name="passengerName" required>
+                        <input type="text" class="form-control" id="validationTooltip03" name="passengerName"
+                               required>
                     </div>
                     <div class="col-md-3 mb-3">
                         <label for="validationTooltip04">Passenger's Age</label>
-                        <input type="number" class="form-control" id="validationTooltip04" name="passengerAge" required>
+                        <input type="number" class="form-control" id="validationTooltip04" name="passengerAge"
+                               required>
                     </div>
                     <div class="col-md-3 mb-3">
                         <label for="validationTooltip05">Passenger's Gender</label>
@@ -61,11 +66,13 @@
 
                     </div>
                 </div>
-                <br><hr>
+                <br>
+                <hr>
             </c:forEach>
 
-            <button  type="submit" class="btn btn-primary">Submit Ticket Details</button>
+            <button type="submit" class="btn btn-primary">Submit Ticket Details</button>
         </form>
 
     </body>
+
 </html>

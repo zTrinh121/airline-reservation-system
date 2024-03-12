@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import model.Flight;
+import model.Passenger;
 
 public class TicketDAO {
 
@@ -350,6 +352,116 @@ public class TicketDAO {
 //        return ticketList;
 //    }
 
+    public void addTicketAndPassenger(Ticket ticketDetails, Passenger passenger) throws ClassNotFoundException {
+        ArrayList<Ticket> tickets = new ArrayList<>();
+        String sqlTicket = "INSERT INTO ticketDetails (pNameRecord, dateReservation, flightID, journeyDate, "
+                + "ticketClass, bookingStatus, noPassengers, accountID, payAmount) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sqlPassenger = "INSERT INTO passengers (pNameRecord, pName, age, gender) VALUES (?, ?, ?, ?)";
+        try (Connection con = ConnectDB.getInstance().openConnection();
+                PreparedStatement stTicket = con.prepareStatement(sqlTicket);
+                PreparedStatement stPassenger = con.prepareStatement(sqlPassenger)) {
+
+            // Disable auto-commit to manage transactions
+            con.setAutoCommit(false);
+
+            // Insert ticket details
+            stTicket.setString(1, ticketDetails.getpNameRecord());
+            stTicket.setDate(2, new java.sql.Date(ticketDetails.getDateReservation().getTime()));
+            stTicket.setString(3, ticketDetails.getFlightID());
+            stTicket.setDate(4, new java.sql.Date(ticketDetails.getJourneyDate().getTime()));
+            stTicket.setString(5, ticketDetails.getTicketClass());
+            stTicket.setString(6, ticketDetails.getBookingStatus());
+            stTicket.setInt(7, ticketDetails.getNoPassengers());
+            stTicket.setInt(8, ticketDetails.getAccountID());
+            stTicket.setFloat(9, ticketDetails.getPayAmount());
+
+            stTicket.executeUpdate();
+
+            // Insert passenger details
+            stPassenger.setString(1, passenger.getpNameRecord());
+            stPassenger.setString(2, passenger.getpName());
+            stPassenger.setInt(3, passenger.getAge());
+            stPassenger.setString(4, passenger.getGender());
+
+            stPassenger.executeUpdate();
+
+            con.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+//
+//    public static ArrayList<Ticket> searchTicket(String pNameRecord, Date dateReservation, String flightID, Date journeyDate,
+//            String ticketClass, String bookingStatus, int noPassengers, int accountID, float payAmount) {
+//        ArrayList<Ticket> ticketList = new ArrayList<>();
+//
+////        String sql = "SELECT * FROM ticketDetails WHERE pNameRecord = ? AND dateReservation = ? AND flightID = ? "
+////                + "AND journeyDate = ? AND ticketClass = ? AND bookingStatus = ? AND noPassengers = ? "
+////                + "AND accountID = ? AND payAmount = ?";
+//        String sql = "SELECT * FROM ticketDetails WHERE "
+//                + "(pNameRecord = ? OR ? IS NULL) AND "
+//                + "(dateReservation = ? OR ? IS NULL) AND "
+//                + "(flightID = ? OR ? IS NULL) AND "
+//                + "(journeyDate = ? OR ? IS NULL) AND "
+//                + "(ticketClass = ? OR ? IS NULL) AND "
+//                + "(bookingStatus = ? OR ? IS NULL) AND "
+//                + "(noPassengers = ? OR ? IS NULL) AND "
+//                + "(accountID = ? OR ? IS NULL) AND "
+//                + "(payAmount = ? OR ? IS NULL)";
+//
+//        try (Connection con = ConnectDB.getInstance().openConnection();
+//                PreparedStatement st = con.prepareStatement(sql)) {
+//
+//            st.setString(1, pNameRecord);
+//            st.setDate(2, (java.sql.Date) dateReservation);
+//            st.setString(3, flightID);
+//            st.setDate(4, (java.sql.Date) journeyDate);
+//            st.setString(5, ticketClass);
+//            st.setString(6, bookingStatus);
+//            st.setInt(7, noPassengers);
+//            st.setInt(8, accountID);
+//            st.setFloat(9, payAmount);
+//
+//            try (ResultSet rs = st.executeQuery()) {
+//                while (rs.next()) {
+//                    Ticket ticket = new Ticket();
+//                    ticket.setpNameRecord(rs.getString("pNameRecord"));
+//                    ticket.setDateReservation(rs.getDate("dateReservation"));
+//                    ticket.setFlightID(rs.getString("flightID"));
+//                    ticket.setJourneyDate(rs.getDate("journeyDate"));
+//                    ticket.setTicketClass(rs.getString("ticketClass"));
+//                    ticket.setBookingStatus(rs.getString("bookingStatus"));
+//                    ticket.setNoPassengers(rs.getInt("noPassengers"));
+//                    ticket.setAccountID(rs.getInt("accountID"));
+//                    ticket.setPayAmount(rs.getFloat("payAmount"));
+//                    ticketList.add(ticket);
+//                }
+//            }
+//        } catch (SQLException | ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return ticketList;
+//    }
+    public double calculatePricePerPersion(Flight flight, String ticketType) {
+        double ticketPrice = 0.0;
+        if ("Economy".equalsIgnoreCase(ticketType)) {
+            ticketPrice = flight.getPriceEconomy();
+        } else if ("Business".equalsIgnoreCase(ticketType)) {
+            ticketPrice = flight.getPriceBusiness();
+        }
+        return ticketPrice;
+    }
+
+    public double calculateTotalTicketPrice(int numPassengers, Flight flight, String ticketType, double tax) {
+        double totalPrice = 0.0;
+        double ticketPrice = calculatePricePerPersion(flight, ticketType);
+        totalPrice = numPassengers * ticketPrice;
+        return totalPrice + totalPrice*tax;
+    }
+
     public static void main(String[] args) throws ClassNotFoundException {
         // Test the getAllTickets method
         ArrayList<Ticket> a = getAllTickets();
@@ -357,4 +469,5 @@ public class TicketDAO {
 
 //        addTicket("21", 27 - 03 - 2003, "dd", 7 - 03 - 2004, "Economic", "Confirmed", 4, 23, 150.000);
     }
+
 }

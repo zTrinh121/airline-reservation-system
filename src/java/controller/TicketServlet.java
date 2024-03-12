@@ -16,12 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
-import java.sql.Time;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import model.Flight;
+import model.Passenger;
 
 @WebServlet(name = "TicketServlet", urlPatterns = {"/ticketController"})
 public class TicketServlet extends HttpServlet {
@@ -70,6 +69,10 @@ public class TicketServlet extends HttpServlet {
                 case "addPassenger":
                     addPassenger(request, response);
                     break;
+                case "checkout":
+                    checkout(request, response);
+                    break;
+
                 default:
                     System.err.println("Unexpected command: " + command);
                     response.sendRedirect("error.jsp");
@@ -84,7 +87,7 @@ public class TicketServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-processRequest(request, response);
+        processRequest(request, response);
     }
 
     @Override
@@ -183,30 +186,63 @@ processRequest(request, response);
         }
     }
 
-    private void searchTicket(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException {
-        String fromCity = request.getParameter("fromCity");
-        String toCity = request.getParameter("toCity");
-        String departureDate_raw = request.getParameter("departureDate");
-        String numPassenger_raw = request.getParameter("numPassenger");
-        String ticketType = request.getParameter("ticketType");
-        int numPassenger;
-        Date departureDate;
+//    private void searchTicket(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException {
+//        String fromCity = request.getParameter("fromCity");
+//        String toCity = request.getParameter("toCity");
+//        String departureDate_raw = request.getParameter("departureDate");
+//        String numPassenger_raw = request.getParameter("numPassenger");
+//        String ticketType = request.getParameter("ticketType");
+//        int numPassenger;
+//        Date departureDate;
+//
+//        try {
+//            HttpSession session = request.getSession();
+//            numPassenger = Integer.parseInt(numPassenger_raw);
+//            departureDate = Date.valueOf(departureDate_raw);
+//            List<Ticket> listSearch = TicketDAO.searchTicket(fromCity, toCity, departureDate, ticketType, numPassenger);
+//            session.setAttribute("searchList", listSearch);
+//            session.setAttribute("numPass", numPassenger);
+//            session.setAttribute("ticketType", ticketType);
+//            listTickets(request, response);
+//        } catch (NumberFormatException e) {
+//            e.printStackTrace();
+//            response.sendRedirect("error.jsp");
+//        } catch (IllegalArgumentException e) {
+//            response.sendRedirect("error.jsp");
+//        }
+//    }
+    private void addPassenger(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException {
+        String[] passengerNames = request.getParameterValues("passengerName");
+        String[] passengerAges = request.getParameterValues("passengerAge");
+        String[] passengerGenders = request.getParameterValues("passengerGender");
 
-        try {
-            HttpSession session = request.getSession();
-            numPassenger = Integer.parseInt(numPassenger_raw);
-            departureDate = Date.valueOf(departureDate_raw);
-            List<Ticket> listSearch = TicketDAO.searchTicket(fromCity, toCity, departureDate, ticketType, numPassenger);
-            session.setAttribute("searchList", listSearch);
-            session.setAttribute("numPass", numPassenger);
-            session.setAttribute("ticketType", ticketType);
-            listTickets(request, response);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            response.sendRedirect("error.jsp");
-        } catch (IllegalArgumentException e) {
-            response.sendRedirect("error.jsp");
+        HttpSession session = request.getSession();
+//        int accountID = (int) session.getAttribute("accountID");
+        int accountID = 6;
+
+        Random random = new Random();
+        String pnrSuffix = String.format("%03d", random.nextInt(1000));
+        String pnr = "PNR" + pnrSuffix;
+
+        String bookingStatus = "pending";
+        Date dateReservation = new Date(System.currentTimeMillis());
+
+        TicketDAO dao = new TicketDAO();
+        List<Passenger> passengers = new ArrayList<>();
+
+        for (int i = 0; i < passengerNames.length; i++) {
+            String passengerName = passengerNames[i];
+            int passengerAge = Integer.parseInt(passengerAges[i]);
+            String passengerGender = passengerGenders[i];
+
+            Ticket ticketDetails = new Ticket(pnr, dateReservation, null, null, null, bookingStatus, 1, accountID, (float) 0.0);
+            Passenger passenger = new Passenger(accountID, pnr, passengerName, passengerAge, passengerGender);
+//            dao.addTicketAndPassenger(ticketDetails, passenger);
+            passengers.add(passenger);
         }
+
+        session.setAttribute("passengers", passengers);
+        response.sendRedirect("displayPassengerInfo.jsp");
     }
 
     private void listTickets(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException {
@@ -214,4 +250,34 @@ processRequest(request, response);
         request.setAttribute("list", tickets);
         request.getRequestDispatcher("listTickets.jsp").forward(request, response);
     }
+
+    private void searchTicket(HttpServletRequest request, HttpServletResponse response) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void checkout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        TicketDAO dao = new TicketDAO();
+        List<Passenger> passengers = (List<Passenger>) request.getSession().getAttribute("passengers");
+        Flight flight = (Flight) request.getSession().getAttribute("flight");
+        String ticketType = (String) request.getSession().getAttribute("ticketType");
+        double tax = 0.075;
+        try {
+            if (flight != null && ticketType != null) {
+                double totalPrice = dao.calculateTotalTicketPrice(passengers.size(), flight, ticketType, tax);
+                double pricePer = dao.calculatePricePerPersion(flight, ticketType);
+
+                request.setAttribute("totalPassengers", passengers.size());
+                request.setAttribute("pricePer", pricePer);
+                request.setAttribute("totalPrice", totalPrice);
+
+                request.getRequestDispatcher("checkout.jsp").forward(request, response);
+            } else {
+                response.sendRedirect("error.jsp");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect("error.jsp");
+        }
+    }
+
 }

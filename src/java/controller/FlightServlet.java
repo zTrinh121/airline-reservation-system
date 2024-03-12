@@ -241,9 +241,10 @@ public class FlightServlet extends HttpServlet {
     
     private void bookFlight(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String flightID = request.getParameter("flightID");
+        System.out.println(flightID);
         HttpSession session = request.getSession();
         Flight f = flightDAO.getFlightById(flightID);
-        request.setAttribute("flight", f);
+        session.setAttribute("flight", f);
         request.getRequestDispatcher("addFlightPassenger.jsp").forward(request, response);
     }
     
