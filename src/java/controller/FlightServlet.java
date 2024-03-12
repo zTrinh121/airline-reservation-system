@@ -188,6 +188,7 @@ public class FlightServlet extends HttpServlet {
         Time departureTime, arrivalTime;
         int seatEconomy, seatBusiness;
         double priceEconomy, priceBusiness;
+        System.out.println("Departure Date:" + departureDate_raw);
  
         try {
 
@@ -195,6 +196,7 @@ public class FlightServlet extends HttpServlet {
             seatBusiness = Integer.parseInt(seatBusiness_raw);
 
             departureDate = Date.valueOf(departureDate_raw);
+            System.out.println("Departure Date:" + departureDate);
             arrivalDate = Date.valueOf(arrivalDate_raw);
 
             departureTime = new Time(timeFormat.parse(request.getParameter("departureTime")).getTime());
