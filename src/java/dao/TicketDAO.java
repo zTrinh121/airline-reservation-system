@@ -467,7 +467,6 @@ public class TicketDAO {
         ArrayList<Ticket> a = getAllTickets();
         System.out.println(a);
 
-//        addTicket("21", 27 - 03 - 2003, "dd", 7 - 03 - 2004, "Economic", "Confirmed", 4, 23, 150.000);
     }
 
 }
