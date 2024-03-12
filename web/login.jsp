@@ -38,7 +38,7 @@
         <div class="home_slider_container">
             <div class="home_slider_background" style="background-image:url(images/home_slider.jpg)"></div>
             <!--Login-->
-            <form class="login d-flex flex-column align-items-center justify-content-between ">
+            <form  action="Login" method="post" class="login d-flex flex-column align-items-center justify-content-between ">
                 <div class="form-group">
                     <div>Username</div>
                     <input type="text" name="username" >
@@ -50,14 +50,15 @@
                 </div>
                 <div class=" remember">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="gridCheck">
+                        <input class="form-check-input" name="remember_me" type="checkbox" id="gridCheck">
                         Remeber me
                     </div>
                     <div class="user_box_register user_box_link">
                         <a href="register.jsp" style="font-size: 12px;">Register</a>
                     </div>
                 </div>
-                <button type="submit" class="button search_button">Login</button>
+                <button type="submit"  name="login"  class="button search_button">Login</button>
+                 <input type="hidden" name="action" value="login">
             </form>
             <!--Login-->
         </div>

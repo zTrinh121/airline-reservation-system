@@ -38,11 +38,10 @@
         <div class="home_slider_container" style="height: 160%">
             <div class="home_slider_background" style="background-image:url(images/home_slider.jpg); "></div>
             <!--Login-->
-            <form class="login d-flex flex-column align-items-center justify-content-between ">
+            <form  action="register" method="post" class="login d-flex flex-column align-items-center justify-content-between ">
                 <div class="form-group">
-
                     <div>Full Name</div>
-                    <input type="text" name="username" >
+                    <input type="text" name="fullname" >
                 </div>
                 <div class="form-group">
                     <div>Username</div>
@@ -59,11 +58,11 @@
                 </div>
                 <div class="form-group ">
                     <div>Phone Number</div>
-                    <input type="email" name="phonenumber" >
+                    <input type="tel"  name="phoneNumber" >
                 </div>
                 <div class="form-group ">
                     <div>Addresss</div>
-                    <input type="email" name="address" >
+                    <input type="text"  name="address">
                 </div>
                 <div class=" remember">
                     <div class="user_box_register user_box_link">
