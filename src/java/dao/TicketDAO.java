@@ -38,6 +38,25 @@ public class TicketDAO {
     }
 
     // Add ticket
+//    public static void addTicket(String pNameRecord, Date dateReservation, String flightID, Date journeyDate, String ticketClass, String bookingStatus, Integer noPassengers, Integer accountID, Float payAmount) throws ClassNotFoundException {
+//        String sql = "INSERT INTO [dbo].[ticketDetails] ([pNameRecord], [dateReservation], [flightID], [journeyDate], [class], [bookingStatus], [noPassengers], [accountID], [payAmount]) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+//
+//        try (Connection con = ConnectDB.getInstance().openConnection(); PreparedStatement st = con.prepareStatement(sql)) {
+//            st.setString(1, pNameRecord);
+//            st.setDate(2, dateReservation != null ? new java.sql.Date(dateReservation.getTime()) : null);
+//            st.setString(3, flightID);
+//            st.setDate(4, journeyDate != null ? new java.sql.Date(journeyDate.getTime()) : null);
+//            st.setString(5, ticketClass);
+//            st.setString(6, bookingStatus);
+//            st.setObject(7, noPassengers);
+//            st.setObject(8, accountID);
+//            st.setObject(9, payAmount);
+//            st.executeUpdate();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
     public static void addTicket(String pNameRecord, Date dateReservation, String flightID, Date journeyDate, String ticketClass, String bookingStatus, int noPassengers, int accountID, float payAmount) throws ClassNotFoundException {
         String sql = "INSERT INTO [dbo].[ticketDetails]\n"
                 + "           ([pNameRecord]\n"
@@ -67,7 +86,6 @@ public class TicketDAO {
             e.printStackTrace();
         }
     }
-
     // Update ticket
     public static void updateTicket(String pNameRecord, String newFlightID, Date newJourneyDate, String newTicketClass, String newBookingStatus, int newNoPassengers, float newPayAmount, int newAccountID, Date newDateReservation) throws ClassNotFoundException {
         String sql = "UPDATE ticketDetails SET pNameRecord = ?, dateReservation = ?, flightID = ?, journeyDate = ?, class = ?, bookingStatus = ?, noPassengers = ?, accountID = ?, payAmount = ? WHERE pNameRecord = ?";
@@ -445,21 +463,21 @@ public class TicketDAO {
 //
 //        return ticketList;
 //    }
-    public double calculatePricePerPersion(Flight flight, String ticketType) {
-        double ticketPrice = 0.0;
+    public float calculatePricePerPersion(Flight flight, String ticketType) {
+        float ticketPrice = (float) 0.0;
         if ("Economy".equalsIgnoreCase(ticketType)) {
-            ticketPrice = flight.getPriceEconomy();
+            ticketPrice = (float) flight.getPriceEconomy();
         } else if ("Business".equalsIgnoreCase(ticketType)) {
-            ticketPrice = flight.getPriceBusiness();
+            ticketPrice = (float) flight.getPriceBusiness();
         }
         return ticketPrice;
     }
 
     public double calculateTotalTicketPrice(int numPassengers, Flight flight, String ticketType, double tax) {
-        double totalPrice = 0.0;
+        float totalPrice = (float) 0.0;
         double ticketPrice = calculatePricePerPersion(flight, ticketType);
-        totalPrice = numPassengers * ticketPrice;
-        return totalPrice + totalPrice*tax;
+        totalPrice = (float) (numPassengers * ticketPrice);
+        return totalPrice + totalPrice * tax;
     }
 
     public static void main(String[] args) throws ClassNotFoundException {

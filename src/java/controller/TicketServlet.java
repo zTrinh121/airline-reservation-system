@@ -215,7 +215,9 @@ public class TicketServlet extends HttpServlet {
         String[] passengerNames = request.getParameterValues("passengerName");
         String[] passengerAges = request.getParameterValues("passengerAge");
         String[] passengerGenders = request.getParameterValues("passengerGender");
-
+        Flight flight = (Flight) request.getSession().getAttribute("flight");
+        String ticketType = (String) request.getSession().getAttribute("ticketType");
+        float payAmount = TicketDAO.calculatePricePerPersion(flight, ticketType);
         HttpSession session = request.getSession();
 //        int accountID = (int) session.getAttribute("accountID");
         int accountID = 6;
@@ -225,8 +227,7 @@ public class TicketServlet extends HttpServlet {
         String pnr = "PNR" + pnrSuffix;
 
         String bookingStatus = "pending";
-        Date dateReservation = new Date(System.currentTimeMillis());
-
+        Date dateReservation = new java.sql.Date(System.currentTimeMillis());
         TicketDAO dao = new TicketDAO();
         List<Passenger> passengers = new ArrayList<>();
 
@@ -235,9 +236,9 @@ public class TicketServlet extends HttpServlet {
             int passengerAge = Integer.parseInt(passengerAges[i]);
             String passengerGender = passengerGenders[i];
 
-            Ticket ticketDetails = new Ticket(pnr, dateReservation, null, null, null, bookingStatus, 1, accountID, (float) 0.0);
+            Ticket ticketDetails = new Ticket(pnr, dateReservation, flight.getFlightID(), flight.getDepartureDate(), ticketType, bookingStatus, 1, accountID, payAmount);
             Passenger passenger = new Passenger(accountID, pnr, passengerName, passengerAge, passengerGender);
-//            dao.addTicketAndPassenger(ticketDetails, passenger);
+            dao.addTicket(ticketDetails);
             passengers.add(passenger);
         }
 
