@@ -17,7 +17,7 @@
             <div class="row">
                 <form action="register" method="post">
 
-                    <div class="col-sm-12">
+                    <div cla<ss="col-sm-12">
                         <div class="row">
                             <div class="col-xs-4">
                                 <label class="fullname">Full Name :</label>
