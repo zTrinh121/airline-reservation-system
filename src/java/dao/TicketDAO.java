@@ -238,56 +238,117 @@ public class TicketDAO {
         return null;
     }
 
-    // Search tickets based on specified criteria
-    public static List<Ticket> searchTicket(String fromCity, String toCity, Date departureDate, String ticketType, int numPassenger) throws ClassNotFoundException {
-        List<Ticket> tickets = new ArrayList<>();
-        StringBuilder sql = new StringBuilder("SELECT * FROM ticketDetails WHERE 1=1");
+    public static ArrayList<Ticket> searchTicket(String pNameRecord, Date dateReservation, String flightID, Date journeyDate,
+            String ticketClass, String bookingStatus, int noPassengers, int accountID, float payAmount) {
+        ArrayList<Ticket> ticketList = new ArrayList<>();
 
-        // Add conditions based on provided parameters
-        if (fromCity != null && !fromCity.isEmpty()) {
-            sql.append(" AND fromCity = ?");
-        }
-        if (toCity != null && !toCity.isEmpty()) {
-            sql.append(" AND toCity = ?");
-        }
-        if (departureDate != null) {
-            sql.append(" AND departureDate = ?");
-        }
-        if (ticketType != null && !ticketType.isEmpty()) {
-            sql.append(" AND ticketType = ?");
-        }
-        sql.append(" AND numPassenger = ?");
+        String sql = "SELECT * FROM ticketDetails WHERE "
+                + "(pNameRecord LIKE ? OR ? IS NULL) AND "
+                + "(dateReservation = ? OR ? IS NULL) AND "
+                + "(flightID LIKE ? OR ? IS NULL) AND "
+                + "(journeyDate = ? OR ? IS NULL) AND "
+                + "(ticketClass LIKE ? OR ? IS NULL) AND "
+                + "(bookingStatus LIKE ? OR ? IS NULL) AND "
+                + "(noPassengers = ? OR ? IS NULL) AND "
+                + "(accountID = ? OR ? IS NULL) AND "
+                + "(payAmount = ? OR ? IS NULL)";
 
-        try (Connection con = ConnectDB.getInstance().openConnection(); PreparedStatement st = con.prepareStatement(sql.toString())) {
-            int parameterIndex = 1;
+        try (Connection con = ConnectDB.getInstance().openConnection();
+                PreparedStatement st = con.prepareStatement(sql)) {
 
-            // Set values for conditions
-            if (fromCity != null && !fromCity.isEmpty()) {
-                st.setString(parameterIndex++, fromCity);
-            }
-            if (toCity != null && !toCity.isEmpty()) {
-                st.setString(parameterIndex++, toCity);
-            }
-            if (departureDate != null) {
-                st.setDate(parameterIndex++, new java.sql.Date(departureDate.getTime()));
-            }
-            if (ticketType != null && !ticketType.isEmpty()) {
-                st.setString(parameterIndex++, ticketType);
-            }
-            st.setInt(parameterIndex, numPassenger);
+            st.setString(1, "%" + pNameRecord + "%");
+            st.setObject(2, pNameRecord);
+            st.setDate(3, (java.sql.Date) dateReservation);
+            st.setObject(4, dateReservation);
+            st.setString(5, "%" + flightID + "%");
+            st.setObject(6, flightID);
+            st.setDate(7, (java.sql.Date) journeyDate);
+            st.setObject(8, journeyDate);
+            st.setString(9, "%" + ticketClass + "%");
+            st.setObject(10, ticketClass);
+            st.setString(11, "%" + bookingStatus + "%");
+            st.setObject(12, bookingStatus);
+            st.setInt(13, noPassengers);
+            st.setObject(14, noPassengers);
+            st.setInt(15, accountID);
+            st.setObject(16, accountID);
+            st.setFloat(17, payAmount);
+            st.setObject(18, payAmount);
 
-            try (ResultSet resultSet = st.executeQuery()) {
-                while (resultSet.next()) {
-                    Ticket ticket = mapResultSetToTicket(resultSet);
-                    tickets.add(ticket);
+            try (ResultSet rs = st.executeQuery()) {
+                while (rs.next()) {
+                    Ticket ticket = new Ticket();
+                    ticket.setpNameRecord(rs.getString("pNameRecord"));
+                    ticket.setDateReservation(rs.getDate("dateReservation"));
+                    ticket.setFlightID(rs.getString("flightID"));
+                    ticket.setJourneyDate(rs.getDate("journeyDate"));
+                    ticket.setTicketClass(rs.getString("ticketClass"));
+                    ticket.setBookingStatus(rs.getString("bookingStatus"));
+                    ticket.setNoPassengers(rs.getInt("noPassengers"));
+                    ticket.setAccountID(rs.getInt("accountID"));
+                    ticket.setPayAmount(rs.getFloat("payAmount"));
+                    ticketList.add(ticket);
                 }
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 
-        return tickets;
+        return ticketList;
     }
+//
+//    public static ArrayList<Ticket> searchTicket(String pNameRecord, Date dateReservation, String flightID, Date journeyDate,
+//            String ticketClass, String bookingStatus, int noPassengers, int accountID, float payAmount) {
+//        ArrayList<Ticket> ticketList = new ArrayList<>();
+//
+////        String sql = "SELECT * FROM ticketDetails WHERE pNameRecord = ? AND dateReservation = ? AND flightID = ? "
+////                + "AND journeyDate = ? AND ticketClass = ? AND bookingStatus = ? AND noPassengers = ? "
+////                + "AND accountID = ? AND payAmount = ?";
+//        String sql = "SELECT * FROM ticketDetails WHERE "
+//                + "(pNameRecord = ? OR ? IS NULL) AND "
+//                + "(dateReservation = ? OR ? IS NULL) AND "
+//                + "(flightID = ? OR ? IS NULL) AND "
+//                + "(journeyDate = ? OR ? IS NULL) AND "
+//                + "(ticketClass = ? OR ? IS NULL) AND "
+//                + "(bookingStatus = ? OR ? IS NULL) AND "
+//                + "(noPassengers = ? OR ? IS NULL) AND "
+//                + "(accountID = ? OR ? IS NULL) AND "
+//                + "(payAmount = ? OR ? IS NULL)";
+//
+//        try (Connection con = ConnectDB.getInstance().openConnection();
+//                PreparedStatement st = con.prepareStatement(sql)) {
+//
+//            st.setString(1, pNameRecord);
+//            st.setDate(2, (java.sql.Date) dateReservation);
+//            st.setString(3, flightID);
+//            st.setDate(4, (java.sql.Date) journeyDate);
+//            st.setString(5, ticketClass);
+//            st.setString(6, bookingStatus);
+//            st.setInt(7, noPassengers);
+//            st.setInt(8, accountID);
+//            st.setFloat(9, payAmount);
+//
+//            try (ResultSet rs = st.executeQuery()) {
+//                while (rs.next()) {
+//                    Ticket ticket = new Ticket();
+//                    ticket.setpNameRecord(rs.getString("pNameRecord"));
+//                    ticket.setDateReservation(rs.getDate("dateReservation"));
+//                    ticket.setFlightID(rs.getString("flightID"));
+//                    ticket.setJourneyDate(rs.getDate("journeyDate"));
+//                    ticket.setTicketClass(rs.getString("ticketClass"));
+//                    ticket.setBookingStatus(rs.getString("bookingStatus"));
+//                    ticket.setNoPassengers(rs.getInt("noPassengers"));
+//                    ticket.setAccountID(rs.getInt("accountID"));
+//                    ticket.setPayAmount(rs.getFloat("payAmount"));
+//                    ticketList.add(ticket);
+//                }
+//            }
+//        } catch (SQLException | ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return ticketList;
+//    }
 
     public static void main(String[] args) throws ClassNotFoundException {
         // Test the getAllTickets method

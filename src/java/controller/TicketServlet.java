@@ -21,6 +21,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @WebServlet(name = "TicketServlet", urlPatterns = {"/ticketController"})
 public class TicketServlet extends HttpServlet {
@@ -66,6 +67,9 @@ public class TicketServlet extends HttpServlet {
                 case "search":
                     searchTicket(request, response);
                     break;
+                case "addPassenger":
+                    addPassenger(request, response);
+                    break;
                 default:
                     System.err.println("Unexpected command: " + command);
                     response.sendRedirect("error.jsp");
@@ -80,7 +84,7 @@ public class TicketServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+processRequest(request, response);
     }
 
     @Override

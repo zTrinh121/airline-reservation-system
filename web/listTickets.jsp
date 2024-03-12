@@ -31,13 +31,7 @@
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
         <title>Search Ticket Page</title>
-        <script type="text/javascript">
-            function doDelete(pNameRecord) {
-                if (confirm("Are you sure to delete " + pNameRecord)) {
-                    window.location = "delete-flight?flightID=" + pNameRecord;
-                }
-            }
-        </script>
+
     </head>
 
     <body>
@@ -83,8 +77,8 @@
                         <td>${ticket.accountID}</td>
                         <td>
                             <%--<c:if test="${isAdmin}">--%>
-                            <a href="${deleteLink}" onclick="if (!(confirm('Sure?')))
-                                                return false" class="btn btn-primary">Delete</a>
+                            <a href="${deleteLink}" onclick="if (!(confirm('Are you sure to delete?')))
+                                        return false" class="btn btn-primary">Delete</a>
                             <a href="${loadLink}" class="btn btn-primary">Update</a>
                             <%--< /c:if>--%>
                         </td>

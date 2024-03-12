@@ -39,7 +39,7 @@
     <body>
         <h1>Add passenger information</h1>
         <c:set var="numPass" value="${sessionScope.numPass}"></c:set>
-            <form action="" method="">
+            <form action="TicketServlet" method="addPassenger">
             <c:forEach var="count" begin="1" end="${numPass}">
                 <p><strong>PASSENGER ${count}</strong></p>
                 <div class="form-row">
