@@ -29,6 +29,7 @@ public class FlightDAO {
             String sql = "select * from Flight";
             statement = con.prepareStatement(sql);
             rs = statement.executeQuery();
+            
             while (rs.next()) {
                 Flight b = new Flight(rs.getString(1), rs.getString(2),
                         rs.getString(3), rs.getDate(4),
@@ -36,7 +37,9 @@ public class FlightDAO {
                         rs.getInt(8), rs.getInt(9), rs.getDouble(10),
                         rs.getDouble(11));
                 list.add(b);
+                System.out.println("Ngay: "+rs.getDate(4));
             }
+            
             rs.close();
             con.close();
             statement.close();
@@ -153,6 +156,8 @@ public class FlightDAO {
                         rs.getDouble(11));
                 list.add(b);
             }
+            System.out.println(sql);
+            System.out.println("Depature date in sql"+departureDate);
             rs.close();
             con.close();
             statement.close();
@@ -189,52 +194,7 @@ public class FlightDAO {
         }
     }
 
-//    public void update(Flight b) {
-//        ConnectDB db = ConnectDB.getInstance();
-//        Connection con = null;
-//        PreparedStatement statement = null;
-//        String sql = "UPDATE [dbo].[Flight]\n"
-//                + "   SET [fromCity] = ?\n"
-//                + "      ,[toCity] = ?\n"
-//                + "      ,[departureDate] = ?\n"
-//                + "      ,[arrivalDate] = ?\n"
-//                + "      ,[departureTime] = ?\n"
-//                + "      ,[arrivalTime] = ?\n"
-//                + "      ,[seatEconomy] = ?\n"
-//                + "      ,[seatBusiness] = ?\n"
-//                + "      ,[priceEconomy] = ?\n"
-//                + "      ,[priceBusiness] = ?\n"
-//                + "      ,[jetID] = ?\n"
-//                + " WHERE flightID=?";
-//        try {
-//            con = db.openConnection();
-//            statement = con.prepareStatement(sql);
-//            statement.setString(1, b.getFromCity());
-//            statement.setString(2, b.getToCity());
-//            statement.setDate(3, new java.sql.Date(b.getDepartureDate().getTime()));
-//            statement.setDate(4, new java.sql.Date(b.getArrivalDate().getTime()));
-//            statement.setTime(5, new java.sql.Time(b.getDepartureTime().getTime()));
-//            statement.setTime(6, new java.sql.Time(b.getArrivalTime().getTime()));
-//            statement.setInt(7, b.getSeatEconomy());
-//            statement.setInt(8, b.getSeatBusiness());
-//            statement.setDouble(9, b.getPriceEconomy());
-//            statement.setDouble(10, b.getPriceBusiness());
-//            statement.setString(11, b.getJetID());
-//            statement.setString(12, b.getFlightID());
-//
-//            statement.executeUpdate();
-//        } catch (SQLException e) {
-//            System.out.println(e);
-//        } catch (ClassNotFoundException e) {
-//            System.out.println(e);
-//        } finally {
-//            try {
-//                con.close();
-//                statement.close();
-//            } catch (SQLException e) {
-//            }
-//        }
-//    }
+
     public void update(Flight b) {
         ConnectDB db = ConnectDB.getInstance();
         Connection con = null;

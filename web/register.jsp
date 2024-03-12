@@ -1,95 +1,85 @@
+<%-- 
+    Document   : home
+    Created on : Mar 6, 2024, 9:13:23 AM
+    Author     : HP
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <title>Registration Form</title>
-        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <link href="decorate/style2.css" rel="stylesheet">
-        <meta charset="UTF-8">
+        <title>Travelix</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="Travelix Project">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
+        <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+        <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+        <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
+        <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
+        <link rel="stylesheet" type="text/css" href="styles/responsive.css">    
+        <link rel="stylesheet" href="decorate/style.css"/>
     </head>
+
     <body>
-        <div class="container">
-
-            <header class="heading"> Registration Form</header><hr>
-
+        <header class="header">
             <div class="row">
-                <form action="register" method="post">
-
-                    <div cla<ss="col-sm-12">
-                        <div class="row">
-                            <div class="col-xs-4">
-                                <label class="fullname">Full Name :</label>
-                            </div>
-                            <div class="col-xs-8">
-                                <input type="text" name="fullname" id="fullname" placeholder="Enter your Full Name" class="form-control">
-                            </div>
+                <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start">
+                    <div class="logo_container">
+                        <div class="logo ">
+                            <a href="#"><img src="images/logo.png" alt="">Welcome to HomeFlight</a>                     
                         </div>
-                    </div>
-
-                    <div class="col-sm-12">
-                        <div class="row">
-                            <div class="col-xs-4">
-                                <label class="username">Username :</label>
-                            </div>
-                            <div class="col-xs-8">
-                                <input type="text" name="username" id="username" placeholder="Enter your Username" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-12">
-                        <div class="row">
-                            <div class="col-xs-4">
-                                <label class="pass">Password :</label>
-                            </div>
-                            <div class="col-xs-8">
-                                <input type="password" name="password" id="password" placeholder="Enter your Password" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-12">
-                        <div class="row">
-                            <div class="col-xs-4">
-                                <label class="mail">Email :</label>
-                            </div>
-                            <div class="col-xs-8">
-                                <input type="email" name="email" id="email" placeholder="Enter your email" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-12">
-                        <div class="row">
-                            <div class="col-xs-4">
-                                <label class="phone">Phone Number :</label>
-                            </div>
-                            <div class="col-xs-8">
-                                <input type="text" name="phoneNumber" id="phoneNumber" placeholder="Enter your Phone Number" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-12">
-                        <div class="row">
-                            <div class="col-xs-4">
-                                <label class="address">Address :</label>
-                            </div>
-                            <div class="col-xs-8">
-                                <input type="text" name="address" id="address" placeholder="Enter your Address" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <button type="submit" class="btn btn-warning">Submit</button>
-                    </div>
-
-                </form>
-
+                    </div>   
+                </div>
             </div>
-        </div>
-    </body>
-</html>
+        </header>
+        <div class="home_slider_container" style="height: 160%">
+            <div class="home_slider_background" style="background-image:url(images/home_slider.jpg); "></div>
+            <!--Login-->
+            <form class="login d-flex flex-column align-items-center justify-content-between ">
+                <div class="form-group">
 
+                    <div>Full Name</div>
+                    <input type="text" name="username" >
+                </div>
+                <div class="form-group">
+                    <div>Username</div>
+                    <input type="text" name="username" >
+                </div>
+                <div class="form-group ">
+                    <div>Password</div>
+                    <input type="password" name="password" >
+
+                </div>
+                <div class="form-group ">
+                    <div>Email</div>
+                    <input type="email" name="email" >
+                </div>
+                <div class="form-group ">
+                    <div>Phone Number</div>
+                    <input type="email" name="phonenumber" >
+                </div>
+                <div class="form-group ">
+                    <div>Addresss</div>
+                    <input type="email" name="address" >
+                </div>
+                <div class=" remember">
+                    <div class="user_box_register user_box_link">
+                        <a href="login.jsp" style="font-size: 12px;">Already have an account</a>
+                    </div>
+                </div>
+                <button type="submit" class="button search_button">Register</button>
+            </form>
+            <!--Login-->
+        </div>
+
+        <script src="js/jquery-3.2.1.min.js"></script>
+        <script src="styles/bootstrap4/popper.js"></script>
+        <script src="styles/bootstrap4/bootstrap.min.js"></script>
+        <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+        <script src="plugins/easing/easing.js"></script>
+        <script src="js/custom.js"></script>
+
+    </body>

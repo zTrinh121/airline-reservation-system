@@ -1,6 +1,5 @@
 
 body {
-    background-image: url(https://s3.envato.com/files/243754334/primag.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     width: 100%;
@@ -10,7 +9,7 @@ body {
 
 
 .container {
-    font-family: Roboto, sans-serif;
+    font-family: 'Open Sans', sans-serif;
     background-image: url(https://image.freepik.com/free-vector/dark-blue-blurred-background_1034-589.jpg);
     border: 1px solid grey;
     margin: 0 auto;
@@ -43,16 +42,20 @@ body {
 
 
 input[type="text"], input[type="email"], input[type="password"] {
-    margin-top: 10px;
     font-size: 16px; /* Tăng kích thước chữ */
     color: #333;
-    width: 90%; /* Đặt chiều rộng của ô input là 90% */
+    width: 100%; /* Đặt chiều rộng của ô input là 90% */
     padding: 8px; /* Tăng độ dày của ô input */
     border: 1px solid #ccc; /* Thêm viền cho ô input */
     border-radius: 5px; /* Bo tròn góc của ô input */
     box-sizing: border-box; /* Đảm bảo kích thước của ô input không bị thay đổi khi thêm padding và border */
+    border-radius: 30px;
 }
 
+input[type="submit"]{
+    border-radius: 30px;
+    font-size: 20px;
+}
 
 
 .btn.btn-warning {
@@ -71,31 +74,30 @@ input[type="text"], input[type="email"], input[type="password"] {
     transition: background-color 0.3s ease-in-out;
 }
 .text-info{
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 16px;
     color: #fff;
 }
 .register-link{
     color:#fff;
-    font-size: 18px;
+    font-size: 16px;
 }
 .btn-login {
     font-size: 30px;
     width: 50%; /* Đặt chiều rộng của nút là 50% */
-    
     margin-top: 20px;
     padding: 2px; /* Tăng kích thước của button */
-    background-color: #FF9966;
-    border: 1px solid white;
-    transition: background-color 0.3s ease-in-out;
+    background: linear-gradient(to right, #fa9e1b, #8d4fff);
+    transition: background 1.5s ease-in-out, transform 0.3s ease-in-out; /* Thay đổi thời gian transition cho background */
     display: block; /* Chuyển nút thành block để căn giữa */
     margin-left: auto; /* Căn giữa theo chiều ngang */
     margin-right: auto; /* Căn giữa theo chiều ngang */
+    border-width: 0px;
 }
 
 .btn-login:hover {
-    background: #CC6633;
+    background: linear-gradient(to right, #8d4fff, #fa9e1b);
 }
+
 .checkbox{
     width: 500px;
 }
@@ -118,3 +120,30 @@ input[type="text"], input[type="email"], input[type="password"] {
     margin: 20px auto; /* Căn giữa nút theo cả chiều ngang và chiều dọc */
 }
 
+.logo_container{
+    margin-left: 20px;
+}
+
+
+
+.form-group input{
+    border-radius: 30px;
+    width: 30vw;
+}
+
+.form-group div{
+    color: #fff;
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+.remember{
+    width: 25vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.login{
+    margin-top: 30vh;
+}
