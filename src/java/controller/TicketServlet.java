@@ -186,6 +186,19 @@ public class TicketServlet extends HttpServlet {
         }
     }
 
+    private void searchTicket(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException {
+        String pNameRecord = request.getParameter("pNameRecord");
+        try {
+            request.setAttribute("tickets", TicketDAO.searchTicket(pNameRecord));
+            request.setAttribute("pNameRecord", pNameRecord);
+
+            request.getRequestDispatcher("searchTicket.jsp").forward(request, response);
+
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            request.setAttribute("err", "Invalid Format");
+        }
+    }
 //    private void searchTicket(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException {
 //        String fromCity = request.getParameter("fromCity");
 //        String toCity = request.getParameter("toCity");
@@ -211,6 +224,7 @@ public class TicketServlet extends HttpServlet {
 //            response.sendRedirect("error.jsp");
 //        }
 //    }
+
     private void addPassenger(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException {
         String[] passengerNames = request.getParameterValues("passengerName");
         String[] passengerAges = request.getParameterValues("passengerAge");
@@ -250,10 +264,6 @@ public class TicketServlet extends HttpServlet {
         ArrayList<Ticket> tickets = TicketDAO.getAllTickets();
         request.setAttribute("list", tickets);
         request.getRequestDispatcher("listTickets.jsp").forward(request, response);
-    }
-
-    private void searchTicket(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     private void checkout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
