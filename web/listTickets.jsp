@@ -276,7 +276,10 @@
                                     <div class="column">
                                         <div class="row row-1">
                                             <p><span>Flight</span>${ticket.flightID}</p>
-                                            <p class="row--right"><span>Number of passengers</span>${ticket.noPassengers}</p>
+                                            <p class="row--right"><span>Ticket class</span>${ticket.ticketClass}</p>
+
+                                            <p class="row--right"><span>NO passengers</span>${ticket.noPassengers}</p>
+
                                         </div>
                                         <div class="row row-2">
                                             <p class="row--center"><span>Date Reservation</span>${ticket.dateReservation}</p>

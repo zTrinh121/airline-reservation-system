@@ -104,6 +104,7 @@ public class TicketDAO {
 
             deletePassengerStmt.setString(1, pNameRecord);
             int rowsDeletedPassenger = deletePassengerStmt.executeUpdate();
+
             if (rowsDeletedPassenger > 0) {
                 deleteTicketStmt.setString(1, pNameRecord);
                 int rowsDeletedTicket = deleteTicketStmt.executeUpdate();
@@ -116,8 +117,16 @@ public class TicketDAO {
                     System.out.println("Error deleting ticket details for NameRecord: " + pNameRecord);
                 }
             } else {
-                con.rollback();
-                System.out.println("No ticket found with NameRecord: " + pNameRecord);
+                deleteTicketStmt.setString(1, pNameRecord);
+                int rowsDeletedTicket = deleteTicketStmt.executeUpdate();
+
+                if (rowsDeletedTicket > 0) {
+                    con.commit();
+                    System.out.println("Delete ticket successful!");
+                } else {
+                    con.rollback();
+                    System.out.println("No ticket found with NameRecord: " + pNameRecord);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -329,7 +338,7 @@ public class TicketDAO {
     public static void main(String[] args) throws ClassNotFoundException {
         ArrayList<Ticket> a = getAllTickets();
         System.out.println(a);
-        deleteTicket("PNR001");
+        deleteTicket("sa");
         ArrayList<Ticket> b = getAllTickets();
         System.out.println(b);
 

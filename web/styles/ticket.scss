@@ -11,8 +11,9 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr); 
     gap: 20px; 
-    background: var(--container);
+    /*background: var(--container);*/
     padding-bottom: 40px;
+    padding-top: 20px;
 }
 body,
 p,
