@@ -267,7 +267,7 @@
                                         <img src="images/trash-solid.svg" alt="delete" height="20px" style="left: 90%; position: absolute; top: 10px;">
                                     </a>
                                     <a href="${loadLink}" >
-                                        <img src="images/pen-to-square-sharp-solid.svg" alt="delete" height="20px" style="left: 76%; position: absolute; top: 10px;">
+                                        <img src="images/pen-to-square-sharp-solid.svg" alt="load" height="20px" style="left: 76%; position: absolute; top: 10px;">
                                     </a>
 
                                 </div>

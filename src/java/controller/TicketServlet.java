@@ -154,7 +154,10 @@ public class TicketServlet extends HttpServlet {
 
         try {
             Ticket ticket = TicketDAO.getTicketByPNameRecord(pNameRecord);
+            List list = TicketDAO.getAllTickets();
             request.setAttribute("ticket", ticket);
+            request.setAttribute("list", list);
+
             request.getRequestDispatcher("updateTicket.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
