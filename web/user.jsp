@@ -43,6 +43,9 @@
 
                                     </div>		
                                 </div>
+
+                               
+
                                 <div class="search_panel active" style="margin-top: 10px;">
                                     <form action="flightController" method="get" id="search_form_1" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
                                         <input type="hidden" name="command" value="search" />
@@ -82,7 +85,8 @@
 
                                         <button class="button search_button">search<span></span><span></span><span></span></button>
                                     </form>
-                                </div>
+
+                                 
                             </div>
                         </div>
                     </div>		

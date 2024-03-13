@@ -38,11 +38,6 @@ public class FlightDAO {
                         rs.getInt(8), rs.getInt(9), rs.getDouble(10),
                         rs.getDouble(11));
                 list.add(b);
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                String formattedDepartureDate = sdf.format(b.getDepartureDate());
-
-                System.out.println("Departure day: " + formattedDepartureDate);
-                System.out.println("Departure day " + rs.getDate(4));
             }
 
             rs.close();

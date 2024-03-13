@@ -120,14 +120,18 @@
                     <div class="home_title">Search Result</div>
                 </div>
             </div>
+            <c:if test="${ empty searchList}">
+                <h3 class="text-center" style="color: black; margin-top: 50px;"> No available flights    </h3>
+                </c:if>
 
             <!-- Offers -->
 
             <div class="offers" style="padding-top: 0 !important;">
 
                 <!-- Offers -->
-
+                
                 <div class="container">
+                    
                     <div class="row">
                         <div class="col-lg-1 temp_col"></div>
 
@@ -137,7 +141,7 @@
                             <div class="offers_grid">
 
                                 <!-- Offers Item -->
-
+                                
                                 <c:if test="${not empty searchList}">
                                     <c:forEach var="f" items="${searchList}">
                                         <form action="flightController" method="get" class="offers_item rating_4">

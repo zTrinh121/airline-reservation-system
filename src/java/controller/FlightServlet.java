@@ -147,7 +147,6 @@ public class FlightServlet extends HttpServlet {
             request.setAttribute("err", validate(flightID, fromCity, toCity));
             request.getRequestDispatcher("addFlight.jsp").forward(request, response);
         }
-        System.out.println("Sai 2");
 
         try {
             seatEconomy = Integer.parseInt(seatEconomy_raw);
@@ -161,7 +160,6 @@ public class FlightServlet extends HttpServlet {
 
             priceEconomy = Double.parseDouble(priceEconomy_raw);
             priceBusiness = Double.parseDouble(priceBusiness_raw);
-            System.out.println("sai 3");
             Flight f = new Flight(flightID, fromCity, toCity, departureDate, arrivalDate, departureTime, arrivalTime, seatEconomy, seatBusiness, priceEconomy, priceBusiness);
             flightDAO.addFlight(f);
             System.out.println(f);

@@ -112,6 +112,48 @@ public class AccountDao {
     }
     return false;
 }
+    public int getAccountIdByUsername(String username) {
+    ConnectDB db = ConnectDB.getInstance();
+    Connection connection = null;
+    PreparedStatement pre = null;
+    ResultSet rs = null;
+    int accountId = -1; 
+    try {
+        connection = db.openConnection();
+        String sql = "SELECT accountId FROM Account WHERE username =?";
+        pre = connection.prepareStatement(sql);
+        pre.setString(1, username);
+        rs = pre.executeQuery();
+
+        if (rs.next()) {
+            accountId = rs.getInt("accountId");
+        }
+    } catch (SQLException | ClassNotFoundException e) {
+        e.printStackTrace();
+    } finally {
+                try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pre != null) {
+                pre.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    return accountId;
+}
 
 
+public String getUserRole(String username, String password) {
+        if (isAdmin(username, password)) {
+            return "admin";
+        } else {
+            return "user";
+        }
+    }
 }
