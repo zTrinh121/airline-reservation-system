@@ -92,25 +92,39 @@ public class TicketDAO {
         }
     }
 
-    // Delete ticket
     public static void deleteTicket(String pNameRecord) throws ClassNotFoundException {
-        String sql = "DELETE FROM ticketDetails WHERE pNameRecord = ?";
+        String deletePassengerSql = "DELETE FROM passengers WHERE pNameRecord = ?";
+        String deleteTicketSql = "DELETE FROM ticketDetails WHERE pNameRecord = ?";
 
-        try (Connection con = ConnectDB.getInstance().openConnection(); PreparedStatement st = con.prepareStatement(sql)) {
-            st.setString(1, pNameRecord);
-            int rowsDeleted = st.executeUpdate();
+        try (Connection con = ConnectDB.getInstance().openConnection();
+                PreparedStatement deletePassengerStmt = con.prepareStatement(deletePassengerSql);
+                PreparedStatement deleteTicketStmt = con.prepareStatement(deleteTicketSql)) {
 
-            if (rowsDeleted > 0) {
-                System.out.println("Delete ticket successful!");
+            con.setAutoCommit(false);
+
+            deletePassengerStmt.setString(1, pNameRecord);
+            int rowsDeletedPassenger = deletePassengerStmt.executeUpdate();
+            if (rowsDeletedPassenger > 0) {
+                deleteTicketStmt.setString(1, pNameRecord);
+                int rowsDeletedTicket = deleteTicketStmt.executeUpdate();
+
+                if (rowsDeletedTicket > 0) {
+                    con.commit();
+                    System.out.println("Delete ticket successful!");
+                } else {
+                    con.rollback();
+                    System.out.println("Error deleting ticket details for NameRecord: " + pNameRecord);
+                }
             } else {
-                System.out.println("No find ticket with NameRecord is " + pNameRecord);
+                con.rollback();
+                System.out.println("No ticket found with NameRecord: " + pNameRecord);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    // Close resources
+// Close resources
     private static void closeResources(ResultSet rs, PreparedStatement statement, Connection connection) {
         try {
             if (rs != null) {
@@ -315,6 +329,9 @@ public class TicketDAO {
     public static void main(String[] args) throws ClassNotFoundException {
         ArrayList<Ticket> a = getAllTickets();
         System.out.println(a);
+        deleteTicket("PNR001");
+        ArrayList<Ticket> b = getAllTickets();
+        System.out.println(b);
 
     }
 
