@@ -195,10 +195,10 @@ public class TicketServlet extends HttpServlet {
     private void searchTicket(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException {
         String pNameRecord = request.getParameter("pNameRecord");
         try {
-            request.setAttribute("tickets", TicketDAO.searchTicket(pNameRecord));
+            request.setAttribute("list", TicketDAO.searchTicket(pNameRecord));
             request.setAttribute("pNameRecord", pNameRecord);
 
-            request.getRequestDispatcher("searchTicket.jsp").forward(request, response);
+            request.getRequestDispatcher("listTickets.jsp").forward(request, response);
 
         } catch (NumberFormatException e) {
             e.printStackTrace();
