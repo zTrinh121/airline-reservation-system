@@ -77,7 +77,7 @@
                                     
                                         <li class="main_nav_item"><a href="offers.jsp">offers</a></li>
 
-                                        <li class="main_nav_item"><a href="contact.html">contact</a></li>
+                                        <li class="main_nav_item"><a href="contact.jsp">contact</a></li>
                                     </ul>
                                 </div>
                                 <div class="content_search ml-lg-0 ml-auto">
@@ -151,7 +151,7 @@
                                 <div class="home_slider_content_inner" data-animation-in="flipInX" data-animation-out="animate-out fadeOut">
                                     <h1>discover</h1>
                                     <h1>the world</h1>
-                                    <div class="button home_slider_button"><div class="button_bcg"></div><a href="#">explore now<span></span><span></span><span></span></a></div>
+                                    
                                 </div>
                             </div>
                         </div>
