@@ -59,7 +59,7 @@
                             </div>
                             <div class="main_nav_container ml-auto">
                                 <ul class="main_nav_list">
-                                    <li class="main_nav_item"><a href="home.jsp">home</a></li>
+                                    <li class="main_nav_item"><a href="user.jsp">home</a></li>
 
                                     <li class="main_nav_item"><a href="offers.jsp">ticket</a></li>
 

@@ -1,71 +1,96 @@
-<%-- 
-    Document   : addFlightPassenger
-    Created on : Mar 7, 2024, 7:55:19 AM
-    Author     : Trinh
---%>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-        <!-- Favicon -->
-        <link href="img/favicon.ico" rel="icon">
-
-        <!-- Google Web Fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap" rel="stylesheet">
-
-        <!-- Icon Font Stylesheet -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
-        <!-- Libraries Stylesheet -->
-        <link href="lib/animate/animate.min.css" rel="stylesheet">
-        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-
-        <!-- Customized Bootstrap Stylesheet -->
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-        <!-- Template Stylesheet -->
-        <link href="css/style.css" rel="stylesheet">
+        <title>Add Passenger Info</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="Travelix Project">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
+        <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+        <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+        <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
+        <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
+        <link rel="stylesheet" type="text/css" href="styles/responsive.css">
     </head>
     <body>
-        <h1>Add passenger information</h1>
-        <c:set var="numPass" value="${sessionScope.numPass}"></c:set>
-            <form action="" method="">
-            <c:forEach var="count" begin="1" end="${numPass}">
-                <p><strong>PASSENGER ${count}</strong></p>
-                <div class="form-row">
-                    <div class="col-md-6 mb-3">
-                        <label for="validationTooltip03">Passenger's Name</label>
-                        <input type="text" class="form-control" id="validationTooltip03" name="passengerName" required>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label for="validationTooltip04">Passenger's Age</label>
-                        <input type="number" class="form-control" id="validationTooltip04" name="passengerAge" required>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label for="validationTooltip05">Passenger's Gender</label>
-                        <select name="passengerGender">
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
+        <!-- Header -->
+        <div class="super_container">
+            <jsp:include page="header.jsp" />
 
+            
+
+            
+            <c:set var="flightController" value="${requestScope.flight}" />
+            <form action="flightController" method="get">
+                <input type="hidden" value="update" name="command" />
+                <div class="modal-body">					
+                    <div class="form-group">
+                        <label>Flight ID</label>
+                        <input type="text" class="form-control" name="flightID" value="${flight.flightID}" readonly="">
+                    </div>
+                    <div class="form-group">
+                        <label>From City</label>
+                        <select id="fromCity" class="form-control" name="fromCity" style="height: 3.5rem;">
+                            <c:forEach var="f" items="${flightList.getAll()}">
+                                <option value="${f.fromCity}" ${f.fromCity eq flight.fromCity ? 'selected' : ''}>${f.fromCity}</option>
+                            </c:forEach>
                         </select>
-
+                    </div>
+                    <div class="form-group">
+                        <label>To city</label>
+                        <select id="toCity" class="form-control" name="toCity" style="height: 3.5rem;">
+                            <c:forEach var="f" items="${flightList.getAll()}">
+                                <option value="${f.toCity}" ${f.toCity eq flight.toCity ? 'selected' : ''}>${f.toCity}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Departure Date</label>
+                        <input type="date" class="form-control" name="departureDate" value="${flight.departureDate}">
+                    </div>
+                    <div class="form-group">
+                        <label>Arrival Date</label>
+                        <input type="date" class="form-control" name="arrivalDate" value="${flight.arrivalDate}">
+                    </div>
+                    <div class="form-group">
+                        <label>departure Time</label>
+                        <input type="time" class="form-control" name="departureTime" value="${flight.departureTime}">
+                    </div>
+                    <div class="form-group">
+                        <label>Arrival Time</label>
+                        <input type="time" class="form-control" name="arrivalTime" value="${flight.arrivalTime}">
+                    </div>
+                    <div class="form-group">
+                        <label>Seat Economy</label>
+                        <input type="number" class="form-control" name="seatEconomy" value="${flight.seatEconomy}">
+                    </div>
+                    <div class="form-group">
+                        <label>Seat Business</label>
+                        <input type="number" class="form-control" name="seatBusiness" value="${flight.seatBusiness}">
+                    </div>
+                    <div class="form-group">
+                        <label>Price Economy</label>
+                        <input type="text" class="form-control" name="priceEconomy" value="${flight.priceEconomy}">
+                    </div>
+                    <div class="form-group">
+                        <label>Price Business</label>
+                        <input type="text" class="form-control" name="priceBusiness" value="${flight.priceBusiness}">
                     </div>
                 </div>
-                <br><hr>
-            </c:forEach>
-
-            <button  type="submit" class="btn btn-primary">Submit Ticket Details</button>
-        </form>
-
+                <div class="modal-footer">
+                    <a href="flightController" class="btn btn-default" >Back to List</a>
+                    <input type="submit" class="btn btn-info" value="Save" style="background-color: #52452b">
+                </div>
+            </form>
+        </div>
     </body>
 </html>
+
+

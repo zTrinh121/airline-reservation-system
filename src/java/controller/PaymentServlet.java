@@ -4,6 +4,10 @@
  */
 package controller;
 
+import com.paypal.api.payments.PayerInfo;
+import com.paypal.api.payments.Payment;
+import com.paypal.api.payments.ShippingAddress;
+import com.paypal.api.payments.Transaction;
 import com.paypal.base.rest.PayPalRESTException;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -62,7 +66,11 @@ public class PaymentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            ReviewPaymentServlet(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(PaymentServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -76,16 +84,35 @@ public class PaymentServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String command = request.getParameter("checkout");
+        String command = request.getParameter("command");
         if (command == null) {
-            request.getRequestDispatcher("error.jsp").forward(request, response);
-        }
-        switch (command) {
-            case "checkout":
-
+            response.sendRedirect("error.jsp");
+        } else {
+            switch (command) {
+                case "authorize": {
+                    try {
+                        AuthorizePaymentServlet(request, response);
+                    } catch (Exception ex) {
+                        Logger.getLogger(PaymentServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
                 break;
-            default:
-                throw new AssertionError();
+                case "execute": {
+                    try {
+                        ExecutePaymentServlet(request, response);
+                    } catch (Exception ex) {
+                        Logger.getLogger(PaymentServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                case "review":
+                    try {
+                        ReviewPaymentServlet(request, response);
+                } catch (Exception e) {
+                }
+                break;
+                default:
+                    throw new AssertionError();
+            }
         }
     }
 
@@ -99,13 +126,12 @@ public class PaymentServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    public void authorizePayment(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    private void AuthorizePaymentServlet(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String total = request.getParameter("total");
         java.util.Date today = new java.util.Date();
         java.sql.Date sqlToday = new java.sql.Date(today.getTime());
         double sum = Double.parseDouble(total);
         PaymentDetails paymentDetails = new PaymentDetails("PAY001", "PNR001", sqlToday, sum, "paypal");
-        System.out.println("ahiahi");
         System.out.println(paymentDetails);
         try {
             PaymentServices paymentServices = new PaymentServices();
@@ -114,8 +140,54 @@ public class PaymentServlet extends HttpServlet {
         } catch (PayPalRESTException ex) {
             request.setAttribute("error", "Invalid Payment Details");
             request.getRequestDispatcher("error.jsp").forward(request, response);
-        } catch (IOException ex) {
-            Logger.getLogger(PaymentServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void ExecutePaymentServlet(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String paymentId = request.getParameter("paymentId");
+        String payerId = request.getParameter("PayerID");
+        System.out.println("Toi execute payment roi");
+
+        try {
+            PaymentServices paymentServices = new PaymentServices();
+            Payment payment = paymentServices.executePayment(paymentId, payerId);
+
+            PayerInfo payerInfo = payment.getPayer().getPayerInfo();
+            Transaction transaction = payment.getTransactions().get(0);
+
+            request.setAttribute("payer", payerInfo);
+            request.setAttribute("transaction", transaction);
+
+            request.getRequestDispatcher("receipt.jsp").forward(request, response);
+
+        } catch (PayPalRESTException ex) {
+            request.setAttribute("error", "Could not execute payment");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+        }
+    }
+
+    private void ReviewPaymentServlet(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String paymentId = request.getParameter("paymentId");
+        String payerId = request.getParameter("PayerID");
+        System.out.println("Toi review payment roi");
+
+        try {
+            PaymentServices paymentservices = new PaymentServices();
+            Payment payment = paymentservices.getPaymentDetails(paymentId);
+
+            PayerInfo payerInfo = payment.getPayer().getPayerInfo();
+            Transaction transaction = payment.getTransactions().get(0);
+            ShippingAddress shippingAddress = transaction.getItemList().getShippingAddress();
+
+            request.setAttribute("payer", payerInfo);
+            request.setAttribute("transaction", transaction);
+            request.setAttribute("shippingAddress", shippingAddress);
+
+            String url = "review.jsp?paymentId=" + paymentId + "&PayerID=" + payerId;
+            request.getRequestDispatcher(url).forward(request, response);
+        } catch (PayPalRESTException ex) {
+            request.setAttribute("error", "Could not get payment details");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         }
     }
 
