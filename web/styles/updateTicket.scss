@@ -1,0 +1,28 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/*
+    Created on : Mar 13, 2024, 3:35:08 PM
+    Author     : ThanhThuy
+*/
+.container_ticket{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px
+}
+.container_ticket .ticket{
+    position: relative;
+    top: 0%;
+    left: 0%;
+    transform: none;
+    width: 50%;
+}
+.airline .top h1{
+    font-size: 24px;
+}
+.form-control{
+    color: black;
+}

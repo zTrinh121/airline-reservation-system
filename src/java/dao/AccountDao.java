@@ -15,30 +15,24 @@ import java.sql.SQLException;
  * @author HP
  */
 public class AccountDao {
-    
-
-    
-   
 
     public boolean checkAccountExist(String username, String password) {
         ConnectDB db = ConnectDB.getInstance();
-        Connection connection= null;
-         
-           PreparedStatement pre = null;
-        ResultSet rs = null;
-        
-        
-        
+        Connection connection = null;
 
-        String sql = "SELECT * FROM Account WHERE userName = ? AND password = ?";
+        PreparedStatement pre = null;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM Account WHERE username = ? AND password = ?";
         try {
-            connection=db.openConnection();
+            connection = db.openConnection();
+            if(connection==null){
+                System.out.println("Null ngay day");
+            }
             pre = connection.prepareStatement(sql);
-            
-          
+
             pre.setString(1, username);
             pre.setString(2, password);
-           rs = pre.executeQuery();
+            rs = pre.executeQuery();
             if (rs.next()) {
                 return true;
             } else {
@@ -46,17 +40,16 @@ public class AccountDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }catch(ClassNotFoundException e){
-            
-            
+        } catch (ClassNotFoundException e) {
+
         }
         return false;
     }
 
     public boolean isAdmin(String adminId, String password) {
-         ConnectDB db = ConnectDB.getInstance();
-        Connection connection= null;
-        
+        ConnectDB db = ConnectDB.getInstance();
+        Connection connection = null;
+
 //        if (connection == null) {
 //            return false;
 //        }
@@ -64,7 +57,7 @@ public class AccountDao {
 
         String sql = "SELECT * FROM [Admin] WHERE adminId = ? AND password = ?";
         try {
-             connection=db.openConnection();
+            connection = db.openConnection();
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setString(1, adminId);
             pre.setString(2, password);
@@ -73,83 +66,84 @@ public class AccountDao {
 
         } catch (SQLException e) {
             e.printStackTrace();
-        }catch(ClassNotFoundException e){
-            
+        } catch (ClassNotFoundException e) {
+
         }
         return false;
     }
+
     public boolean addUser(String fullname, String username, String password, String email, String phoneNumber, String address) {
-    ConnectDB db = ConnectDB.getInstance();
-    Connection connection = null;
-    PreparedStatement pre = null;
+        ConnectDB db = ConnectDB.getInstance();
+        Connection connection = null;
+        PreparedStatement pre = null;
 
-    try {
-        connection = db.openConnection();
-        String sql = "INSERT INTO Account (fullName, username, password, email, phoneNumber, address) VALUES (?, ?, ?, ?, ?, ?)";
-        pre = connection.prepareStatement(sql);
-        pre.setString(1, fullname);
-        pre.setString(2, username);
-        pre.setString(3, password);
-        pre.setString(4, email);
-        pre.setString(5, phoneNumber);
-        pre.setString(6, address);
-
-        int rowsAffected = pre.executeUpdate();
-        return rowsAffected > 0;
-    } catch (Exception e) {
-        e.printStackTrace();
-    } finally {
         try {
-            if (pre != null) {
-                pre.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
-        } catch (SQLException e) {
+            connection = db.openConnection();
+            String sql = "INSERT INTO Account (fullName, username, password, email, phoneNumber, address) VALUES (?, ?, ?, ?, ?, ?)";
+            pre = connection.prepareStatement(sql);
+            pre.setString(1, fullname);
+            pre.setString(2, username);
+            pre.setString(3, password);
+            pre.setString(4, email);
+            pre.setString(5, phoneNumber);
+            pre.setString(6, address);
+
+            int rowsAffected = pre.executeUpdate();
+            return rowsAffected > 0;
+        } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (pre != null) {
+                    pre.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+        return false;
     }
-    return false;
-}
+
     public int getAccountIdByUsername(String username) {
-    ConnectDB db = ConnectDB.getInstance();
-    Connection connection = null;
-    PreparedStatement pre = null;
-    ResultSet rs = null;
-    int accountId = -1; 
-    try {
-        connection = db.openConnection();
-        String sql = "SELECT accountId FROM Account WHERE username =?";
-        pre = connection.prepareStatement(sql);
-        pre.setString(1, username);
-        rs = pre.executeQuery();
+        ConnectDB db = ConnectDB.getInstance();
+        Connection connection = null;
+        PreparedStatement pre = null;
+        ResultSet rs = null;
+        int accountId = -1;
+        try {
+            connection = db.openConnection();
+            String sql = "SELECT accountId FROM Account WHERE username =?";
+            pre = connection.prepareStatement(sql);
+            pre.setString(1, username);
+            rs = pre.executeQuery();
 
-        if (rs.next()) {
-            accountId = rs.getInt("accountId");
-        }
-    } catch (SQLException | ClassNotFoundException e) {
-        e.printStackTrace();
-    } finally {
-                try {
-            if (rs != null) {
-                rs.close();
+            if (rs.next()) {
+                accountId = rs.getInt("accountId");
             }
-            if (pre != null) {
-                pre.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pre != null) {
+                    pre.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+        return accountId;
     }
-    return accountId;
-}
 
-
-public String getUserRole(String username, String password) {
+    public String getUserRole(String username, String password) {
         if (isAdmin(username, password)) {
             return "admin";
         } else {

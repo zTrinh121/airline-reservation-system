@@ -1,17 +1,8 @@
-<%-- 
-    Document   : addTicket
-    Created on : Mar 9, 2024, 1:11:53 PM
-    Author     : ThanhThuy
---%>
-
-<%@page import="java.time.LocalDate"%>
-<%@page import="dao.TicketDAO"%>
-<%@page import="model.Ticket"%>
-<%@page import="java.sql.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <title>Search Ticket</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="Travelix Project">
@@ -22,14 +13,17 @@
         <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
         <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
         <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
-        <link rel="stylesheet" type="text/css" href="styles/addTicket.scss">
-        <link href="https://fonts.googleapis.com/css?family=Cabin|Indie+Flower|Inknut+Antiqua|Lora|Ravi+Prakash" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"  />
+        <link rel="stylesheet" type="text/css" href="styles/responsive.css">
+        <link rel="stylesheet" type="text/css" href="styles/searchTicket.scss">
 
     </head>
+
     <body>
+
         <div class="super_container">
+
             <!-- Header -->
+
             <header class="header">
 
                 <!-- Top Bar -->
@@ -50,8 +44,8 @@
                                     </ul>
                                 </div>
                                 <div class="user_box ml-auto">
-                                    <div  ><a  style="font-size: 20px;color: #CC00FF;font-weight: bold" >HI ADMIN!</a></div>
-
+                                    <div class="user_box_login user_box_link"><a href="login.jsp">login</a></div>
+                                    <div class="user_box_register user_box_link"><a href="register.jsp">register</a></div>
                                 </div>
                             </div>
                         </div>
@@ -69,11 +63,11 @@
                                 </div>
                                 <div class="main_nav_container ml-auto">
                                     <ul class="main_nav_list">
-                                        <li class="main_nav_item"><a href="admin.jsp">home</a></li>
-                                        <li class="main_nav_item"><a href="flight.jsp">Flight</a></li>
-                                        <li class="main_nav_item"><a href="customer.jsp">Customer</a></li>
+                                        <li class="main_nav_item"><a href="home.jsp">home</a></li>
 
-                                        <li class="main_nav_item"><a href="ticket.jsp">Ticket</a></li>
+                                        <li class="main_nav_item"><a href="offers.jsp">offers</a></li>
+
+                                        <li class="main_nav_item"><a href="contact.jsp">contact</a></li>
                                     </ul>
                                 </div>
                                 <div class="content_search ml-lg-0 ml-auto">
@@ -160,7 +154,7 @@
                                 <div class="home_slider_content_inner" data-animation-in="flipInX" data-animation-out="animate-out fadeOut">
                                     <h1>discover</h1>
                                     <h1>the world</h1>
-
+                                    <div class="button home_slider_button"><div class="button_bcg"></div><a href="#">explore now<span></span><span></span><span></span></a></div>
                                 </div>
                             </div>
                         </div>
@@ -230,91 +224,89 @@
 
             </div>
 
-            <form action="ticketController" method="get">
-                <input type="hidden" value="add" name="command" />
+            <!-- Search -->
 
-                <div class="container">
+            <div class="search">
 
-                    <div class="item">
-                        <div class="item-right">
-                            <h1 class="day">Add ticket </h1>
-                            <!--<p class="day">Feb</p>-->
-                            <div class="form-group">
-                                <div class="icon">
-                                    <i class="fa fa-table"></i>
-                                    <label for="dateReservation">Date Reservation</label>
-                                    <input type="date" class="form-control" name="dateReservation" value="${param.dateReservation}" required="">
+
+                <!-- Search Contents -->
+
+                <div class="container fill_height">
+                    <div class="row fill_height">
+                        <div class="col fill_height">
+
+                            <!-- Search Tabs -->
+
+                            <!-- Search Tabs -->
+                            <div class="search_tabs_container">
+                                <div class="search_tabs d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
+                                    <div class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start">
+                                        <img src="images/departure.png" alt="">Trips
+                                    </div>
+                                    <div class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start active">
+                                        <div style="width: 50px; height: 50px; overflow: hidden;">
+                                            <img src="images/ticket3.png" style="max-width: 100%; max-height: 100%; display: block;">
+                                        </div>
+                                        <span style="margin-left: 10px;">Tickets Booked</span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="icon">
-                                    <i class="fa fa-table"></i>
-                                    <label for="journeyDate">Journey Date</label>
-                                    <input type="date" class="form-control" name="journeyDate" value="${param.journeyDate}"required="">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="ticketClass">Ticket Class</label>
-                                <select class="form-control" name="ticketClass">
-                                    <option value="Economy" ${param.ticketClass == 'Economy' ? 'selected' : ''}>Economy</option>
-                                    <option value="Business" ${param.ticketClass == 'Business' ? 'selected' : ''}>Business</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="bookingStatus">Booking Status</label>
-                                <select class="form-control" name="bookingStatus">
-                                    <option value="Confirmed" ${param.bookingStatus == 'Confirmed' ? 'selected' : ''}>Confirmed</option>
-                                    <option value="Pending" ${param.bookingStatus == 'Pending' ? 'selected' : ''}>Pending</option>
-                                </select>
-                            </div>
-                            <span class="up-border"></span>
-                            <span class="down-border"></span>
-                        </div> <!-- end item-right -->
+                            <!-- Search Panel -->
 
-                        <div class="item-left">
-                            <p class="event"><div class="form-group">
-                                <label for="pNameRecord">Passenger Name Record</label>
-                                <input type="text" class="form-control" name="pNameRecord" placeholder="Enter Passenger Name Record" value="${param.pNameRecord}"required="">
-                            </div>
-                            </p>
-
-                            <div class="sce">
+                            <div class="search_panel">
+                                <form action="search_trips" id="search_form_trips" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
+                                    <div class="search_item">
+                                        <div>From City</div>
+                                        <input type="text" class="destination search_input" required="required">
+                                    </div>
+                                    <div class="search_item">
+                                        <div>To City</div>
+                                        <input type="text" class="check_in search_input" placeholder="">
+                                    </div>
+                                    <div class="search_item">
+                                        <div>Departure Time</div>
+                                        <input type="text" class="check_out search_input" placeholder="">
+                                    </div>
+                                    <div class="search_item">
+                                        <div>Arrival Time</div>
+                                        <input type="text" class="check_out search_input" placeholder="">
+                                    </div>
 
 
-                            </div>
-                            <div class="fix"><div class="form-group">
-                                    <label for="flightID">Flight ID</label>
-                                    <input type="text" class="form-control" name="flightID" placeholder="Enter Flight ID" value="${param.flightID}"required="">
-                                </div>
+                                    <button class="button search_button">search<span></span><span></span><span></span></button>
+                                </form>
                             </div>
 
-                            <div class="form-group">
-                                <label for="noPassengers">Number of Passengers</label>
-                                <input type="number" class="form-control" name="noPassengers" placeholder="Enter Number of Passengers" value="${param.noPassengers}"required="">
+                            <!-- Search Panel -->
+                            <div class="search_panel active">
+                                <form action="ticketController" method="get">
+                                    <input type="hidden" name="command" value="search" />
+                                    <div class="search_item_ticket">
+                                        <div>Passenger Name Record</div>
+                                        <label style="display: block;" for="pNameRecord"></label>
+                                        <input type="text" class="check_out search_input" name="pNameRecord" placeholder="Enter Passenger Name Record" value=${pNameRecord}>
+                                    </div>
+                                    <br />
+                                    <button class="button search_button">Search Tickets Booked<span></span><span></span><span></span></button>
+                                    <br />
+                                </form>
                             </div>
 
-                            <div class="form-group">
-                                <label for="accountID">Account ID</label>
-                                <input type="number" class="form-control" name="accountID" placeholder="Enter Account ID" value="${param.accountID}"required="">
-                            </div>
+                            <!--</form>-->
 
-                            <div class="form-group">
-                                <label for="payAmount">Pay Amount</label>
-                                <input type="number" class="form-control" name="payAmount" placeholder="Enter Pay Amount" value="${param.payAmount}"required="">
-                            </div>
-
-                            <div class="fix"></div>
-                            <button type="submit" class="booked">Add new ticket</button>
-                            <a href="ticketController" class="btn btn-secondary">Back to Ticket List</a>
-
-                        </div> <!-- end item-right -->
-                    </div> <!-- end item -->
+                            <!-- Search Panel -->
 
 
+                        </div>
+                    </div>
+                </div>		
+            </div>
 
-                </div> <!-- end item-right -->
-            </form>
+
             <p><iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3835.530391474877!2d108.228167!3d15.985882!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31421b40be596029%3A0x57f47da73f6041c0!2zVsOpIE3DoXkgQmF5IMSQw6AgTuG6tW5n!5e0!3m2!1svi!2sus!4v1709870332747!5m2!1svi!2sus" width="1200" height="500" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></p>
+
+
+
 
             <!-- Footer -->
 
@@ -467,11 +459,5 @@
         <script src="js/custom.js"></script>
 
     </body>
-
-</html>
-
-
-
-</body>
 
 </html>

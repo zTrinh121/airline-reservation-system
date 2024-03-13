@@ -29,20 +29,7 @@
                     <div class="container fill_height">
                         <div class="row fill_height">
                             <div class="col fill_height">
-                                <div class="search_tabs_container">
-                                    <div class="search_tabs d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
-
-                                        <div class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><img src="images/departure.png" alt="">Trips</div>
-                                        <div class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start">
-                                            <div style="width: 50px; height: 50px; overflow: hidden;"> <!-- Khung có kích thước cố định 80x80px và ẩn tràn ra ngoài -->
-                                                <img src="images/ticket3.png" style="max-width: 100%; max-height: 100%; display: block;"> <!-- Hình ảnh tự động thu nhỏ để vừa với khung -->
-                                            </div>
-                                            <span style="margin-left: 10px;">Tickets Booked</span> <!-- Chèn "Ticket" cạnh hình ảnh với khoảng cách là 10px -->
-                                        </div>
-
-
-                                    </div>		
-                                </div>
+                                
 
                                
 
@@ -51,7 +38,7 @@
                                         <input type="hidden" name="command" value="search" />
                                         <div class="search_item">
                                             <div style="color: #000;">From City</div>
-                                            <select id="inputState" class="form-control" name="fromCity" style="width: 9rem;" >
+                                            <select id="inputState" class="form-control" name="fromCity" style="width: 9rem; border-radius: 10px;" >
                                                 <c:forEach var="f" items="${flightList.getAll()}">
                                                     <option>${f.fromCity}</option>
                                                 </c:forEach>
@@ -59,7 +46,7 @@
                                         </div>
                                         <div class="search_item">
                                             <div style="color: #000;">To City</div>
-                                            <select id="inputState" class="form-control" name="toCity" style="width: 9rem;">
+                                            <select id="inputState" class="form-control" name="toCity" style="width: 9rem; border-radius: 10px;">
                                                 <c:forEach var="f" items="${flightList.getAll()}">
                                                     <option>${f.toCity}</option>
                                                 </c:forEach>
@@ -67,19 +54,19 @@
                                         </div>
                                         <div class="search_item">
                                             <div style="color: #000;">Depart. Date</div>
-                                            <input type="date" class="form-control" name="departureDate" style="width: 7.5rem;" required>
+                                            <input type="date" class="form-control" name="departureDate" style="width: 7.5rem; border-radius: 10px;" required>
                                         </div>
                                         
                                         <div class="search_item">
                                             <div style="color: #000;">Type</div>
-                                            <select id="inputState" class="form-control" name="ticketType" style="width: 7.5rem;">
+                                            <select id="inputState" class="form-control" name="ticketType" style="width: 7.5rem;border-radius: 10px;">
                                                 <option value="Economy">Economy</option>
                                                 <option value="Business">Business</option>
                                             </select>
                                         </div>
                                         <div class="search_item">
                                             <div style="color: #000;">Pax</div>
-                                            <input type="number" class="form-control" name="numPassenger" value="1" style="width: 3rem;" required>
+                                            <input type="number" class="form-control" name="numPassenger" value="1" style="width: 3rem; border-radius: 10px;" required>
                                         </div>
 
 

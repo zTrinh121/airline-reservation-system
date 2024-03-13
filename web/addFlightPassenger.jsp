@@ -2,11 +2,11 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:useBean id="flightList" class="dao.FlightDAO" />
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Add Passenger Info</title>
+        <title>HomeFlight</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="Travelix Project">
@@ -19,78 +19,69 @@
         <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
         <link rel="stylesheet" type="text/css" href="styles/responsive.css">
     </head>
+
     <body>
-        <!-- Header -->
+
         <div class="super_container">
-            <jsp:include page="header.jsp" />
+            <jsp:include page="header.jsp"/>
+            <div class="search">
+                <div class="search_inner">
+                    <div class="container fill_height">
+                        <div class="row fill_height">
+                            <div class="col fill_height">
 
-            
 
-            
-            <c:set var="flightController" value="${requestScope.flight}" />
-            <form action="flightController" method="get">
-                <input type="hidden" value="update" name="command" />
-                <div class="modal-body">					
-                    <div class="form-group">
-                        <label>Flight ID</label>
-                        <input type="text" class="form-control" name="flightID" value="${flight.flightID}" readonly="">
+
+
+                                <div class="search_panel active" style="margin-top: 10px; margin-bottom: 20px;">
+
+                                    <c:set var="numPass" value="${sessionScope.numPass}"></c:set>
+                                        <form action="ticketController" method="get">
+                                        <c:forEach var="count" begin="1" end="${numPass}">
+                                            <p><strong style="color: black;">PASSENGER ${count}</strong></p>
+                                            <div class="form-row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="validationTooltip03">Passenger's Name</label>
+                                                    <input type="text" class="form-control" id="validationTooltip03" name="passengerName" required>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <label for="validationTooltip04">Passenger's Age</label>
+                                                    <input type="number" class="form-control" id="validationTooltip04" name="passengerAge" required>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <label for="validationTooltip05">Passenger's Gender</label>
+                                                    <select name="passengerGender" class="form-control">
+                                                        <option value="Male">Male</option>
+                                                        <option value="Female">Female</option>
+
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                            <br><hr>
+                                        </c:forEach>
+
+                                        <button  type="submit" class="btn btn-search">Submit Passenger Info</button>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>		
                     </div>
-                    <div class="form-group">
-                        <label>From City</label>
-                        <select id="fromCity" class="form-control" name="fromCity" style="height: 3.5rem;">
-                            <c:forEach var="f" items="${flightList.getAll()}">
-                                <option value="${f.fromCity}" ${f.fromCity eq flight.fromCity ? 'selected' : ''}>${f.fromCity}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>To city</label>
-                        <select id="toCity" class="form-control" name="toCity" style="height: 3.5rem;">
-                            <c:forEach var="f" items="${flightList.getAll()}">
-                                <option value="${f.toCity}" ${f.toCity eq flight.toCity ? 'selected' : ''}>${f.toCity}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Departure Date</label>
-                        <input type="date" class="form-control" name="departureDate" value="${flight.departureDate}">
-                    </div>
-                    <div class="form-group">
-                        <label>Arrival Date</label>
-                        <input type="date" class="form-control" name="arrivalDate" value="${flight.arrivalDate}">
-                    </div>
-                    <div class="form-group">
-                        <label>departure Time</label>
-                        <input type="time" class="form-control" name="departureTime" value="${flight.departureTime}">
-                    </div>
-                    <div class="form-group">
-                        <label>Arrival Time</label>
-                        <input type="time" class="form-control" name="arrivalTime" value="${flight.arrivalTime}">
-                    </div>
-                    <div class="form-group">
-                        <label>Seat Economy</label>
-                        <input type="number" class="form-control" name="seatEconomy" value="${flight.seatEconomy}">
-                    </div>
-                    <div class="form-group">
-                        <label>Seat Business</label>
-                        <input type="number" class="form-control" name="seatBusiness" value="${flight.seatBusiness}">
-                    </div>
-                    <div class="form-group">
-                        <label>Price Economy</label>
-                        <input type="text" class="form-control" name="priceEconomy" value="${flight.priceEconomy}">
-                    </div>
-                    <div class="form-group">
-                        <label>Price Business</label>
-                        <input type="text" class="form-control" name="priceBusiness" value="${flight.priceBusiness}">
-                    </div>
+
                 </div>
-                <div class="modal-footer">
-                    <a href="flightController" class="btn btn-default" >Back to List</a>
-                    <input type="submit" class="btn btn-info" value="Save" style="background-color: #52452b">
-                </div>
-            </form>
-        </div>
+
+
+                <jsp:include page="footer.jsp" />
+            </div>
+
+            <script src="js/jquery-3.2.1.min.js"></script>
+            <script src="styles/bootstrap4/popper.js"></script>
+            <script src="styles/bootstrap4/bootstrap.min.js"></script>
+            <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+            <script src="plugins/easing/easing.js"></script>
+            <script src="js/custom.js"></script>
+
     </body>
+
 </html>
-
-

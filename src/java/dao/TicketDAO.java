@@ -11,16 +11,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import model.Flight;
+import model.Passenger;
 
 public class TicketDAO {
 
-    // Private constructor to prevent instantiation
     public TicketDAO() {
     }
 
     // Add ticket
     public static void addTicket(Ticket newTicket) throws ClassNotFoundException {
-        // Extract values from the newTicket object
         String pNameRecord = newTicket.getpNameRecord();
         Date dateReservation = newTicket.getDateReservation();
         String flightID = newTicket.getFlightID();
@@ -31,11 +31,9 @@ public class TicketDAO {
         float payAmount = newTicket.getPayAmount();
         int accountID = newTicket.getAccountID();
 
-        // Call the existing addTicket method with the extracted values
         addTicket(pNameRecord, dateReservation, flightID, journeyDate, ticketClass, bookingStatus, noPassengers, accountID, payAmount);
     }
 
-    // Add ticket
     public static void addTicket(String pNameRecord, Date dateReservation, String flightID, Date journeyDate, String ticketClass, String bookingStatus, int noPassengers, int accountID, float payAmount) throws ClassNotFoundException {
         String sql = "INSERT INTO [dbo].[ticketDetails]\n"
                 + "           ([pNameRecord]\n"
@@ -94,25 +92,48 @@ public class TicketDAO {
         }
     }
 
-    // Delete ticket
     public static void deleteTicket(String pNameRecord) throws ClassNotFoundException {
-        String sql = "DELETE FROM ticketDetails WHERE pNameRecord = ?";
+        String deletePassengerSql = "DELETE FROM passengers WHERE pNameRecord = ?";
+        String deleteTicketSql = "DELETE FROM ticketDetails WHERE pNameRecord = ?";
 
-        try (Connection con = ConnectDB.getInstance().openConnection(); PreparedStatement st = con.prepareStatement(sql)) {
-            st.setString(1, pNameRecord);
-            int rowsDeleted = st.executeUpdate();
+        try (Connection con = ConnectDB.getInstance().openConnection();
+                PreparedStatement deletePassengerStmt = con.prepareStatement(deletePassengerSql);
+                PreparedStatement deleteTicketStmt = con.prepareStatement(deleteTicketSql)) {
 
-            if (rowsDeleted > 0) {
-                System.out.println("Delete ticket successful!");
+            con.setAutoCommit(false);
+
+            deletePassengerStmt.setString(1, pNameRecord);
+            int rowsDeletedPassenger = deletePassengerStmt.executeUpdate();
+
+            if (rowsDeletedPassenger > 0) {
+                deleteTicketStmt.setString(1, pNameRecord);
+                int rowsDeletedTicket = deleteTicketStmt.executeUpdate();
+
+                if (rowsDeletedTicket > 0) {
+                    con.commit();
+                    System.out.println("Delete ticket successful!");
+                } else {
+                    con.rollback();
+                    System.out.println("Error deleting ticket details for NameRecord: " + pNameRecord);
+                }
             } else {
-                System.out.println("No find ticket with NameRecord is " + pNameRecord);
+                deleteTicketStmt.setString(1, pNameRecord);
+                int rowsDeletedTicket = deleteTicketStmt.executeUpdate();
+
+                if (rowsDeletedTicket > 0) {
+                    con.commit();
+                    System.out.println("Delete ticket successful!");
+                } else {
+                    con.rollback();
+                    System.out.println("No ticket found with NameRecord: " + pNameRecord);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    // Close resources
+// Close resources
     private static void closeResources(ResultSet rs, PreparedStatement statement, Connection connection) {
         try {
             if (rs != null) {
@@ -182,9 +203,7 @@ public class TicketDAO {
         }
     }
 
-    // Save payment details to database
     private static void savePaymentDetailsToDatabase(Connection connection, PaymentDetails paymentDetails) throws SQLException {
-        // Implement this method based on your requirements
     }
 
     private static Ticket mapResultSetToTicket(ResultSet resultSet) throws SQLException {
@@ -238,62 +257,91 @@ public class TicketDAO {
         return null;
     }
 
-    // Search tickets based on specified criteria
-    public static List<Ticket> searchTicket(String fromCity, String toCity, Date departureDate, String ticketType, int numPassenger) throws ClassNotFoundException {
-        List<Ticket> tickets = new ArrayList<>();
-        StringBuilder sql = new StringBuilder("SELECT * FROM ticketDetails WHERE 1=1");
+    public static List<Ticket> searchTicket(String pNameRecord) {
+        List<Ticket> ticketList = new ArrayList<>();
+        String sql = "SELECT * FROM ticketDetails WHERE pNameRecord LIKE ?";
 
-        // Add conditions based on provided parameters
-        if (fromCity != null && !fromCity.isEmpty()) {
-            sql.append(" AND fromCity = ?");
-        }
-        if (toCity != null && !toCity.isEmpty()) {
-            sql.append(" AND toCity = ?");
-        }
-        if (departureDate != null) {
-            sql.append(" AND departureDate = ?");
-        }
-        if (ticketType != null && !ticketType.isEmpty()) {
-            sql.append(" AND ticketType = ?");
-        }
-        sql.append(" AND numPassenger = ?");
-
-        try (Connection con = ConnectDB.getInstance().openConnection(); PreparedStatement st = con.prepareStatement(sql.toString())) {
-            int parameterIndex = 1;
-
-            // Set values for conditions
-            if (fromCity != null && !fromCity.isEmpty()) {
-                st.setString(parameterIndex++, fromCity);
-            }
-            if (toCity != null && !toCity.isEmpty()) {
-                st.setString(parameterIndex++, toCity);
-            }
-            if (departureDate != null) {
-                st.setDate(parameterIndex++, new java.sql.Date(departureDate.getTime()));
-            }
-            if (ticketType != null && !ticketType.isEmpty()) {
-                st.setString(parameterIndex++, ticketType);
-            }
-            st.setInt(parameterIndex, numPassenger);
+        try (Connection con = ConnectDB.getInstance().openConnection();
+                PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, "%" + pNameRecord + "%");
 
             try (ResultSet resultSet = st.executeQuery()) {
                 while (resultSet.next()) {
                     Ticket ticket = mapResultSetToTicket(resultSet);
-                    tickets.add(ticket);
+                    ticketList.add(ticket);
                 }
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 
-        return tickets;
+        return ticketList;
+    }
+
+    public void addTicketAndPassenger(Ticket ticketDetails, Passenger passenger) throws ClassNotFoundException {
+        ArrayList<Ticket> tickets = new ArrayList<>();
+        String sqlTicket = "INSERT INTO ticketDetails (pNameRecord, dateReservation, flightID, journeyDate, "
+                + "ticketClass, bookingStatus, noPassengers, accountID, payAmount) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sqlPassenger = "INSERT INTO passengers (pNameRecord, pName, age, gender) VALUES (?, ?, ?, ?)";
+        try (Connection con = ConnectDB.getInstance().openConnection();
+                PreparedStatement stTicket = con.prepareStatement(sqlTicket);
+                PreparedStatement stPassenger = con.prepareStatement(sqlPassenger)) {
+
+            // Disable auto-commit to manage transactions
+            con.setAutoCommit(false);
+
+            // Insert ticket details
+            stTicket.setString(1, ticketDetails.getpNameRecord());
+            stTicket.setDate(2, new java.sql.Date(ticketDetails.getDateReservation().getTime()));
+            stTicket.setString(3, ticketDetails.getFlightID());
+            stTicket.setDate(4, new java.sql.Date(ticketDetails.getJourneyDate().getTime()));
+            stTicket.setString(5, ticketDetails.getTicketClass());
+            stTicket.setString(6, ticketDetails.getBookingStatus());
+            stTicket.setInt(7, ticketDetails.getNoPassengers());
+            stTicket.setInt(8, ticketDetails.getAccountID());
+            stTicket.setFloat(9, ticketDetails.getPayAmount());
+
+            stTicket.executeUpdate();
+
+            // Insert passenger details
+            stPassenger.setString(1, passenger.getpNameRecord());
+            stPassenger.setString(2, passenger.getpName());
+            stPassenger.setInt(3, passenger.getAge());
+            stPassenger.setString(4, passenger.getGender());
+
+            stPassenger.executeUpdate();
+
+            con.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public float calculatePricePerPersion(Flight flight, String ticketType) {
+        float ticketPrice = (float) 0.0;
+        if ("Economy".equalsIgnoreCase(ticketType)) {
+            ticketPrice = (float) flight.getPriceEconomy();
+        } else if ("Business".equalsIgnoreCase(ticketType)) {
+            ticketPrice = (float) flight.getPriceBusiness();
+        }
+        return ticketPrice;
+    }
+
+    public double calculateTotalTicketPrice(int numPassengers, Flight flight, String ticketType, double tax) {
+        float totalPrice = (float) 0.0;
+        double ticketPrice = calculatePricePerPersion(flight, ticketType);
+        totalPrice = (float) (numPassengers * ticketPrice);
+        return totalPrice + totalPrice * tax;
     }
 
     public static void main(String[] args) throws ClassNotFoundException {
-        // Test the getAllTickets method
         ArrayList<Ticket> a = getAllTickets();
         System.out.println(a);
+        deleteTicket("sa");
+        ArrayList<Ticket> b = getAllTickets();
+        System.out.println(b);
 
-//        addTicket("21", 27 - 03 - 2003, "dd", 7 - 03 - 2004, "Economic", "Confirmed", 4, 23, 150.000);
     }
+
 }
