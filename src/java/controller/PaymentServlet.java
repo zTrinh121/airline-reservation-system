@@ -146,7 +146,6 @@ public class PaymentServlet extends HttpServlet {
     private void ExecutePaymentServlet(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String paymentId = request.getParameter("paymentId");
         String payerId = request.getParameter("PayerID");
-        System.out.println("Toi execute payment roi");
 
         try {
             PaymentServices paymentServices = new PaymentServices();

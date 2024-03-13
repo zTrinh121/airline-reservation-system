@@ -37,6 +37,8 @@
 
                                     <c:set var="numPass" value="${sessionScope.numPass}"></c:set>
                                         <form action="ticketController" method="get">
+
+                                            <input type="hidden" value="addPassenger" name="command" />
                                         <c:forEach var="count" begin="1" end="${numPass}">
                                             <p><strong style="color: black;">PASSENGER ${count}</strong></p>
                                             <div class="form-row">

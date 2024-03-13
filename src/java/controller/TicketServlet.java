@@ -239,6 +239,7 @@ public class TicketServlet extends HttpServlet {
         String ticketType = (String) request.getSession().getAttribute("ticketType");
         float payAmount = TicketDAO.calculatePricePerPersion(flight, ticketType);
         HttpSession session = request.getSession();
+        System.out.println("In ra cho nay khong");
 //        int accountID = (int) session.getAttribute("accountID");
         int accountID = 6;
 

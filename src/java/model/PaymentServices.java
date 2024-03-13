@@ -113,8 +113,8 @@ public class PaymentServices {
 
     private RedirectUrls getReirectUrls() {
         RedirectUrls redirecturls = new RedirectUrls();
-        redirecturls.setCancelUrl("http://localhost:9999/paypalPayment/cancel.html");
-        redirecturls.setReturnUrl("http://localhost:9999/paypalPayment/review_payment");
+        redirecturls.setCancelUrl("http://localhost:9999/airline-reservation-system/cancel.html");
+        redirecturls.setReturnUrl("http://localhost:9999/airline-reservation-system/receipt.jsp");
         return redirecturls;
     }
 }

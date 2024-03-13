@@ -35,7 +35,7 @@
                     </c:forEach>
                 </tbody>
             </table>
-            <button type="submit" class="btn btn-primary">Payment</button>
+            <button type="submit" class="btn btn-primary">Confirm</button>
         </form>
     </body>
 </html>

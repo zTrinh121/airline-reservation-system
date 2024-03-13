@@ -220,7 +220,6 @@ public class FlightDAO {
 
             int rowsUpdated = statement.executeUpdate();
             if (rowsUpdated > 0) {
-                System.out.println("Ngay sau khi chuyen doi " + b.getDepartureDate());
                 System.out.println("Update successful");
             } else {
                 System.out.println("Update failed");

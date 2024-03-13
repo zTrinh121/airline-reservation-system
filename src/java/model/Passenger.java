@@ -61,6 +61,11 @@ public class Passenger {
     public void setGender(String gender) {
         this.gender = gender;
     }
+
+    @Override
+    public String toString() {
+        return "Passenger{" + "pID=" + pID + ", pNameRecord=" + pNameRecord + ", pName=" + pName + ", age=" + age + ", gender=" + gender + '}';
+    }
     
     
 }
