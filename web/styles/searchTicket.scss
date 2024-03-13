@@ -8,6 +8,14 @@ and open the template in the editor.
     Author     : ThanhThuy
 */
 
-.search_item:nth-child(2) {
+.search_item_ticket:nth-child(2) {
     width: 100%;
+}
+.search_item_ticket div {
+    margin-top: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    margin-bottom: 14px;
 }

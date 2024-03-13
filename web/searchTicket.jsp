@@ -281,9 +281,9 @@
                             <div class="search_panel active">
                                 <form action="ticketController" method="get">
                                     <input type="hidden" name="command" value="search" />
-                                    <div class="search_item">
-                                        <div>Passenger Name Record:</div>
-                                        <label for="pNameRecord"></label>
+                                    <div class="search_item_ticket">
+                                        <div>Passenger Name Record</div>
+                                        <label style="display: block;" for="pNameRecord"></label>
                                         <input type="text" class="check_out search_input" name="pNameRecord" placeholder="Enter Passenger Name Record" value=${pNameRecord}>
                                     </div>
                                     <br />
