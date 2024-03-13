@@ -305,6 +305,8 @@
 
                             <div class="fix"></div>
                             <button type="submit" class="booked">Add new ticket</button>
+                            <a href="ticketController" class="btn btn-secondary">Back to Ticket List</a>
+
                         </div> <!-- end item-right -->
                     </div> <!-- end item -->
 

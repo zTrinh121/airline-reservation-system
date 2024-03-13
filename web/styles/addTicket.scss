@@ -7,6 +7,14 @@ and open the template in the editor.
     Created on : Mar 13, 2024, 2:44:08 PM
     Author     : ThanhThuy
 */
+.btn-secondary{
+    color: #fff;
+    padding: 6px 14px;
+    float: left;
+    margin-top: 10px;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;}
 .form-control{
     color: black;
 }
@@ -87,7 +95,7 @@ div.container {
     font-size: 25px;
 }
 .container .item-left {
-      width: 50%;
+    width: 50%;
     padding: 34px 0px 19px 46px;
     border-left: 3px dotted #999;
 } 
