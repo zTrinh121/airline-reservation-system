@@ -27,7 +27,9 @@ import model.Flight;
  * @author Trinh
  */
 public class FlightServlet extends HttpServlet {
+
     FlightDAO flightDAO = new FlightDAO();
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -80,6 +82,10 @@ public class FlightServlet extends HttpServlet {
                     throw new AssertionError();
             }
         } catch (Exception e) {
+            // Xử lý ngoại lệ ở đây, ví dụ:
+            e.printStackTrace(); // In stack trace để xem chi tiết lỗi trong log
+            request.setAttribute("errorMessage", e.getMessage()); // Truyền thông điệp lỗi đến trang error.jsp hoặc trang khác
+            request.getRequestDispatcher("error.jsp").forward(request, response); // Chuyển hướng đến trang error.jsp hoặc trang khác để hiển thị thông điệp lỗi
         }
     }
 
@@ -110,7 +116,10 @@ public class FlightServlet extends HttpServlet {
     private void listFlight(HttpServletRequest request, HttpServletResponse response) throws Exception {
         ArrayList<Flight> list = flightDAO.getAll();
         request.setAttribute("list", list);
-
+        for (Flight flight : list) {
+            System.out.println(flight);
+        }
+        System.out.println("Ko in ");
         request.getRequestDispatcher("listFlightAdmin.jsp").forward(request, response);
     }
 
@@ -132,13 +141,14 @@ public class FlightServlet extends HttpServlet {
         Time departureTime, arrivalTime;
         int seatEconomy, seatBusiness;
         double priceEconomy, priceBusiness;
+        System.out.println("Sai 1");
+        if (validate(flightID, fromCity, toCity) != "") {
+            System.out.println(validate(flightID, fromCity, toCity));
+            request.setAttribute("err", validate(flightID, fromCity, toCity));
+            request.getRequestDispatcher("addFlight.jsp").forward(request, response);
+        }
+        System.out.println("Sai 2");
 
-        if(validate(flightID, fromCity, toCity)!=""){
-                System.out.println(validate(flightID, fromCity, toCity));
-                request.setAttribute("err", validate(flightID, fromCity, toCity));
-                request.getRequestDispatcher("addFlight.jsp").forward(request, response);
-            }
-        
         try {
             seatEconomy = Integer.parseInt(seatEconomy_raw);
             seatBusiness = Integer.parseInt(seatBusiness_raw);
@@ -151,10 +161,10 @@ public class FlightServlet extends HttpServlet {
 
             priceEconomy = Double.parseDouble(priceEconomy_raw);
             priceBusiness = Double.parseDouble(priceBusiness_raw);
-            
+            System.out.println("sai 3");
             Flight f = new Flight(flightID, fromCity, toCity, departureDate, arrivalDate, departureTime, arrivalTime, seatEconomy, seatBusiness, priceEconomy, priceBusiness);
             flightDAO.addFlight(f);
-            
+            System.out.println(f);
             listFlight(request, response);
         } catch (NumberFormatException e) {
             request.setAttribute("err", "Invalid Format");
@@ -188,15 +198,13 @@ public class FlightServlet extends HttpServlet {
         Time departureTime, arrivalTime;
         int seatEconomy, seatBusiness;
         double priceEconomy, priceBusiness;
-        System.out.println("Departure Date:" + departureDate_raw);
- 
+
         try {
 
             seatEconomy = Integer.parseInt(seatEconomy_raw);
             seatBusiness = Integer.parseInt(seatBusiness_raw);
 
             departureDate = Date.valueOf(departureDate_raw);
-            System.out.println("Departure Date:" + departureDate);
             arrivalDate = Date.valueOf(arrivalDate_raw);
 
             departureTime = new Time(timeFormat.parse(request.getParameter("departureTime")).getTime());
@@ -240,7 +248,7 @@ public class FlightServlet extends HttpServlet {
         } catch (Exception e) {
         }
     }
-    
+
     private void bookFlight(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String flightID = request.getParameter("flightID");
         HttpSession session = request.getSession();
@@ -248,12 +256,14 @@ public class FlightServlet extends HttpServlet {
         request.setAttribute("flight", f);
         request.getRequestDispatcher("addFlightPassenger.jsp").forward(request, response);
     }
-    
-    private String validate(String flightID, String fromCity, String toCity){
-        if(!flightID.matches("^VN\\d{3}$")){
+
+    private String validate(String flightID, String fromCity, String toCity) {
+        if (!flightID.matches("^VN\\d{3}$")) {
             return "FlightID must follow VN+3digits";
         }
-        if(fromCity.equalsIgnoreCase(toCity)) return "From City and To City cannot be the same";
+        if (fromCity.equalsIgnoreCase(toCity)) {
+            return "From City and To City cannot be the same";
+        }
         return "";
-    }   
+    }
 }

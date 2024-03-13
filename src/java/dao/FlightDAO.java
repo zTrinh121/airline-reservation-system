@@ -29,7 +29,7 @@ public class FlightDAO {
             String sql = "select * from Flight";
             statement = con.prepareStatement(sql);
             rs = statement.executeQuery();
-            
+
             while (rs.next()) {
                 Flight b = new Flight(rs.getString(1), rs.getString(2),
                         rs.getString(3), rs.getDate(4),
@@ -37,9 +37,8 @@ public class FlightDAO {
                         rs.getInt(8), rs.getInt(9), rs.getDouble(10),
                         rs.getDouble(11));
                 list.add(b);
-                System.out.println("Ngay: "+rs.getDate(4));
             }
-            
+
             rs.close();
             con.close();
             statement.close();
@@ -86,6 +85,7 @@ public class FlightDAO {
             statement.setDouble(10, b.getPriceEconomy());
             statement.setDouble(11, b.getPriceBusiness());
             statement.execute();
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -157,7 +157,7 @@ public class FlightDAO {
                 list.add(b);
             }
             System.out.println(sql);
-            System.out.println("Depature date in sql"+departureDate);
+            System.out.println("Depature date in sql" + departureDate);
             rs.close();
             con.close();
             statement.close();
@@ -194,7 +194,6 @@ public class FlightDAO {
         }
     }
 
-
     public void update(Flight b) {
         ConnectDB db = ConnectDB.getInstance();
         Connection con = null;
@@ -217,6 +216,7 @@ public class FlightDAO {
 
             int rowsUpdated = statement.executeUpdate();
             if (rowsUpdated > 0) {
+                System.out.println("Ngay sau khi chuyen doi "+b.getDepartureDate());
                 System.out.println("Update successful");
             } else {
                 System.out.println("Update failed");

@@ -269,7 +269,7 @@ table.table .avatar {
 
 /* Thêm đoạn CSS để điều chỉnh màu sắc cho nút Add New Flight */
 .table-title .btn-success {
-    background-color: #620669 !important;
+    background-color: #620669 ;
 }
 
 /* Thêm đoạn CSS để điều chỉnh màu sắc cho tiêu đề của modal */

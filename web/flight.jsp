@@ -1,8 +1,4 @@
-<%-- 
-    Document   : flight
-    Created on : Mar 9, 2024, 9:05:19 PM
-    Author     : HP
---%>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -18,16 +14,16 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <<link rel="stylesheet" href="decorate/flight.css"/>
+        <link rel="stylesheet" href="decorate/flight.css"/>
 
-    <body  style="background-image:url(images/login5.jpg)">
+    <body  style=" background-image: linear-gradient(rgba(49, 18, 75, 0.5), rgba(49, 18, 75, 0.5)), url(images/home_slider.jpg);">
         <div class="container">
-            <h1 class="text-center"style="color: #fff;font-size: 48px;font-weight: 800" ><b>FLIGHT</b></h1> 
+            <h1 class="text-center"style="color: #fff;font-size: 48px;font-weight: 800" ><b>FLIGHT LIST</b></h1> 
             <div class="table-wrapper">
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-6">
-                            <h2 style="color: #ffffff;">Flight <b>Information</b></h2> <!-- Điều chỉnh màu sắc cho tiêu đề -->
+                            <h2 style="color: #ffffff;">Flight Information</h2> <!-- Điều chỉnh màu sắc cho tiêu đề -->
                         </div>
                         <div class="col-sm-6">
                           
