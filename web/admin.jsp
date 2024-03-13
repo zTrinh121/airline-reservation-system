@@ -48,10 +48,18 @@
                                         <li class="social_list_item"><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
                                     </ul>
                                 </div>
-                                <div class="user_box ml-auto">
-                                    <div  ><a  style="font-size: 20px;color: #CC00FF;font-weight: bold" >HI ADMIN!</a></div>
-                                   
+                                <div class="user_box ml-auto" style="display: flex; align-items: center;">
+                                    <% if (session != null && session.getAttribute("username") != null) {
+                                        String username = (String) session.getAttribute("username");
+                                    %>
+                                    <p style="color: #fff; font-family: 'Open Sans', 'sans-serif'; font-size: 16px; margin-right: 10px;">Welcome, <%= username %> !</p>
+                                   <a href="<%= request.getContextPath() %>/Login?action=logout" style="background-color:#79339c; color: #fff; text-decoration: none; padding:2px; border-radius: 3px; cursor: pointer;font-weight:bold ">Log out</a>
+
+
+                                    <% } %>
                                 </div>
+
+
                             </div>
                         </div>
                     </div>		
@@ -146,7 +154,7 @@
                                 <div class="home_slider_content_inner" data-animation-in="flipInX" data-animation-out="animate-out fadeOut">
                                     <h1>discover</h1>
                                     <h1>the world</h1>
-                                  
+
                                 </div>
                             </div>
                         </div>
@@ -159,7 +167,7 @@
                                 <div class="home_slider_content_inner" data-animation-in="flipInX" data-animation-out="animate-out fadeOut">
                                     <h1>discover</h1>
                                     <h1>the world</h1>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -229,7 +237,7 @@
 
             </div>
 
-            
+
             <!-- Intro -->
 
             <div class="intro">
@@ -353,7 +361,7 @@
                                             <i></i>
                                         </div>
                                         <p class="cta_text">Travel makes one modest. You see what a tiny place you occupy in the world!!!</p>
-                                       
+
                                     </div>
 
                                     <!-- CTA Slider Item -->
@@ -432,10 +440,10 @@
 
             <!-- Offers -->
 
-          
 
-                        <!-- Offers Item -->
-                
+
+            <!-- Offers Item -->
+
             <!-- Testimonials -->
 
             <div class="testimonials">
@@ -608,9 +616,9 @@
                 </div>
             </div>
             <p><iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3835.530391474877!2d108.228167!3d15.985882!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31421b40be596029%3A0x57f47da73f6041c0!2zVsOpIE3DoXkgQmF5IMSQw6AgTuG6tW5n!5e0!3m2!1svi!2sus!4v1709870332747!5m2!1svi!2sus" width="1200" height="500" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></p>
-          
 
- 
+
+
 
             <!-- Footer -->
 
@@ -677,7 +685,7 @@
                         <!-- Footer Column -->
                         <div class="col-lg-3 footer_column">
                             <div class="footer_col">
-                               
+
                                 <div class="footer_content footer_tags">
                                     <ul class="tags_list clearfix">
                                         <li class="tag_item"><a href="#">design</a></li>

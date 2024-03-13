@@ -9,11 +9,12 @@ import dao.AccountDao;
 import dbcontext.ConnectDB;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.sql.Connection;
 
 /**
@@ -54,11 +55,18 @@ public class Login extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
+     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
-    } 
+            throws ServletException, IOException {
+        HttpSession session = request.getSession(false); // Lấy session nếu nó tồn tại
+
+        if (session != null) {
+            session.invalidate(); // Hủy bỏ session
+        }
+
+        response.sendRedirect("login.jsp"); // Chuyển hướng người dùng đến trang đăng nhập
+    }
+
 
     /** 
      * Handles the HTTP <code>POST</code> method.
@@ -68,37 +76,41 @@ public class Login extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-      String action = request.getParameter("action");
 
-        if ("login".equals(action)) {
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
-            String rememberMe = request.getParameter("remember_me");
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    String action = request.getParameter("action");
 
-           AccountDao accountDao = new AccountDao();
+    if ("login".equals(action)) {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        String rememberMe = request.getParameter("remember_me");
 
+        AccountDao accountDao = new AccountDao();
 
-            if (accountDao.checkAccountExist(username, password)) {
-               
-               
-                if (accountDao.isAdmin(username, password)) {
-                    handleRememberMe(rememberMe, username, response);
-                    response.sendRedirect("admin.jsp");
-                } else {
-                    handleRememberMe(rememberMe, username, response);
-                    response.sendRedirect("user.jsp");
-                }
+        if (accountDao.checkAccountExist(username, password)) {
+            HttpSession session = request.getSession(); 
+            int accountId = accountDao.getAccountIdByUsername(username); 
+            session.setAttribute("username", username); 
+            session.setAttribute("password", password);
+            session.setAttribute("accountId", accountId);
+
+            if (accountDao.isAdmin(username, password)) {
+                handleRememberMe(rememberMe, username, response);
+                response.sendRedirect("admin.jsp");
             } else {
-               
-                response.sendRedirect("login.jsp");
+                handleRememberMe(rememberMe, username, response);
+                response.sendRedirect("user.jsp");
             }
-        } else if ("register".equals(action)) {
-           
-            response.sendRedirect("register.jsp");
+        } else {
+            request.setAttribute("errorMessage", "Invalid username or password");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
+    } else if ("register".equals(action)) {
+        response.sendRedirect("register.jsp");
     }
+
+}
      private void handleRememberMe(String rememberMe, String username, HttpServletResponse response) {
         if (rememberMe != null && rememberMe.equals("on")) {
             Cookie cookie = new Cookie("username", username);

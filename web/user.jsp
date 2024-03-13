@@ -47,9 +47,15 @@
                                         <li class="social_list_item"><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
                                     </ul>
                                 </div>
-                                <div class="user_box ml-auto">
-                                    <div class="user_box_login user_box_link"><a href="login.jsp">login</a></div>
-                                    <div class="user_box_register user_box_link"><a href="register.jsp">register</a></div>
+                                 <div class="user_box ml-auto" style="display: flex; align-items: center;">
+                                    <% if (session != null && session.getAttribute("username") != null) {
+                                        String username = (String) session.getAttribute("username");
+                                    %>
+                                    <p style="color: #fff; font-family: 'Open Sans', 'sans-serif'; font-size: 16px; margin-right: 10px;">Welcome, <%= username %> !</p>
+                                   <a href="<%= request.getContextPath() %>/Login?action=logout" style="background-color:#79339c; color: #fff; text-decoration: none; padding:2px; border-radius: 3px; cursor: pointer;font-weight:bold ">Log out</a>
+
+
+                                    <% } %>
                                 </div>
                             </div>
                         </div>
@@ -67,11 +73,11 @@
                                 </div>
                                 <div class="main_nav_container ml-auto">
                                     <ul class="main_nav_list">
-                                        <li class="main_nav_item"><a href="home.jsp">home</a></li>
+                                        <li class="main_nav_item"><a href="user.jsp">home</a></li>
                                     
                                         <li class="main_nav_item"><a href="offers.jsp">offers</a></li>
 
-                                        <li class="main_nav_item"><a href="contact.jsp">contact</a></li>
+                                        <li class="main_nav_item"><a href="contact.html">contact</a></li>
                                     </ul>
                                 </div>
                                 <div class="content_search ml-lg-0 ml-auto">
@@ -145,7 +151,7 @@
                                 <div class="home_slider_content_inner" data-animation-in="flipInX" data-animation-out="animate-out fadeOut">
                                     <h1>discover</h1>
                                     <h1>the world</h1>
-                                   
+                                    <div class="button home_slider_button"><div class="button_bcg"></div><a href="#">explore now<span></span><span></span><span></span></a></div>
                                 </div>
                             </div>
                         </div>
