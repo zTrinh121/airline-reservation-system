@@ -16,13 +16,11 @@ import model.Passenger;
 
 public class TicketDAO {
 
-    // Private constructor to prevent instantiation
     public TicketDAO() {
     }
 
     // Add ticket
     public static void addTicket(Ticket newTicket) throws ClassNotFoundException {
-        // Extract values from the newTicket object
         String pNameRecord = newTicket.getpNameRecord();
         Date dateReservation = newTicket.getDateReservation();
         String flightID = newTicket.getFlightID();
@@ -33,7 +31,6 @@ public class TicketDAO {
         float payAmount = newTicket.getPayAmount();
         int accountID = newTicket.getAccountID();
 
-        // Call the existing addTicket method with the extracted values
         addTicket(pNameRecord, dateReservation, flightID, journeyDate, ticketClass, bookingStatus, noPassengers, accountID, payAmount);
     }
 
@@ -298,59 +295,6 @@ public class TicketDAO {
         }
     }
 
-//
-//    public static ArrayList<Ticket> searchTicket(String pNameRecord, Date dateReservation, String flightID, Date journeyDate,
-//            String ticketClass, String bookingStatus, int noPassengers, int accountID, float payAmount) {
-//        ArrayList<Ticket> ticketList = new ArrayList<>();
-//
-////        String sql = "SELECT * FROM ticketDetails WHERE pNameRecord = ? AND dateReservation = ? AND flightID = ? "
-////                + "AND journeyDate = ? AND ticketClass = ? AND bookingStatus = ? AND noPassengers = ? "
-////                + "AND accountID = ? AND payAmount = ?";
-//        String sql = "SELECT * FROM ticketDetails WHERE "
-//                + "(pNameRecord = ? OR ? IS NULL) AND "
-//                + "(dateReservation = ? OR ? IS NULL) AND "
-//                + "(flightID = ? OR ? IS NULL) AND "
-//                + "(journeyDate = ? OR ? IS NULL) AND "
-//                + "(ticketClass = ? OR ? IS NULL) AND "
-//                + "(bookingStatus = ? OR ? IS NULL) AND "
-//                + "(noPassengers = ? OR ? IS NULL) AND "
-//                + "(accountID = ? OR ? IS NULL) AND "
-//                + "(payAmount = ? OR ? IS NULL)";
-//
-//        try (Connection con = ConnectDB.getInstance().openConnection();
-//                PreparedStatement st = con.prepareStatement(sql)) {
-//
-//            st.setString(1, pNameRecord);
-//            st.setDate(2, (java.sql.Date) dateReservation);
-//            st.setString(3, flightID);
-//            st.setDate(4, (java.sql.Date) journeyDate);
-//            st.setString(5, ticketClass);
-//            st.setString(6, bookingStatus);
-//            st.setInt(7, noPassengers);
-//            st.setInt(8, accountID);
-//            st.setFloat(9, payAmount);
-//
-//            try (ResultSet rs = st.executeQuery()) {
-//                while (rs.next()) {
-//                    Ticket ticket = new Ticket();
-//                    ticket.setpNameRecord(rs.getString("pNameRecord"));
-//                    ticket.setDateReservation(rs.getDate("dateReservation"));
-//                    ticket.setFlightID(rs.getString("flightID"));
-//                    ticket.setJourneyDate(rs.getDate("journeyDate"));
-//                    ticket.setTicketClass(rs.getString("ticketClass"));
-//                    ticket.setBookingStatus(rs.getString("bookingStatus"));
-//                    ticket.setNoPassengers(rs.getInt("noPassengers"));
-//                    ticket.setAccountID(rs.getInt("accountID"));
-//                    ticket.setPayAmount(rs.getFloat("payAmount"));
-//                    ticketList.add(ticket);
-//                }
-//            }
-//        } catch (SQLException | ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return ticketList;
-//    }
     public float calculatePricePerPersion(Flight flight, String ticketType) {
         float ticketPrice = (float) 0.0;
         if ("Economy".equalsIgnoreCase(ticketType)) {
@@ -369,7 +313,6 @@ public class TicketDAO {
     }
 
     public static void main(String[] args) throws ClassNotFoundException {
-        // Test the getAllTickets method
         ArrayList<Ticket> a = getAllTickets();
         System.out.println(a);
 

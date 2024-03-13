@@ -51,7 +51,10 @@
                     <th scope="col">No. of Passengers</th>
                     <th scope="col">Pay Amount</th>
                     <th scope="col">Account ID</th>
+                        <%--<c:if test="${isAdmin}">--%>
                     <th scope="col">Action</th>
+                        <%--</c:if>--%>
+
                 </tr>
             </thead>
             <tbody>
@@ -77,12 +80,13 @@
                         <td>${ticket.accountID}</td>
                         <td>
                             <%--<c:if test="${isAdmin}">--%>
-                            <a href="${deleteLink}" onclick="if (!(confirm('Are you sure to delete?')))
+                            <c:if test="true">
+                                <a href="${deleteLink}" onclick="if (!(confirm('Are you sure to delete?')))
                                         return false" class="btn btn-primary">Delete</a>
-                            <a href="${loadLink}" class="btn btn-primary">Update</a>
-                            <%--< /c:if>--%>
-                        </td>
-                    </tr>
+                                <a href="${loadLink}" class="btn btn-primary">Update</a>
+                                </c:if>
+                            </td>
+                        </tr>
                 </c:forEach>
             </tbody>
         </table>

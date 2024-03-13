@@ -19,6 +19,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import javax.servlet.RequestDispatcher;
 import model.Flight;
 import model.Passenger;
 
@@ -72,7 +73,9 @@ public class TicketServlet extends HttpServlet {
                 case "checkout":
                     checkout(request, response);
                     break;
-
+                case "ticketBooked":
+                    ticketBooked(request, response);
+                    break;
                 default:
                     System.err.println("Unexpected command: " + command);
                     response.sendRedirect("error.jsp");
@@ -291,4 +294,15 @@ public class TicketServlet extends HttpServlet {
         }
     }
 
+    private void ticketBooked(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        int accountID = (int) session.getAttribute("accountID");
+        try {
+            List<Ticket> bookedTickets = TicketDAO.getTicketsByAccount(accountID);
+            request.setAttribute("bookedTickets", bookedTickets);
+            request.getRequestDispatcher("ticketBooked.jsp").forward(request, response);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 }
