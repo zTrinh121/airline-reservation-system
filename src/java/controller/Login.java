@@ -9,19 +9,22 @@ import dao.AccountDao;
 import dbcontext.ConnectDB;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.sql.Connection;
+import model.Account;
+import model.Admin;
 
 /**
  *
  * @author HP
  */
 public class Login extends HttpServlet {
+    
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -30,6 +33,7 @@ public class Login extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+  
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -55,17 +59,25 @@ public class Login extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        HttpSession session = request.getSession(false); // Lấy session nếu nó tồn tại
+  
+  @Override
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    response.setHeader("Pragma", "no-cache");
+    response.setHeader("Expires", "0");
 
-        if (session != null) {
-            session.invalidate(); // Hủy bỏ session
-        }
+    HttpSession session = request.getSession(false); // Lấy session nếu nó tồn tại
 
-        response.sendRedirect("login.jsp"); // Chuyển hướng người dùng đến trang đăng nhập
+    if (session != null) {
+        session.invalidate(); 
     }
+
+    // Thêm tham số ngẫu nhiên vào URL để tránh việc lưu trữ bản sao của trang trong bộ nhớ cache của trình duyệt
+    response.sendRedirect("login.jsp?rnd=" + Math.random());
+}
+
+
 
 
     /** 
@@ -94,9 +106,15 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
             session.setAttribute("username", username); 
             session.setAttribute("password", password);
             session.setAttribute("accountId", accountId);
+            Account userAccount = accountDao.getUserDetails(accountId); // Lấy thông tin người dùng từ cơ sở dữ liệu
+           
+            session.setAttribute("userAccount", userAccount);
 
             if (accountDao.isAdmin(username, password)) {
                 handleRememberMe(rememberMe, username, response);
+                 Admin admin = accountDao.getAdminDetails(username);
+                session.setAttribute("admin", admin);
+                
                 response.sendRedirect("admin.jsp");
             } else {
                 handleRememberMe(rememberMe, username, response);

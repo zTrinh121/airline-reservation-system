@@ -3,6 +3,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="flightList" class="dao.FlightDAO" />
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -11,6 +12,10 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="Travelix Project">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Expires" content="0">
+
         <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
         <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
@@ -34,17 +39,17 @@
 
                                         <div class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><img src="images/departure.png" alt="">Trips</div>
                                         <div class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start">
-                                            <div style="width: 50px; height: 50px; overflow: hidden;"> <!-- Khung có kích thước cố định 80x80px và ẩn tràn ra ngoài -->
-                                                <img src="images/ticket3.png" style="max-width: 100%; max-height: 100%; display: block;"> <!-- Hình ảnh tự động thu nhỏ để vừa với khung -->
+                                            <div style="width: 50px; height: 50px; overflow: hidden;"> 
+                                                <img src="images/ticket3.png" style="max-width: 100%; max-height: 100%; display: block;"> 
                                             </div>
-                                            <span style="margin-left: 10px;">Tickets Booked</span> <!-- Chèn "Ticket" cạnh hình ảnh với khoảng cách là 10px -->
+                                            <span style="margin-left: 10px;">Tickets Booked</span>
                                         </div>
 
 
                                     </div>		
                                 </div>
 
-                               
+
 
                                 <div class="search_panel active" style="margin-top: 10px;">
                                     <form action="flightController" method="get" id="search_form_1" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
@@ -69,7 +74,7 @@
                                             <div style="color: #000;">Depart. Date</div>
                                             <input type="date" class="form-control" name="departureDate" style="width: 7.5rem;" required>
                                         </div>
-                                        
+
                                         <div class="search_item">
                                             <div style="color: #000;">Type</div>
                                             <select id="inputState" class="form-control" name="ticketType" style="width: 7.5rem;">
@@ -86,122 +91,122 @@
                                         <button class="button search_button">search<span></span><span></span><span></span></button>
                                     </form>
 
-                                 
-                            </div>
-                        </div>
-                    </div>		
-                </div>
-                <div class="intro">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col">
-                                <h2 class="intro_title text-center">We have the best tours</h2>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-10 offset-lg-1">
-                                <div class="intro_text text-center">
-                                    <p>Travel to make memories all around the world!!! </p>
+
                                 </div>
                             </div>
-                        </div>
-                        <div class="row intro_items">
+                        </div>		
+                    </div>
+                    <div class="intro">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <h2 class="intro_title text-center">We have the best tours</h2>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-10 offset-lg-1">
+                                    <div class="intro_text text-center">
+                                        <p>Travel to make memories all around the world!!! </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row intro_items">
 
-                            <!-- Intro Item -->
+                                <!-- Intro Item -->
 
-                            <div class="col-lg-4 intro_col">
-                                <div class="intro_item">
-                                    <div class="intro_item_overlay"></div>
-                                    <!-- Image by https://unsplash.com/@dnevozhai -->
-                                    <div class="intro_item_background" style="background-image:url(images/intro_1.jpg)"></div>
-                                    <div class="intro_item_content d-flex flex-column align-items-center justify-content-center">
-                                        <div class="intro_date">May 25th - June 01st</div>
-                                        <div class="button intro_button"><div class="button_bcg"></div><a href="#">see more<span></span><span></span><span></span></a></div>
-                                        <div class="intro_center text-center">
-                                            <h1>Da Nang</h1>
-                                            <div class="intro_price">From $1450</div>
-                                            <div class="rating rating_4">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
+                                <div class="col-lg-4 intro_col">
+                                    <div class="intro_item">
+                                        <div class="intro_item_overlay"></div>
+                                        <!-- Image by https://unsplash.com/@dnevozhai -->
+                                        <div class="intro_item_background" style="background-image:url(images/intro_1.jpg)"></div>
+                                        <div class="intro_item_content d-flex flex-column align-items-center justify-content-center">
+                                            <div class="intro_date">May 25th - June 01st</div>
+                                            <div class="button intro_button"><div class="button_bcg"></div><a href="#">see more<span></span><span></span><span></span></a></div>
+                                            <div class="intro_center text-center">
+                                                <h1>Da Nang</h1>
+                                                <div class="intro_price">From $1450</div>
+                                                <div class="rating rating_4">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <!-- Intro Item -->
+                                <!-- Intro Item -->
 
-                            <div class="col-lg-4 intro_col">
-                                <div class="intro_item">
-                                    <div class="intro_item_overlay"></div>
-                                    <div class="intro_item_background" style="background-image:url(images/intro_2.jpg)"></div>
-                                    <div class="intro_item_content d-flex flex-column align-items-center justify-content-center">
-                                        <div class="intro_date">May 25th - June 01st</div>
-                                        <div class="button intro_button"><div class="button_bcg"></div><a href="#">see more<span></span><span></span><span></span></a></div>
-                                        <div class="intro_center text-center">
-                                            <h1>Nha Trang</h1>
-                                            <div class="intro_price">From $1450</div>
-                                            <div class="rating rating_4">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
+                                <div class="col-lg-4 intro_col">
+                                    <div class="intro_item">
+                                        <div class="intro_item_overlay"></div>
+                                        <div class="intro_item_background" style="background-image:url(images/intro_2.jpg)"></div>
+                                        <div class="intro_item_content d-flex flex-column align-items-center justify-content-center">
+                                            <div class="intro_date">May 25th - June 01st</div>
+                                            <div class="button intro_button"><div class="button_bcg"></div><a href="#">see more<span></span><span></span><span></span></a></div>
+                                            <div class="intro_center text-center">
+                                                <h1>Nha Trang</h1>
+                                                <div class="intro_price">From $1450</div>
+                                                <div class="rating rating_4">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <!-- Intro Item -->
+                                <!-- Intro Item -->
 
-                            <div class="col-lg-4 intro_col">
-                                <div class="intro_item">
-                                    <div class="intro_item_overlay"></div>
-                                    <!-- Image by https://unsplash.com/@willianjusten -->
-                                    <div class="intro_item_background" style="background-image:url(images/intro_3.jpg)"></div>
-                                    <div class="intro_item_content d-flex flex-column align-items-center justify-content-center">
-                                        <div class="intro_date">May 25th - June 01st</div>
-                                        <div class="button intro_button"><div class="button_bcg"></div><a href="#">see more<span></span><span></span><span></span></a></div>
-                                        <div class="intro_center text-center">
-                                            <h1>Ha Noi</h1>
-                                            <div class="intro_price">From $1450</div>
-                                            <div class="rating rating_4">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
+                                <div class="col-lg-4 intro_col">
+                                    <div class="intro_item">
+                                        <div class="intro_item_overlay"></div>
+                                        <!-- Image by https://unsplash.com/@willianjusten -->
+                                        <div class="intro_item_background" style="background-image:url(images/intro_3.jpg)"></div>
+                                        <div class="intro_item_content d-flex flex-column align-items-center justify-content-center">
+                                            <div class="intro_date">May 25th - June 01st</div>
+                                            <div class="button intro_button"><div class="button_bcg"></div><a href="#">see more<span></span><span></span><span></span></a></div>
+                                            <div class="intro_center text-center">
+                                                <h1>Ha Noi</h1>
+                                                <div class="intro_price">From $1450</div>
+                                                <div class="rating rating_4">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- CTA -->
+
+                <jsp:include page="CTASlider.jsp" />
+
+                <!-- Testimonials -->
+                <jsp:include page="Testimonials_Map.jsp"/>
+
+                <jsp:include page="footer.jsp" />
             </div>
 
-            <!-- CTA -->
-
-            <jsp:include page="CTASlider.jsp" />
-
-            <!-- Testimonials -->
-            <jsp:include page="Testimonials_Map.jsp"/>
-
-            <jsp:include page="footer.jsp" />
-        </div>
-
-        <script src="js/jquery-3.2.1.min.js"></script>
-        <script src="styles/bootstrap4/popper.js"></script>
-        <script src="styles/bootstrap4/bootstrap.min.js"></script>
-        <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-        <script src="plugins/easing/easing.js"></script>
-        <script src="js/custom.js"></script>
+            <script src="js/jquery-3.2.1.min.js"></script>
+            <script src="styles/bootstrap4/popper.js"></script>
+            <script src="styles/bootstrap4/bootstrap.min.js"></script>
+            <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+            <script src="plugins/easing/easing.js"></script>
+            <script src="js/custom.js"></script>
 
     </body>
 

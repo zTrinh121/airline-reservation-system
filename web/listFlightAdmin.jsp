@@ -25,6 +25,8 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+          <link rel="stylesheet" type="text/css" href="decorate/profile.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-..." crossorigin="anonymous">
         
     </head>
 
@@ -53,6 +55,48 @@
                                         <li class="social_list_item"><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
                                     </ul>
                                 </div>
+                                <div class="user_box ml-auto justify-content-end" style="display: flex; align-items: center; position: relative;">
+                                    <% if (session != null && session.getAttribute("username") != null) {
+                                        String username = (String) session.getAttribute("username");
+                                    %>
+                                    <p style="color: #fff; font-family: 'Open Sans', 'sans-serif'; font-size: 16px; display: flex; align-items: center;">Welcome, <%= username%> ! <i id="avatarIcon" class="fa-solid fa-user" style="cursor: pointer; margin-left: 5px;"></i></p>
+
+
+                                    <div id="avatarDropdown" class="dropdown-content">
+                                        <a href="<%= request.getContextPath()%>/Login?action=logout">Log out</a>
+                                        <a href="<%= request.getContextPath()%>/a_profile.jsp">Show Profile</a>
+                                        <a href="<%= request.getContextPath()%>/password_a.jsp">Change Password</a>
+                                    </div>
+                                    <% }%>
+                                </div>
+
+                                <script>
+
+                                    var modal = document.getElementById('avatarModal');
+
+
+                                    var icon = document.getElementById("avatarIcon");
+
+
+                                    icon.onclick = function () {
+                                        var dropdown = document.getElementById("avatarDropdown");
+                                        dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+                                    }
+
+
+                                    window.onclick = function (event) {
+                                        if (!event.target.matches('#avatarIcon')) {
+                                            var dropdowns = document.getElementsByClassName("dropdown-content");
+                                            for (var i = 0; i < dropdowns.length; i++) {
+                                                var openDropdown = dropdowns[i];
+                                                if (openDropdown.style.display === "block") {
+                                                    openDropdown.style.display = "none";
+                                                }
+                                            }
+                                        }
+                                    }
+                                </script>
+
 
 
 
@@ -79,16 +123,47 @@
                                         <li class="main_nav_item"><a href="ticket.jsp">Ticket</a></li>
                                     </ul>
                                 </div>
-                                <div class="user_box ml-auto" style="display: flex; align-items: center;">
+                                <div class="user_box ml-auto justify-content-end" style="display: flex; align-items: center; position: relative;">
                                     <% if (session != null && session.getAttribute("username") != null) {
-                                            String username = (String) session.getAttribute("username");
+                                        String username = (String) session.getAttribute("username");
                                     %>
-                                    <p style="color: #fff; font-family: 'Open Sans', 'sans-serif'; font-size: 16px; margin-right: 10px;">Welcome, <%= username%> !</p>
-                                    <a href="<%= request.getContextPath()%>/Login?action=logout" style=" color: #fff; text-decoration: none; margin-top: -16px; cursor: pointer;font-weight:bold ">Log out</a>
+                                    <p style="color: #fff; font-family: 'Open Sans', 'sans-serif'; font-size: 16px; display: flex; align-items: center;">Welcome, <%= username%> ! <i id="avatarIcon" class="fa-solid fa-user" style="cursor: pointer; margin-left: 5px;"></i></p>
 
 
+                                    <div id="avatarDropdown" class="dropdown-content">
+                                        <a href="<%= request.getContextPath()%>/Login?action=logout">Log out</a>
+                                        <a href="<%= request.getContextPath()%>/a_profile.jsp">Show Profile</a>
+                                        <a href="<%= request.getContextPath()%>/password_a.jsp">Change Password</a>
+                                    </div>
                                     <% }%>
                                 </div>
+
+                                <script>
+
+                                    var modal = document.getElementById('avatarModal');
+
+
+                                    var icon = document.getElementById("avatarIcon");
+
+
+                                    icon.onclick = function () {
+                                        var dropdown = document.getElementById("avatarDropdown");
+                                        dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+                                    }
+
+
+                                    window.onclick = function (event) {
+                                        if (!event.target.matches('#avatarIcon')) {
+                                            var dropdowns = document.getElementsByClassName("dropdown-content");
+                                            for (var i = 0; i < dropdowns.length; i++) {
+                                                var openDropdown = dropdowns[i];
+                                                if (openDropdown.style.display === "block") {
+                                                    openDropdown.style.display = "none";
+                                                }
+                                            }
+                                        }
+                                    }
+                                </script>
 
 
                                 <div class="hamburger">
@@ -219,13 +294,11 @@
             <h4 style="color: red;">${err}</h4>
             <div>
                 <div class="container">
-                    <h1 class="text-center"style="color: #fff;font-size: 48px;font-weight: 800" ><b>FLIGHT LIST</b></h1> 
+                    <h1 class="text-center"style="color: #fff;font-size: 48px;font-weight: 800;color: #46185F" ><b>FLIGHT LIST</b></h1> 
                     <div class="table-wrapper">
                         <div class="table-title">
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <h2 style="color: #ffffff;">Flight Information</h2> <!-- Điều chỉnh màu sắc cho tiêu đề -->
-                                </div>
+                                
                                 <div class="col-sm-6">
 
                                 </div>
