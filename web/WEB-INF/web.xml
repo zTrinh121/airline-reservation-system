@@ -7,29 +7,27 @@
         <filter-name>LoginFilter</filter-name>
         <filter-class>filter.LoginFilter</filter-class>
     </filter>
-    
-   
     <filter-mapping>
         <filter-name>LoginFilter</filter-name>
         <url-pattern>/admin.jsp</url-pattern>
     </filter-mapping>
-     <filter-mapping>
+    <filter-mapping>
         <filter-name>LoginFilter</filter-name>
         <url-pattern>/addFlight.jsp</url-pattern>
     </filter-mapping>
-     <filter-mapping>
+    <filter-mapping>
         <filter-name>LoginFilter</filter-name>
         <url-pattern>/addFlightPassenger.jsp</url-pattern>
     </filter-mapping>
-     <filter-mapping>
+    <filter-mapping>
         <filter-name>LoginFilter</filter-name>
         <url-pattern>/addTicketAdmin.jsp</url-pattern>
     </filter-mapping>
-     <filter-mapping>
+    <filter-mapping>
         <filter-name>LoginFilter</filter-name>
         <url-pattern>/flight.jsp</url-pattern>
     </filter-mapping>
-     <filter-mapping>
+    <filter-mapping>
         <filter-name>LoginFilter</filter-name>
         <url-pattern>/listFlightAdmin.jsp</url-pattern>
     </filter-mapping>
@@ -49,7 +47,7 @@
         <filter-name>LoginFilter</filter-name>
         <url-pattern>/updateFlight.jsp</url-pattern>
     </filter-mapping>
-     <filter-mapping>
+    <filter-mapping>
         <filter-name>LoginFilter</filter-name>
         <url-pattern>/user.jsp</url-pattern>
     </filter-mapping>
@@ -61,10 +59,22 @@
         <filter-name>LoginFilter</filter-name>
         <url-pattern>/contact.jsp</url-pattern>
     </filter-mapping>
-
-    
-   
-    
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/profile.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/password.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/profile_a.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/password_a.jsp</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>Login</servlet-name>
         <servlet-class>controller.Login</servlet-class>
@@ -73,14 +83,18 @@
         <servlet-name>register</servlet-name>
         <servlet-class>dbcontext.register</servlet-class>
     </servlet>
-    
-   
     <servlet>
         <servlet-name>FlightServlet</servlet-name>
         <servlet-class>controller.FlightServlet</servlet-class>
     </servlet>
-    
-   
+    <servlet>
+        <servlet-name>ProfileServlet</servlet-name>
+        <servlet-class>controller.ProfileServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProfileServlet_a</servlet-name>
+        <servlet-class>controller.ProfileServlet_a</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -89,10 +103,17 @@
         <servlet-name>register</servlet-name>
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
-    
     <servlet-mapping>
         <servlet-name>FlightServlet</servlet-name>
         <url-pattern>/flightController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProfileServlet</servlet-name>
+        <url-pattern>/ProfileServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProfileServlet_a</servlet-name>
+        <url-pattern>/profile_a</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

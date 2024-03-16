@@ -2,7 +2,6 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:useBean id="flightList" class="dao.FlightDAO" />
 
 <!DOCTYPE html>
 <html lang="en">
@@ -100,6 +99,7 @@
 
 
 
+
                             </div>
                         </div>
                     </div>		
@@ -112,60 +112,18 @@
                         <div class="row">
                             <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start">
                                 <div class="logo_container">
-                                    <div class="logo"><a href="#"><img src="images/logo.png" alt="">HomeFlight</a></div>
+                                    <div class="logo"><a href="#"><img src="images/logo.png" alt="">travelix</a></div>
                                 </div>
                                 <div class="main_nav_container ml-auto">
                                     <ul class="main_nav_list">
                                         <li class="main_nav_item"><a href="admin.jsp">home</a></li>
-                                        <li class="main_nav_item"><a href="flightController">Flight</a></li>
+                                        <li class="main_nav_item"><a href="listFlightAdmin.jsp">Flight</a></li>
                                         <li class="main_nav_item"><a href="customer.jsp">Customer</a></li>
 
                                         <li class="main_nav_item"><a href="ticket.jsp">Ticket</a></li>
                                     </ul>
                                 </div>
-                                <div class="user_box ml-auto justify-content-end" style="display: flex; align-items: center; position: relative;">
-                                    <% if (session != null && session.getAttribute("username") != null) {
-                                        String username = (String) session.getAttribute("username");
-                                    %>
-                                    <p style="color: #fff; font-family: 'Open Sans', 'sans-serif'; font-size: 16px; display: flex; align-items: center;">Welcome, <%= username%> ! <i id="avatarIcon" class="fa-solid fa-user" style="cursor: pointer; margin-left: 5px;"></i></p>
-
-
-                                    <div id="avatarDropdown" class="dropdown-content">
-                                        <a href="<%= request.getContextPath()%>/Login?action=logout">Log out</a>
-                                        <a href="<%= request.getContextPath()%>/a_profile.jsp">Show Profile</a>
-                                        <a href="<%= request.getContextPath()%>/password_a.jsp">Change Password</a>
-                                    </div>
-                                    <% }%>
-                                </div>
-
-                                <script>
-
-                                    var modal = document.getElementById('avatarModal');
-
-
-                                    var icon = document.getElementById("avatarIcon");
-
-
-                                    icon.onclick = function () {
-                                        var dropdown = document.getElementById("avatarDropdown");
-                                        dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
-                                    }
-
-
-                                    window.onclick = function (event) {
-                                        if (!event.target.matches('#avatarIcon')) {
-                                            var dropdowns = document.getElementsByClassName("dropdown-content");
-                                            for (var i = 0; i < dropdowns.length; i++) {
-                                                var openDropdown = dropdowns[i];
-                                                if (openDropdown.style.display === "block") {
-                                                    openDropdown.style.display = "none";
-                                                }
-                                            }
-                                        }
-                                    }
-                                </script>
-
-
+                                
                                 <div class="hamburger">
                                     <i class="fa fa-bars trans_200"></i>
                                 </div>
@@ -291,11 +249,10 @@
                 </div>
 
             </div>
-            
+            <h4 style="color: red;">${err}</h4>
             <div>
-                <h4 style="color: green; margin-left: 30px; margin-top: 30px;">${msg}</h4>
                 <div class="container">
-                    <h1 class="text-center"style="color: #fff;font-size: 48px;font-weight: 800;color: #46185F" ><b>FLIGHT LIST</b></h1> 
+                    <h1 class="text-center"style="color: #fff;font-size: 48px;font-weight: 800 ;color:#46185F " ><b>TICKET LIST</b></h1> 
                     <div class="table-wrapper">
                         <div class="table-title">
                             <div class="row">
@@ -308,33 +265,21 @@
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th>Id</th>
-                                    <th>City</th>
-                                    <th>Day</th>
-                                    <th>Time</th>
-                                    <th>Action</th>
+                                    <th>pNameRecord</th>
+                                    <th>dateReservation</th>
+                                    <th>flightID</th>
+                                    <th>journeyDate</th>
+                                    <th>bookingStatus</th>
+                                    <th>noPassengers</th>
+                                     <th>payID</th>
+                                        <th>accountID</th>
+                                     
                                 </tr>
                             </thead>
                             <tbody>
 
                                 <c:forEach var="f" items="${list}">
-                                    <tr>
-                                        <c:url value="flightController" var="loadLink">
-                                            <c:param name="command" value="load"></c:param>
-                                            <c:param name="flightID" value="${f.flightID}"></c:param>
-                                        </c:url>
-                                        <c:url value="flightController" var="deleteLink">
-                                            <c:param name="command" value="delete"></c:param>
-                                            <c:param name="flightID" value="${f.flightID}"></c:param>
-                                        </c:url>
-                                        <td>${f.flightID}</td>
-                                        <td>From ${f.fromCity} - To ${f.toCity}</td>
-                                        <td>${f.departureDate} - ${f.arrivalDate}</td>
-                                        <td>${f.departureTime} - ${f.arrivalTime}</td>
-                                        <td>
-                                            <a href="${loadLink}" class="btn btn-primary"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                            <a href="${deleteLink}"  onclick="if(!(confirm('Sure?'))) return false" class="btn btn-primary"><i class="material-icons" data-toggle="tooltip" title="Delete" data-flightid="${f.flightID}">&#xE872;</i></a>
-                                        </td>
+                                   
                                     </tr>
                                 </c:forEach>
 
@@ -343,12 +288,8 @@
 
                     </div>
                 </div>
+              
                
-                <a href="addFlight.jsp" class="btn btn-success" style="background-color: #7e57c2;"><i class="material-icons">&#xE147;</i> <span>Add New Flight</span></a> <!-- Điều chỉnh màu sắc cho nút -->
-
-            </div>
-            <!-- Footer -->
-
             <jsp:include page="footer.jsp" />
 
         </div>
