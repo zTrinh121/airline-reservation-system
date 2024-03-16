@@ -169,12 +169,13 @@ public class FlightServlet extends HttpServlet {
                 request.setAttribute("priceBusiness", priceBusiness_raw);
 
                 request.getRequestDispatcher("addFlight.jsp").forward(request, response);
+            } else {
+                Flight f = new Flight(flightID, fromCity, toCity, departureDate, arrivalDate, departureTime, arrivalTime, seatEconomy, seatBusiness, priceEconomy, priceBusiness);
+                flightDAO.addFlight(f);
+                System.out.println(f);
+                listFlight(request, response);
             }
 
-            Flight f = new Flight(flightID, fromCity, toCity, departureDate, arrivalDate, departureTime, arrivalTime, seatEconomy, seatBusiness, priceEconomy, priceBusiness);
-            flightDAO.addFlight(f);
-            System.out.println(f);
-            listFlight(request, response);
         } catch (NumberFormatException e) {
             request.setAttribute("err", "Invalid Format");
         } catch (ParseException ex) {
@@ -250,13 +251,37 @@ public class FlightServlet extends HttpServlet {
             HttpSession session = request.getSession();
             numPassenger = Integer.parseInt(numPassenger_raw);
             departureDate = Date.valueOf(departureDate_raw);
+            if (validateSearch(fromCity, toCity, numPassenger) != "") {
+                request.setAttribute("fromCity", fromCity);
+                request.setAttribute("toCity", toCity);
+                request.setAttribute("numPassenger", numPassenger);
+                request.setAttribute("departureDate", departureDate);
+                request.setAttribute("ticketType", ticketType);
+                request.setAttribute("err", validateSearch(fromCity, toCity, numPassenger));
+                request.getRequestDispatcher("user.jsp").forward(request, response);
+
+            }
+
             ArrayList<Flight> listSearch = flightDAO.searchFlight(fromCity, toCity, departureDate_raw, ticketType, numPassenger);
+            for (Flight flight : listSearch) {
+                System.out.println(flight);
+            }
             session.setAttribute("searchList", listSearch);
             session.setAttribute("numPass", numPassenger);
             session.setAttribute("ticketType", ticketType);
             request.getRequestDispatcher("searchResult.jsp").forward(request, response);
         } catch (Exception e) {
         }
+    }
+
+    private String validateSearch(String fromCity, String toCity, int numPass) {
+        if (fromCity.equalsIgnoreCase(toCity)) {
+            return "From and to city cannot be the same";
+        }
+        if (numPass <= 0) {
+            return "Number of passengers must be greater than 0";
+        }
+        return "";
     }
 
     private void bookFlight(HttpServletRequest request, HttpServletResponse response) throws Exception {

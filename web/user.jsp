@@ -34,37 +34,34 @@
                     <div class="container fill_height">
                         <div class="row fill_height">
                             <div class="col fill_height">
-                                
-
-
-
+                                <h4 style="color: red; margin-left: 10px;">${err}</h4>
                                 <div class="search_panel active" style="margin-top: 10px;">
                                     <form action="flightController" method="get" id="search_form_1" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
                                         <input type="hidden" name="command" value="search" />
                                         <div class="search_item">
                                             <div style="color: #000;">From City</div>
                                             <select id="inputState" class="form-control" name="fromCity" style="width: 9rem; border-radius: 10px;" >
-                                                <c:forEach var="f" items="${flightList.getAll()}">
-                                                    <option>${f.fromCity}</option>
+                                                <c:forEach var="f" items="${flightList.getUniqueCity()}">
+                                                    <option value="${f}" <c:if test="${f eq fromCity}">selected</c:if>>${f}</option>
                                                 </c:forEach>
                                             </select>
                                         </div>
                                         <div class="search_item">
                                             <div style="color: #000;">To City</div>
                                             <select id="inputState" class="form-control" name="toCity" style="width: 9rem; border-radius: 10px;">
-                                                <c:forEach var="f" items="${flightList.getAll()}">
-                                                    <option>${f.toCity}</option>
+                                                <c:forEach var="f" items="${flightList.getUniqueCity()}">
+                                                    <option value="${f}" <c:if test="${f eq toCity}">selected</c:if>>${f}</option>
                                                 </c:forEach>
                                             </select>
                                         </div>
                                         <div class="search_item">
                                             <div style="color: #000;">Depart. Date</div>
-                                            <input type="date" class="form-control" name="departureDate" style="width: 7.5rem; border-radius: 10px;" required>
+                                            <input type="date" value="${departureDate}" class="form-control" name="departureDate" style="width: 7.5rem; border-radius: 10px;" required>
                                         </div>
 
                                         <div class="search_item">
                                             <div style="color: #000;">Type</div>
-                                            <select id="inputState" class="form-control" name="ticketType" style="width: 7.5rem;border-radius: 10px;">
+                                            <select id="inputState" class="form-control" name="ticketType" style="width: 7.5rem;border-radius: 10px;" value="${ticketType}">
                                                 <option value="Economy">Economy</option>
                                                 <option value="Business">Business</option>
                                             </select>

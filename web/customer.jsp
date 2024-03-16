@@ -2,6 +2,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:useBean id="passengerList" class="dao.PassengerDAO" />
 
 
 <!DOCTYPE html>
@@ -25,9 +26,9 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-          <link rel="stylesheet" type="text/css" href="decorate/profile.css">
+        <link rel="stylesheet" type="text/css" href="decorate/profile.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-..." crossorigin="anonymous">
-        
+
     </head>
 
     <body>
@@ -57,7 +58,7 @@
                                 </div>
                                 <div class="user_box ml-auto justify-content-end" style="display: flex; align-items: center; position: relative;">
                                     <% if (session != null && session.getAttribute("username") != null) {
-                                        String username = (String) session.getAttribute("username");
+                                            String username = (String) session.getAttribute("username");
                                     %>
                                     <p style="color: #fff; font-family: 'Open Sans', 'sans-serif'; font-size: 16px; display: flex; align-items: center;">Welcome, <%= username%> ! <i id="avatarIcon" class="fa-solid fa-user" style="cursor: pointer; margin-left: 5px;"></i></p>
 
@@ -115,13 +116,13 @@
                                 <div class="main_nav_container ml-auto">
                                     <ul class="main_nav_list">
                                         <li class="main_nav_item"><a href="admin.jsp">home</a></li>
-                                        <li class="main_nav_item"><a href="listFlightAdmin.jsp">Flight</a></li>
+                                        <li class="main_nav_item"><a href="flightController">Flight</a></li>
                                         <li class="main_nav_item"><a href="customer.jsp">Customer</a></li>
 
                                         <li class="main_nav_item"><a href="ticket.jsp">Ticket</a></li>
                                     </ul>
                                 </div>
-                               
+
 
                                 <div class="hamburger">
                                     <i class="fa fa-bars trans_200"></i>
@@ -255,7 +256,7 @@
                     <div class="table-wrapper">
                         <div class="table-title">
                             <div class="row">
-                                
+
                                 <div class="col-sm-6">
 
                                 </div>
@@ -264,18 +265,25 @@
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
-                                   
-                                    <th>Pid</th>
+
+                                    <th>ID</th>
                                     <th>PNameRecord</th>
-                                    <th>Pname</th>
+                                    <th>Full Name</th>
                                     <th>Age</th>
                                     <th>Gender</th>
                                 </tr>
                             </thead>
                             <tbody>
 
-                                <c:forEach var="f" items="${list}">
-                                   
+                                <c:forEach var="p" items="${passengerList.getAll()}">
+
+                                    <tr>
+                                        <td>${p.pID}</td>
+                                        <td>${p.pNameRecord}</td>
+                                        <td>${p.pName}</td>
+                                        <td>${p.age}</td>
+                                        <td>${p.gender}</td>
+
                                     </tr>
                                 </c:forEach>
 
@@ -284,18 +292,18 @@
 
                     </div>
                 </div>
-              
-               
-            <jsp:include page="footer.jsp" />
 
-        </div>
 
-        <script src="js/jquery-3.2.1.min.js"></script>
-        <script src="styles/bootstrap4/popper.js"></script>
-        <script src="styles/bootstrap4/bootstrap.min.js"></script>
-        <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-        <script src="plugins/easing/easing.js"></script>
-        <script src="js/custom.js"></script>
+                <jsp:include page="footer.jsp" />
+
+            </div>
+
+            <script src="js/jquery-3.2.1.min.js"></script>
+            <script src="styles/bootstrap4/popper.js"></script>
+            <script src="styles/bootstrap4/bootstrap.min.js"></script>
+            <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+            <script src="plugins/easing/easing.js"></script>
+            <script src="js/custom.js"></script>
 
     </body>
 

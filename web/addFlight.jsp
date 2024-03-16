@@ -222,7 +222,7 @@
                 </div>
 
             </div>
-            <h4 style="color: red; margin-left: 10px;">${err}</h4>
+            <h4 style="color: red; margin-left: 10px; margin-top: 10px;">${err}</h4>
             <form action="flightController" method="get">
                 <input type="hidden" value="add" name="command" />
                 <div class="modal-body">					
@@ -233,16 +233,16 @@
                     <div class="form-group">
                         <label>From City</label>
                         <select id="fromCity" class="form-control" name="fromCity" style="height: 3.5rem;" required="">
-                            <c:forEach var="f" items="${flightList.getAll()}">
-                                <option value="${fromCity}" ${f.fromCity eq fromCity ? 'selected' : ''}>${f.fromCity}</option>
+                            <c:forEach var="f" items="${flightList.getUniqueCity()}">
+                                <option value="${f}" <c:if test="${f eq fromCity}">selected</c:if>>${f}</option>
                             </c:forEach>
                         </select>
                     </div>
                     <div class="form-group">
                         <label>To city</label>
                         <select id="toCity" class="form-control" name="toCity" style="height: 3.5rem;" required="">
-                            <c:forEach var="f" items="${flightList.getAll()}">
-                                <option value="${toCity}" ${f.toCity eq toCity ? 'selected' : ''}>${f.toCity}</option>
+                            <c:forEach var="f" items="${flightList.getUniqueCity()}">
+                                <option value="${f}" <c:if test="${f eq toCity}">selected</c:if>>${f}</option>
                             </c:forEach>
                         </select>
                     </div>

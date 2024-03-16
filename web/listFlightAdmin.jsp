@@ -25,9 +25,9 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-          <link rel="stylesheet" type="text/css" href="decorate/profile.css">
+        <link rel="stylesheet" type="text/css" href="decorate/profile.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-..." crossorigin="anonymous">
-        
+
     </head>
 
     <body>
@@ -123,21 +123,7 @@
                                         <li class="main_nav_item"><a href="ticket.jsp">Ticket</a></li>
                                     </ul>
                                 </div>
-                                <div class="user_box ml-auto justify-content-end" style="display: flex; align-items: center; position: relative;">
-                                    <% if (session != null && session.getAttribute("username") != null) {
-                                        String username = (String) session.getAttribute("username");
-                                    %>
-                                    <p style="color: #fff; font-family: 'Open Sans', 'sans-serif'; font-size: 16px; display: flex; align-items: center;">Welcome, <%= username%> ! <i id="avatarIcon" class="fa-solid fa-user" style="cursor: pointer; margin-left: 5px;"></i></p>
-
-
-                                    <div id="avatarDropdown" class="dropdown-content">
-                                        <a href="<%= request.getContextPath()%>/Login?action=logout">Log out</a>
-                                        <a href="<%= request.getContextPath()%>/a_profile.jsp">Show Profile</a>
-                                        <a href="<%= request.getContextPath()%>/password_a.jsp">Change Password</a>
-                                    </div>
-                                    <% }%>
-                                </div>
-
+                                
                                 <script>
 
                                     var modal = document.getElementById('avatarModal');
@@ -292,7 +278,7 @@
 
             </div>
             
-            <div>
+            
                 <h4 style="color: green; margin-left: 30px; margin-top: 30px;">${msg}</h4>
                 <div class="container">
                     <h1 class="text-center"style="color: #fff;font-size: 48px;font-weight: 800;color: #46185F" ><b>FLIGHT LIST</b></h1> 

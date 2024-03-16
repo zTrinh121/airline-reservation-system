@@ -117,7 +117,7 @@
                                 <div class="main_nav_container ml-auto">
                                     <ul class="main_nav_list">
                                         <li class="main_nav_item"><a href="admin.jsp">home</a></li>
-                                        <li class="main_nav_item"><a href="listFlightAdmin.jsp">Flight</a></li>
+                                        <li class="main_nav_item"><a href="flightController">Flight</a></li>
                                         <li class="main_nav_item"><a href="customer.jsp">Customer</a></li>
 
                                         <li class="main_nav_item"><a href="ticket.jsp">Ticket</a></li>

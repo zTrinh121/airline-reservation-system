@@ -45,7 +45,7 @@
                                 <c:if test="${ empty searchList}">
                                     <h3 class="text-center" style="color: black; margin-top: 50px;"> No available flights    </h3>
                                 </c:if>
-
+                                    <a href="user.jsp" class="btn btn-default text-center" >Back to Home</a>
                                 <!-- Offers -->
 
                                 <div class="offers" style="padding-top: 10px; background: #fff;">
