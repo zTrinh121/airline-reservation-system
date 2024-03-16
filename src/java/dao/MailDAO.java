@@ -1,8 +1,9 @@
+package dao;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dao;
+
 
 import java.util.Properties;
 import javax.mail.Message;
@@ -52,11 +53,11 @@ public class MailDAO {
         }
     }
     
-    public static void main(String[] args) {
-        String to = "trinhntmde180146@fpt.edu.vn";
-        String subject = "Dang ky nhan thu thanh cong";
-        String message = "Cam on ban da dang ky nhan thu";
-        MailDAO md = new MailDAO();
-        md.send(to, subject, message);
-    }
+//    public static void main(String[] args) {
+//        String to = "trinhntmde180146@fpt.edu.vn";
+//        String subject = "Dang ky nhan thu thanh cong";
+//        String message = "Cam on ban da dang ky nhan thu";
+//        MailDAO md = new MailDAO();
+//        md.send(to, subject, message);
+//    }
 }

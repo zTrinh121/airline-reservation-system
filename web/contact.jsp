@@ -11,7 +11,7 @@
         <title>Contact</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="description" content="Travelix Project">
+        <meta name="description" content="HomeFlight Project">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
         <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -66,7 +66,7 @@
                         <div class="row">
                             <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start">
                                 <div class="logo_container">
-                                    <div class="logo"><a href="#"><img src="images/logo.png" alt="">travelix</a></div>
+                                    <div class="logo"><a href="#"><img src="images/logo.png" alt="">HomeFlight</a></div>
                                 </div>
                                 <div class="main_nav_container ml-auto">
                                     <ul class="main_nav_list">
@@ -140,15 +140,15 @@
 
                             <!-- Contact Form -->
                             <div class="contact_form_container">
-                                <div class="contact_title text-center">get in touch</div>
-                                <form action="#" id="contact_form" class="contact_form text-center">
-                                    <input type="text" id="contact_form_name" class="contact_form_name input_field" placeholder="Name" required="required" data-error="Name is required.">
-                                    <input type="text" id="contact_form_email" class="contact_form_email input_field" placeholder="E-mail" required="required" data-error="Email is required.">
-                                    <input type="text" id="contact_form_subject" class="contact_form_subject input_field" placeholder="Subject" required="required" data-error="Subject is required.">
-                                    <textarea id="contact_form_message" class="text_field contact_form_message" name="message" rows="4" placeholder="Message" required="required" data-error="Please, write us a message."></textarea>
-                                    <button type="submit" id="form_submit_button" class="form_submit_button button trans_200">send message<span></span><span></span><span></span></button>
+                                <div class="contact_title text-center">Get latest information from us</div>
+                                <form action="MailServlet" method="get" id="contact_form" class="contact_form text-center">
+                                    <input name="name" type="text" id="contact_form_name" class="contact_form_name input_field" placeholder="Name" required="required" data-error="Name is required.">
+                                    <input name="email" type="text" id="contact_form_email" class="contact_form_email input_field" placeholder="E-mail" required="required" data-error="Email is required.">
+                                    <button type="submit" id="form_submit_button" class="form_submit_button button trans_200">subscribe<span></span><span></span><span></span></button>
                                 </form>
+                                <p style="margin-top: 10px; color: #fff; font-family: 'Open Sans', 'sans-serif'; font-size: 16px; text-align: center;" >${mess}</p>
                             </div>
+                            
 
                         </div>
                     </div>

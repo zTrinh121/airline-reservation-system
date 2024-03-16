@@ -119,7 +119,6 @@ public class FlightServlet extends HttpServlet {
         for (Flight flight : list) {
             System.out.println(flight);
         }
-        System.out.println("Ko in ");
         request.getRequestDispatcher("listFlightAdmin.jsp").forward(request, response);
     }
 
@@ -141,12 +140,6 @@ public class FlightServlet extends HttpServlet {
         Time departureTime, arrivalTime;
         int seatEconomy, seatBusiness;
         double priceEconomy, priceBusiness;
-        System.out.println("Sai 1");
-        if (validate(flightID, fromCity, toCity) != "") {
-            System.out.println(validate(flightID, fromCity, toCity));
-            request.setAttribute("err", validate(flightID, fromCity, toCity));
-            request.getRequestDispatcher("addFlight.jsp").forward(request, response);
-        }
 
         try {
             seatEconomy = Integer.parseInt(seatEconomy_raw);
@@ -160,6 +153,24 @@ public class FlightServlet extends HttpServlet {
 
             priceEconomy = Double.parseDouble(priceEconomy_raw);
             priceBusiness = Double.parseDouble(priceBusiness_raw);
+            if (validate(flightID, fromCity, toCity, seatEconomy, seatBusiness, priceEconomy, priceBusiness) != "") {
+                request.setAttribute("err", validate(flightID, fromCity, toCity, seatEconomy, seatBusiness, priceEconomy, priceBusiness));
+                request.setAttribute("flightID", flightID);
+                request.setAttribute("fromCity", fromCity);
+                request.setAttribute("toCity", toCity);
+                request.setAttribute("departureDate", departureDate_raw);
+                request.setAttribute("arrivalDate", arrivalDate_raw);
+                request.setAttribute("arrivalTime", arrivalTime_raw);
+                request.setAttribute("departureTime", departureTime_raw);
+
+                request.setAttribute("seatEconomy", seatEconomy_raw);
+                request.setAttribute("seatBusiness", seatBusiness_raw);
+                request.setAttribute("priceEconomy", priceEconomy_raw);
+                request.setAttribute("priceBusiness", priceBusiness_raw);
+
+                request.getRequestDispatcher("addFlight.jsp").forward(request, response);
+            }
+
             Flight f = new Flight(flightID, fromCity, toCity, departureDate, arrivalDate, departureTime, arrivalTime, seatEconomy, seatBusiness, priceEconomy, priceBusiness);
             flightDAO.addFlight(f);
             System.out.println(f);
@@ -223,6 +234,7 @@ public class FlightServlet extends HttpServlet {
     private void deleteFlight(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String flightID = request.getParameter("flightID");
         flightDAO.delete(flightID);
+        request.setAttribute("msg", flightID + " has been deleted");
         listFlight(request, response);
     }
 
@@ -256,12 +268,31 @@ public class FlightServlet extends HttpServlet {
         request.getRequestDispatcher("addFlightPassenger.jsp").forward(request, response);
     }
 
-    private String validate(String flightID, String fromCity, String toCity) {
+    private String validate(String flightID, String fromCity, String toCity, int seatEco, int seatBus, double priceEco, double priceBus) {
+        Flight f = flightDAO.getFlightById(flightID);
         if (!flightID.matches("^VN\\d{3}$")) {
-            return "FlightID must follow VN+3digits";
+            return "FlightID must follow VN + 3digits";
         }
         if (fromCity.equalsIgnoreCase(toCity)) {
             return "From City and To City cannot be the same";
+        }
+        if (f != null) {
+            return "Flight ID has been existed. Try again";
+        }
+        if (fromCity.isEmpty() || toCity.isEmpty()) {
+            return "City cannot be empty";
+        }
+        if (seatEco <= 0) {
+            return "Seat Economy must be a positive integer";
+        }
+        if (seatBus < 0) {
+            return "Seat Business must be a positive integer";
+        }
+        if (priceEco < 0) {
+            return "Price Economy must be a positive integer";
+        }
+        if (priceBus < 0) {
+            return "Price Business must be a positive integer";
         }
         return "";
     }

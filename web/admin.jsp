@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Travelix</title>
+        <title>HomeFlight</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="Travelix Project">
@@ -59,7 +59,7 @@
                         <div class="row">
                             <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start">
                                 <div class="logo_container">
-                                    <div class="logo"><a href="#"><img src="images/logo.png" alt="">travelix</a></div>
+                                    <div class="logo"><a href="#"><img src="images/logo.png" alt="">HomeFlight</a></div>
                                 </div>
                                 <div class="main_nav_container ml-auto">
                                     <ul class="main_nav_list">

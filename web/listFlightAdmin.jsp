@@ -68,12 +68,12 @@
                         <div class="row">
                             <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start">
                                 <div class="logo_container">
-                                    <div class="logo"><a href="#"><img src="images/logo.png" alt="">travelix</a></div>
+                                    <div class="logo"><a href="#"><img src="images/logo.png" alt="">HomeFlight</a></div>
                                 </div>
                                 <div class="main_nav_container ml-auto">
                                     <ul class="main_nav_list">
                                         <li class="main_nav_item"><a href="admin.jsp">home</a></li>
-                                        <li class="main_nav_item"><a href="listFlightAdmin.jsp">Flight</a></li>
+                                        <li class="main_nav_item"><a href="flightController">Flight</a></li>
                                         <li class="main_nav_item"><a href="customer.jsp">Customer</a></li>
 
                                         <li class="main_nav_item"><a href="ticket.jsp">Ticket</a></li>
@@ -216,8 +216,9 @@
                 </div>
 
             </div>
-            <h4 style="color: red;">${err}</h4>
+            
             <div>
+                <h4 style="color: green; margin-left: 30px; margin-top: 30px;">${msg}</h4>
                 <div class="container">
                     <h1 class="text-center"style="color: #fff;font-size: 48px;font-weight: 800" ><b>FLIGHT LIST</b></h1> 
                     <div class="table-wrapper">
@@ -269,147 +270,8 @@
 
                     </div>
                 </div>
-                <!-- Add Modal HTML -->
-                <div id="addEmployeeModal" class="modal fade">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <form action="flightController" method="get">
-                                <input type="hidden" value="add" name="command" />
-                                <div class="modal-header">						
-                                    <h4 class="modal-title">Add new Flight</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                </div>
-                                <div class="modal-body">					
-                                    <div class="form-group">
-                                        <label>Flight ID</label>
-                                        <input type="text" class="form-control" name="flightID"  required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>From city</label>
-                                        <select id="inputState" class="form-control" name="fromCity">
-                                            <c:forEach var="f" items="${flightList.getAll()}">
-                                                <option>${f.fromCity}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>To city</label>
-                                        <select id="inputState" class="form-control" name="toCity">
-                                            <c:forEach var="f" items="${flightList.getAll()}">
-                                                <option>${f.toCity}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Departure Date</label>
-                                        <input type="date" class="form-control" name="departureDate" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Arrival Date</label>
-                                        <input type="date" class="form-control" name="arrivalDate" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Departure Time</label>
-                                        <input type="time" class="form-control" name="departureTime" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Arrival Time</label>
-                                        <input type="time" class="form-control" name="arrivalTime" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Seat Economy</label>
-                                        <input type="number" class="form-control" name="seatEconomy" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Seat Business</label>
-                                        <input type="number" class="form-control" name="seatBusiness" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Price Economy</label>
-                                        <input type="number" class="form-control" name="priceEconomy" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Price Business</label>
-                                        <input type="number" class="form-control" name="priceBusiness" required>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                    <input type="submit" class="btn btn-success" value="Add">
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <!-- Edit Modal HTML -->
-                <div id="editEmployeeModal" class="modal fade">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <form>
-                                <div class="modal-header">						
-                                    <h4 class="modal-title">Edit Flight</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                </div>
-                                <div class="modal-body">					
-                                    <div class="form-group">
-                                        <label>Flight ID</label>
-                                        <input type="text" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>From City</label>
-                                        <input type="email" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>To city</label>
-                                        <textarea class="form-control" required></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Departure Date</label>
-                                        <input type="text" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Arrival Date</label>
-                                        <input type="text" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>departure Time</label>
-                                        <input type="text" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Arrival Time</label>
-                                        <input type="text" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Seat Economy</label>
-                                        <input type="text" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Seat Business</label>
-                                        <input type="text" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Price Economy</label>
-                                        <input type="text" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Price Business</label>
-                                        <input type="text" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Jet ID</label>
-                                        <input type="text" class="form-control" required>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" >
-                                    <input type="submit" class="btn btn-info" value="Save" style="background-color: #52452b">
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <!-- Delete Modal HTML -->
-                <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal" style="background-color: #7e57c2;"><i class="material-icons">&#xE147;</i> <span>Add New Flight</span></a> <!-- Điều chỉnh màu sắc cho nút -->
+               
+                <a href="addFlight.jsp" class="btn btn-success" style="background-color: #7e57c2;"><i class="material-icons">&#xE147;</i> <span>Add New Flight</span></a> <!-- Điều chỉnh màu sắc cho nút -->
 
             </div>
             <!-- Footer -->

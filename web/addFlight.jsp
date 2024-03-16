@@ -1,8 +1,3 @@
-<%-- 
-    Document   : updateFlight
-    Created on : Mar 3, 2024, 8:43:30 PM
-    Author     : Trinh
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -11,7 +6,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Update Flight</title>
+        <title>Add Flight</title>
         <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
         <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
@@ -65,12 +60,12 @@
                         <div class="row">
                             <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start">
                                 <div class="logo_container">
-                                    <div class="logo"><a href="#"><img src="images/logo.png" alt="">HomeFlight</a></div>
+                                    <div class="logo"><a href="#"><img src="images/logo.png" alt="">travelix</a></div>
                                 </div>
                                 <div class="main_nav_container ml-auto">
                                     <ul class="main_nav_list">
                                         <li class="main_nav_item"><a href="admin.jsp">home</a></li>
-                                        <li class="main_nav_item"><a href="listFlightAdmin.jsp">Flight</a></li>
+                                        <li class="main_nav_item"><a href="flightController">Flight</a></li>
                                         <li class="main_nav_item"><a href="customer.jsp">Customer</a></li>
 
                                         <li class="main_nav_item"><a href="ticket.jsp">Ticket</a></li>
@@ -213,61 +208,61 @@
                 </div>
 
             </div>
-            <c:set var="flightController" value="${requestScope.flight}" />
+            <h4 style="color: red; margin-left: 10px;">${err}</h4>
             <form action="flightController" method="get">
-                <input type="hidden" value="update" name="command" />
+                <input type="hidden" value="add" name="command" />
                 <div class="modal-body">					
                     <div class="form-group">
                         <label>Flight ID</label>
-                        <input type="text" class="form-control" name="flightID" value="${flight.flightID}" readonly="">
+                        <input type="text" class="form-control" name="flightID" value="${flightID}">
                     </div>
                     <div class="form-group">
                         <label>From City</label>
-                        <select id="fromCity" class="form-control" name="fromCity" style="height: 3.5rem;">
+                        <select id="fromCity" class="form-control" name="fromCity" style="height: 3.5rem;" required="">
                             <c:forEach var="f" items="${flightList.getAll()}">
-                                <option value="${f.fromCity}" ${f.fromCity eq flight.fromCity ? 'selected' : ''}>${f.fromCity}</option>
+                                <option value="${fromCity}" ${f.fromCity eq fromCity ? 'selected' : ''}>${f.fromCity}</option>
                             </c:forEach>
                         </select>
                     </div>
                     <div class="form-group">
                         <label>To city</label>
-                        <select id="toCity" class="form-control" name="toCity" style="height: 3.5rem;">
+                        <select id="toCity" class="form-control" name="toCity" style="height: 3.5rem;" required="">
                             <c:forEach var="f" items="${flightList.getAll()}">
-                                <option value="${f.toCity}" ${f.toCity eq flight.toCity ? 'selected' : ''}>${f.toCity}</option>
+                                <option value="${toCity}" ${f.toCity eq toCity ? 'selected' : ''}>${f.toCity}</option>
                             </c:forEach>
                         </select>
                     </div>
                     <div class="form-group">
                         <label>Departure Date</label>
-                        <input type="date" class="form-control" name="departureDate" value="${flight.departureDate}">
+                        <input type="date" class="form-control" name="departureDate" value="${departureDate}">
                     </div>
                     <div class="form-group">
                         <label>Arrival Date</label>
-                        <input type="date" class="form-control" name="arrivalDate" value="${flight.arrivalDate}">
+                        <input type="date" class="form-control" name="arrivalDate" value="${arrivalDate}">
                     </div>
                     <div class="form-group">
                         <label>departure Time</label>
-                        <input type="time" class="form-control" name="departureTime" value="${flight.departureTime}">
+                        <input type="time" class="form-control" name="departureTime" value="${departureTime}">
                     </div>
                     <div class="form-group">
                         <label>Arrival Time</label>
-                        <input type="time" class="form-control" name="arrivalTime" value="${flight.arrivalTime}">
+                        <input type="time" class="form-control" name="arrivalTime" value="${arrivalTime}">
                     </div>
                     <div class="form-group">
                         <label>Seat Economy</label>
-                        <input type="number" class="form-control" name="seatEconomy" value="${flight.seatEconomy}">
+                        <input type="number" class="form-control" name="seatEconomy" value="${seatEconomy}">
                     </div>
                     <div class="form-group">
                         <label>Seat Business</label>
-                        <input type="number" class="form-control" name="seatBusiness" value="${flight.seatBusiness}">
+                        <input type="number" class="form-control" name="seatBusiness" value="${seatBusiness}">
                     </div>
                     <div class="form-group">
                         <label>Price Economy</label>
-                        <input type="text" class="form-control" name="priceEconomy" value="${flight.priceEconomy}">
+                        <input type="text" class="form-control" name="priceEconomy" value="${priceEconomy}">
                     </div>
                     <div class="form-group">
                         <label>Price Business</label>
-                        <input type="text" class="form-control" name="priceBusiness" value="${flight.priceBusiness}">
+                        <input type="text" class="form-control" name="priceBusiness" value="${priceBusiness}">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -276,6 +271,12 @@
                 </div>
             </form>
         </div>
+        <script src="js/jquery-3.2.1.min.js"></script>
+        <script src="styles/bootstrap4/popper.js"></script>
+        <script src="styles/bootstrap4/bootstrap.min.js"></script>
+        <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+        <script src="plugins/easing/easing.js"></script>
+        <script src="js/custom.js"></script>
     </body>
 </html>
 
