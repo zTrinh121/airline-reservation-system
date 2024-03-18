@@ -55,6 +55,23 @@ public class FlightDAO {
         return list;
     }
 
+    public ArrayList<String> getUniqueCity() {
+        ArrayList<Flight> flightList = new FlightDAO().getAll();
+        ArrayList<String> cityList = new ArrayList<>();
+        for (Flight flight : flightList) {
+            String fromCity = flight.getFromCity();
+            if (!cityList.contains(fromCity)) {
+                cityList.add(fromCity);
+            }
+            String toCity = flight.getToCity();
+            if (!cityList.contains(toCity)) {
+                cityList.add(toCity);
+            }
+
+        }
+        return cityList;
+    }
+
     public void addFlight(Flight b) {
         String sql = "INSERT INTO [dbo].[Flight]\n"
                 + "           ([flightID]\n"
@@ -161,7 +178,6 @@ public class FlightDAO {
                 list.add(b);
             }
             System.out.println(sql);
-            System.out.println("Depature date in sql" + departureDate);
             rs.close();
             con.close();
             statement.close();
@@ -242,13 +258,13 @@ public class FlightDAO {
         }
     }
 
-    public static void main(String[] args) {
-        ArrayList<Flight> list = new FlightDAO().getAll();
-//        for (Flight flight : list) {
-//            System.out.println(flight);
-//        }
-        FlightDAO dao = new FlightDAO();
-        System.out.println(dao.getFlightById("VN101").getFromCity());
-
-    }
+//    public static void main(String[] args) {
+//        ArrayList<Flight> list = new FlightDAO().getAll();
+////        for (Flight flight : list) {
+////            System.out.println(flight);
+////        }
+//        FlightDAO dao = new FlightDAO();
+//        System.out.println(dao.getFlightById("VN101").getFromCity());
+//
+//    }
 }

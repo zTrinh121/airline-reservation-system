@@ -1,17 +1,18 @@
-<%-- 
-    Document   : updateFlight
-    Created on : Mar 3, 2024, 8:43:30 PM
-    Author     : Trinh
---%>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:useBean id="flightList" class="dao.FlightDAO" />
+<jsp:useBean id="passengerList" class="dao.PassengerDAO" />
+
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Update Flight</title>
+        <title>HomeFlight</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="Travelix Project">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
         <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
@@ -25,11 +26,16 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="decorate/profile.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-..." crossorigin="anonymous">
+
     </head>
+
     <body>
-        <!-- Header -->
+
         <div class="super_container">
 
+            <!-- Header -->
 
             <header class="header">
 
@@ -50,7 +56,47 @@
                                         <li class="social_list_item"><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
                                     </ul>
                                 </div>
+                                <div class="user_box ml-auto justify-content-end" style="display: flex; align-items: center; position: relative;">
+                                    <% if (session != null && session.getAttribute("username") != null) {
+                                            String username = (String) session.getAttribute("username");
+                                    %>
+                                    <p style="color: #fff; font-family: 'Open Sans', 'sans-serif'; font-size: 16px; display: flex; align-items: center;">Welcome, <%= username%> ! <i id="avatarIcon" class="fa-solid fa-user" style="cursor: pointer; margin-left: 5px;"></i></p>
 
+
+                                    <div id="avatarDropdown" class="dropdown-content">
+                                        <a href="<%= request.getContextPath()%>/Login?action=logout">Log out</a>
+                                        <a href="<%= request.getContextPath()%>/a_profile.jsp">Show Profile</a>
+                                        <a href="<%= request.getContextPath()%>/password_a.jsp">Change Password</a>
+                                    </div>
+                                    <% }%>
+                                </div>
+
+                                <script>
+
+                                    var modal = document.getElementById('avatarModal');
+
+
+                                    var icon = document.getElementById("avatarIcon");
+
+
+                                    icon.onclick = function () {
+                                        var dropdown = document.getElementById("avatarDropdown");
+                                        dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+                                    }
+
+
+                                    window.onclick = function (event) {
+                                        if (!event.target.matches('#avatarIcon')) {
+                                            var dropdowns = document.getElementsByClassName("dropdown-content");
+                                            for (var i = 0; i < dropdowns.length; i++) {
+                                                var openDropdown = dropdowns[i];
+                                                if (openDropdown.style.display === "block") {
+                                                    openDropdown.style.display = "none";
+                                                }
+                                            }
+                                        }
+                                    }
+                                </script>
 
 
                             </div>
@@ -65,26 +111,16 @@
                         <div class="row">
                             <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start">
                                 <div class="logo_container">
-                                    <div class="logo"><a href="#"><img src="images/logo.png" alt="">HomeFlight</a></div>
+                                    <div class="logo"><a href="#"><img src="images/logo.png" alt="">travelix</a></div>
                                 </div>
                                 <div class="main_nav_container ml-auto">
                                     <ul class="main_nav_list">
                                         <li class="main_nav_item"><a href="admin.jsp">home</a></li>
-                                        <li class="main_nav_item"><a href="listFlightAdmin.jsp">Flight</a></li>
+                                        <li class="main_nav_item"><a href="flightController">Flight</a></li>
                                         <li class="main_nav_item"><a href="customer.jsp">Customer</a></li>
 
                                         <li class="main_nav_item"><a href="ticket.jsp">Ticket</a></li>
                                     </ul>
-                                </div>
-                                <div class="user_box ml-auto" style="display: flex; align-items: center;">
-                                    <% if (session != null && session.getAttribute("username") != null) {
-                                            String username = (String) session.getAttribute("username");
-                                    %>
-                                    <p style="color: #fff; font-family: 'Open Sans', 'sans-serif'; font-size: 16px; margin-right: 10px;">Welcome, <%= username%> !</p>
-                                    <a href="<%= request.getContextPath()%>/Login?action=logout" style=" color: #fff; text-decoration: none; margin-top: -16px; cursor: pointer;font-weight:bold ">Log out</a>
-
-
-                                    <% }%>
                                 </div>
 
 
@@ -213,70 +249,63 @@
                 </div>
 
             </div>
-            <c:set var="flightController" value="${requestScope.flight}" />
-            <form action="flightController" method="get">
-                <input type="hidden" value="update" name="command" />
-                <div class="modal-body">					
-                    <div class="form-group">
-                        <label>Flight ID</label>
-                        <input type="text" class="form-control" name="flightID" value="${flight.flightID}" readonly="">
-                    </div>
-                    <div class="form-group">
-                        <label>From City</label>
-                        <select id="fromCity" class="form-control" name="fromCity" style="height: 3.5rem;">
-                            <c:forEach var="f" items="${flightList.getAll()}">
-                                <option value="${f.fromCity}" ${f.fromCity eq flight.fromCity ? 'selected' : ''}>${f.fromCity}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>To city</label>
-                        <select id="toCity" class="form-control" name="toCity" style="height: 3.5rem;">
-                            <c:forEach var="f" items="${flightList.getAll()}">
-                                <option value="${f.toCity}" ${f.toCity eq flight.toCity ? 'selected' : ''}>${f.toCity}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Departure Date</label>
-                        <input type="date" class="form-control" name="departureDate" value="${flight.departureDate}">
-                    </div>
-                    <div class="form-group">
-                        <label>Arrival Date</label>
-                        <input type="date" class="form-control" name="arrivalDate" value="${flight.arrivalDate}">
-                    </div>
-                    <div class="form-group">
-                        <label>departure Time</label>
-                        <input type="time" class="form-control" name="departureTime" value="${flight.departureTime}">
-                    </div>
-                    <div class="form-group">
-                        <label>Arrival Time</label>
-                        <input type="time" class="form-control" name="arrivalTime" value="${flight.arrivalTime}">
-                    </div>
-                    <div class="form-group">
-                        <label>Seat Economy</label>
-                        <input type="number" class="form-control" name="seatEconomy" value="${flight.seatEconomy}">
-                    </div>
-                    <div class="form-group">
-                        <label>Seat Business</label>
-                        <input type="number" class="form-control" name="seatBusiness" value="${flight.seatBusiness}">
-                    </div>
-                    <div class="form-group">
-                        <label>Price Economy</label>
-                        <input type="text" class="form-control" name="priceEconomy" value="${flight.priceEconomy}">
-                    </div>
-                    <div class="form-group">
-                        <label>Price Business</label>
-                        <input type="text" class="form-control" name="priceBusiness" value="${flight.priceBusiness}">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <a href="flightController" class="btn btn-default" >Back to List</a>
-                    <input type="submit" class="btn btn-info" value="Save" style="background-color: #52452b">
-                </div>
-            </form>
-        </div>
-    </body>
-</html>
+            <h4 style="color: red;">${err}</h4>
+            <div>
+                <div class="container">
+                    <h1 class="text-center"style="color: #fff;font-size: 48px;font-weight: 800 ;color:#46185F" ><b>CUSTOMER LIST</b></h1> 
+                    <div class="table-wrapper">
+                        <div class="table-title">
+                            <div class="row">
 
+                                <div class="col-sm-6">
+
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+
+                                    <th>ID</th>
+                                    <th>PNameRecord</th>
+                                    <th>Full Name</th>
+                                    <th>Age</th>
+                                    <th>Gender</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <c:forEach var="p" items="${passengerList.getAll()}">
+
+                                    <tr>
+                                        <td>${p.pID}</td>
+                                        <td>${p.pNameRecord}</td>
+                                        <td>${p.pName}</td>
+                                        <td>${p.age}</td>
+                                        <td>${p.gender}</td>
+
+                                    </tr>
+                                </c:forEach>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+
+                <jsp:include page="footer.jsp" />
+
+            </div>
+
+            <script src="js/jquery-3.2.1.min.js"></script>
+            <script src="styles/bootstrap4/popper.js"></script>
+            <script src="styles/bootstrap4/bootstrap.min.js"></script>
+            <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+            <script src="plugins/easing/easing.js"></script>
+            <script src="js/custom.js"></script>
+
+    </body>
+
+</html>
 

@@ -154,11 +154,11 @@ public class PassengerDAO {
         }
     }
 
-    public static void main(String[] args) {
-        ArrayList<Passenger> list = new PassengerDAO().getAll();
-        for (Passenger flight : list) {
-            System.out.println(flight);
-        }
-
-    }
+//    public static void main(String[] args) {
+//        ArrayList<Passenger> list = new PassengerDAO().getAll();
+//        for (Passenger flight : list) {
+//            System.out.println(flight);
+//        }
+//
+//    }
 }

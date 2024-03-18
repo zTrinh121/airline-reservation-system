@@ -1,0 +1,27 @@
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #C9B6E4; /* Màu tím nhạt */
+    min-width: 10px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    top: 100%; /* Position dropdown below the element */
+    right: 0;
+    border-radius: 5px;
+}
+
+
+.dropdown-content a {
+    color: #333;
+    font-weight: bold;
+    padding: 8px 12px;
+    display: block;
+    text-decoration: none;
+}
+
+
+.dropdown-content a:hover {
+    background-color: #8a2be2; 
+    color: #fff;
+}

@@ -35,7 +35,7 @@
                             <div class="footer_col">
                                 <div class="footer_content footer_about">
                                     <div class="logo_container footer_logo">
-                                        <div class="logo"><a href="#"><img src="images/logo.png" alt="">travelix</a></div>
+                                        <div class="logo"><a href="#"><img src="images/logo.png" alt="">HomeFlight</a></div>
                                     </div>
                                     <p class="footer_about_text">No one realized how beautiful the trip was until they got home and fell on an old, familiar pillow.</p>
                                     <ul class="footer_social_list">

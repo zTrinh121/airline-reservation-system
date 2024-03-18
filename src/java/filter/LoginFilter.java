@@ -51,13 +51,20 @@ public class LoginFilter implements Filter {
         
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
+         if (!req.getRequestURI().endsWith("login.jsp")) {
+            // Thiết lập các headers để ngăn chặn lưu trữ vào bộ nhớ cache
+            res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+            res.setHeader("Pragma", "no-cache");
+            res.setHeader("Expires", "0");
+        }
          String requestURI = req.getRequestURI();
           
         HttpSession session = req.getSession(false);
           
      
-        String username = (String) session.getAttribute("username");
+       
         String password = (String) session.getAttribute("password");
+         String username = (String) session.getAttribute("username");
         AccountDao accountDao = new AccountDao();
         String userRole = accountDao.getUserRole(username, password);
 
@@ -68,25 +75,25 @@ public class LoginFilter implements Filter {
         if (isLoggedIn ) {
             System.out.println(userRole);
             if ("admin".equals(userRole)) {
-                List<String> adminPages = Arrays.asList("admin.jsp", "addFlight.jsp", "addFlightPassenger.jsp", "addTicketAdmin.jsp", "flight.jsp", "listFlightAdmin.jsp", "listFlightSearchAdmin.jsp", "listTicket.jsp", "searchFlight.jsp", "searchResult.jsp", "updateFlight.jsp", "updateTicket.jsp");
+                List<String> adminPages = Arrays.asList("profile_a.jsp","password_a.jsp","admin.jsp", "addFlight.jsp", "addFlightPassenger.jsp", "addTicketAdmin.jsp", "flight.jsp", "listFlightAdmin.jsp", "listFlightSearchAdmin.jsp", "listTicket.jsp", "searchFlight.jsp", "searchResult.jsp", "updateFlight.jsp", "updateTicket.jsp");
 
                 if (adminPages.stream().anyMatch(req.getRequestURI()::contains)) {
                     chain.doFilter(request, response);
 
                 }else{
-                    res.sendRedirect("error.jsp");
+                    res.sendRedirect("admin.jsp");
                     
                 }
             } else if ("user".equals(userRole)) {
                 System.out.println("hihih");
-                List<String> userPages = Arrays.asList("user.jsp", "offers", "contact.jsp");
+                List<String> userPages = Arrays.asList("user.jsp", "offers", "contact.jsp","profile.jsp","password.jsp");
 
                 if (userPages.stream().anyMatch(req.getRequestURI()::contains)) {
 
                     chain.doFilter(request, response);
 
                 }else{
-                    res.sendRedirect("error.jsp");
+                    res.sendRedirect("user.jsp");
                 }
 
             }

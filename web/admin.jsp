@@ -1,11 +1,13 @@
 
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:useBean id="flightList" class="dao.FlightDAO" />
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Travelix</title>
+        <title>HomeFlight</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="Travelix Project">
@@ -17,6 +19,15 @@
         <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
         <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
         <link rel="stylesheet" type="text/css" href="styles/responsive.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="decorate/profile.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-..." crossorigin="anonymous">
+
     </head>
 
     <body>
@@ -44,6 +55,48 @@
                                         <li class="social_list_item"><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
                                     </ul>
                                 </div>
+                                <div class="user_box ml-auto justify-content-end" style="display: flex; align-items: center; position: relative;">
+                                    <% if (session != null && session.getAttribute("username") != null) {
+                                        String username = (String) session.getAttribute("username");
+                                    %>
+                                    <p style="color: #fff; font-family: 'Open Sans', 'sans-serif'; font-size: 16px; display: flex; align-items: center;">Welcome, <%= username%> ! <i id="avatarIcon" class="fa-solid fa-user" style="cursor: pointer; margin-left: 5px;"></i></p>
+
+
+                                    <div id="avatarDropdown" class="dropdown-content">
+                                        <a href="<%= request.getContextPath()%>/Login?action=logout">Log out</a>
+                                        <a href="<%= request.getContextPath()%>/a_profile.jsp">Show Profile</a>
+                                        <a href="<%= request.getContextPath()%>/password_a.jsp">Change Password</a>
+                                    </div>
+                                    <% }%>
+                                </div>
+
+                                <script>
+
+                                    var modal = document.getElementById('avatarModal');
+
+
+                                    var icon = document.getElementById("avatarIcon");
+
+
+                                    icon.onclick = function () {
+                                        var dropdown = document.getElementById("avatarDropdown");
+                                        dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+                                    }
+
+
+                                    window.onclick = function (event) {
+                                        if (!event.target.matches('#avatarIcon')) {
+                                            var dropdowns = document.getElementsByClassName("dropdown-content");
+                                            for (var i = 0; i < dropdowns.length; i++) {
+                                                var openDropdown = dropdowns[i];
+                                                if (openDropdown.style.display === "block") {
+                                                    openDropdown.style.display = "none";
+                                                }
+                                            }
+                                        }
+                                    }
+                                </script>
+
 
 
 
@@ -59,7 +112,7 @@
                         <div class="row">
                             <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start">
                                 <div class="logo_container">
-                                    <div class="logo"><a href="#"><img src="images/logo.png" alt="">travelix</a></div>
+                                    <div class="logo"><a href="#"><img src="images/logo.png" alt="">HomeFlight</a></div>
                                 </div>
                                 <div class="main_nav_container ml-auto">
                                     <ul class="main_nav_list">
@@ -70,16 +123,33 @@
                                         <li class="main_nav_item"><a href="ticket.jsp">Ticket</a></li>
                                     </ul>
                                 </div>
-                                <div class="user_box ml-auto" style="display: flex; align-items: center;">
-                                    <% if (session != null && session.getAttribute("username") != null) {
-                                            String username = (String) session.getAttribute("username");
-                                    %>
-                                    <p style="color: #fff; font-family: 'Open Sans', 'sans-serif'; font-size: 16px; margin-right: 10px;">Welcome, <%= username%> !</p>
-                                    <a href="<%= request.getContextPath()%>/Login?action=logout" style=" color: #fff; text-decoration: none; margin-top: -16px; cursor: pointer;font-weight:bold ">Log out</a>
+                                
+                                <script>
+
+                                    var modal = document.getElementById('avatarModal');
 
 
-                                    <% }%>
-                                </div>
+                                    var icon = document.getElementById("avatarIcon");
+
+
+                                    icon.onclick = function () {
+                                        var dropdown = document.getElementById("avatarDropdown");
+                                        dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+                                    }
+
+
+                                    window.onclick = function (event) {
+                                        if (!event.target.matches('#avatarIcon')) {
+                                            var dropdowns = document.getElementsByClassName("dropdown-content");
+                                            for (var i = 0; i < dropdowns.length; i++) {
+                                                var openDropdown = dropdowns[i];
+                                                if (openDropdown.style.display === "block") {
+                                                    openDropdown.style.display = "none";
+                                                }
+                                            }
+                                        }
+                                    }
+                                </script>
 
 
                                 <div class="hamburger">
@@ -205,120 +275,12 @@
                     </div>
 
                 </div>
-
+<!--Main Content-->
             </div>
-
-
-            <!-- Intro -->
-
-            <div class="intro">
-                <div class="container">
-                    <div class="row">
-                        <div class="col">
-                            <h2 class="intro_title text-center">We have the best tours</h2>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-10 offset-lg-1">
-                            <div class="intro_text text-center">
-                                <p>Travel to make memories all around the world!!! </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row intro_items">
-
-                        <!-- Intro Item -->
-
-                        <div class="col-lg-4 intro_col">
-                            <div class="intro_item">
-                                <div class="intro_item_overlay"></div>
-                                <!-- Image by https://unsplash.com/@dnevozhai -->
-                                <div class="intro_item_background" style="background-image:url(images/intro_1.jpg)"></div>
-                                <div class="intro_item_content d-flex flex-column align-items-center justify-content-center">
-                                    <div class="intro_date">May 25th - June 01st</div>
-                                    <div class="button intro_button"><div class="button_bcg"></div><a href="#">see more<span></span><span></span><span></span></a></div>
-                                    <div class="intro_center text-center">
-                                        <h1>Da Nang</h1>
-                                        <div class="intro_price">From $1450</div>
-                                        <div class="rating rating_4">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Intro Item -->
-
-                        <div class="col-lg-4 intro_col">
-                            <div class="intro_item">
-                                <div class="intro_item_overlay"></div>
-                                <div class="intro_item_background" style="background-image:url(images/intro_2.jpg)"></div>
-                                <div class="intro_item_content d-flex flex-column align-items-center justify-content-center">
-                                    <div class="intro_date">May 25th - June 01st</div>
-                                    <div class="button intro_button"><div class="button_bcg"></div><a href="#">see more<span></span><span></span><span></span></a></div>
-                                    <div class="intro_center text-center">
-                                        <h1>Nha Trang</h1>
-                                        <div class="intro_price">From $1450</div>
-                                        <div class="rating rating_4">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Intro Item -->
-
-                        <div class="col-lg-4 intro_col">
-                            <div class="intro_item">
-                                <div class="intro_item_overlay"></div>
-                                <!-- Image by https://unsplash.com/@willianjusten -->
-                                <div class="intro_item_background" style="background-image:url(images/intro_3.jpg)"></div>
-                                <div class="intro_item_content d-flex flex-column align-items-center justify-content-center">
-                                    <div class="intro_date">May 25th - June 01st</div>
-                                    <div class="button intro_button"><div class="button_bcg"></div><a href="#">see more<span></span><span></span><span></span></a></div>
-                                    <div class="intro_center text-center">
-                                        <h1>Ha Noi</h1>
-                                        <div class="intro_price">From $1450</div>
-                                        <div class="rating rating_4">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+            
+            
+               
             </div>
-
-            <!-- CTA -->
-
-            <jsp:include page="CTASlider.jsp" />
-            <!-- Offers -->
-
-
-
-            <!-- Offers Item -->
-
-            <!-- Testimonials -->
-
-            <jsp:include page="Testimonials_Map.jsp" />
-
-
             <!-- Footer -->
 
             <jsp:include page="footer.jsp" />

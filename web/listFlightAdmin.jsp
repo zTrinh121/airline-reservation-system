@@ -25,7 +25,9 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        
+        <link rel="stylesheet" type="text/css" href="decorate/profile.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-..." crossorigin="anonymous">
+
     </head>
 
     <body>
@@ -53,6 +55,48 @@
                                         <li class="social_list_item"><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
                                     </ul>
                                 </div>
+                                <div class="user_box ml-auto justify-content-end" style="display: flex; align-items: center; position: relative;">
+                                    <% if (session != null && session.getAttribute("username") != null) {
+                                        String username = (String) session.getAttribute("username");
+                                    %>
+                                    <p style="color: #fff; font-family: 'Open Sans', 'sans-serif'; font-size: 16px; display: flex; align-items: center;">Welcome, <%= username%> ! <i id="avatarIcon" class="fa-solid fa-user" style="cursor: pointer; margin-left: 5px;"></i></p>
+
+
+                                    <div id="avatarDropdown" class="dropdown-content">
+                                        <a href="<%= request.getContextPath()%>/Login?action=logout">Log out</a>
+                                        <a href="<%= request.getContextPath()%>/a_profile.jsp">Show Profile</a>
+                                        <a href="<%= request.getContextPath()%>/password_a.jsp">Change Password</a>
+                                    </div>
+                                    <% }%>
+                                </div>
+
+                                <script>
+
+                                    var modal = document.getElementById('avatarModal');
+
+
+                                    var icon = document.getElementById("avatarIcon");
+
+
+                                    icon.onclick = function () {
+                                        var dropdown = document.getElementById("avatarDropdown");
+                                        dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+                                    }
+
+
+                                    window.onclick = function (event) {
+                                        if (!event.target.matches('#avatarIcon')) {
+                                            var dropdowns = document.getElementsByClassName("dropdown-content");
+                                            for (var i = 0; i < dropdowns.length; i++) {
+                                                var openDropdown = dropdowns[i];
+                                                if (openDropdown.style.display === "block") {
+                                                    openDropdown.style.display = "none";
+                                                }
+                                            }
+                                        }
+                                    }
+                                </script>
+
 
 
 
@@ -68,27 +112,44 @@
                         <div class="row">
                             <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start">
                                 <div class="logo_container">
-                                    <div class="logo"><a href="#"><img src="images/logo.png" alt="">travelix</a></div>
+                                    <div class="logo"><a href="#"><img src="images/logo.png" alt="">HomeFlight</a></div>
                                 </div>
                                 <div class="main_nav_container ml-auto">
                                     <ul class="main_nav_list">
                                         <li class="main_nav_item"><a href="admin.jsp">home</a></li>
-                                        <li class="main_nav_item"><a href="listFlightAdmin.jsp">Flight</a></li>
+                                        <li class="main_nav_item"><a href="flightController">Flight</a></li>
                                         <li class="main_nav_item"><a href="customer.jsp">Customer</a></li>
 
                                         <li class="main_nav_item"><a href="ticket.jsp">Ticket</a></li>
                                     </ul>
                                 </div>
-                                <div class="user_box ml-auto" style="display: flex; align-items: center;">
-                                    <% if (session != null && session.getAttribute("username") != null) {
-                                            String username = (String) session.getAttribute("username");
-                                    %>
-                                    <p style="color: #fff; font-family: 'Open Sans', 'sans-serif'; font-size: 16px; margin-right: 10px;">Welcome, <%= username%> !</p>
-                                    <a href="<%= request.getContextPath()%>/Login?action=logout" style=" color: #fff; text-decoration: none; margin-top: -16px; cursor: pointer;font-weight:bold ">Log out</a>
+                                
+                                <script>
+
+                                    var modal = document.getElementById('avatarModal');
 
 
-                                    <% }%>
-                                </div>
+                                    var icon = document.getElementById("avatarIcon");
+
+
+                                    icon.onclick = function () {
+                                        var dropdown = document.getElementById("avatarDropdown");
+                                        dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+                                    }
+
+
+                                    window.onclick = function (event) {
+                                        if (!event.target.matches('#avatarIcon')) {
+                                            var dropdowns = document.getElementsByClassName("dropdown-content");
+                                            for (var i = 0; i < dropdowns.length; i++) {
+                                                var openDropdown = dropdowns[i];
+                                                if (openDropdown.style.display === "block") {
+                                                    openDropdown.style.display = "none";
+                                                }
+                                            }
+                                        }
+                                    }
+                                </script>
 
 
                                 <div class="hamburger">
@@ -216,16 +277,15 @@
                 </div>
 
             </div>
-            <h4 style="color: red;">${err}</h4>
-            <div>
+            
+            
+                <h4 style="color: green; margin-left: 30px; margin-top: 30px;">${msg}</h4>
                 <div class="container">
-                    <h1 class="text-center"style="color: #fff;font-size: 48px;font-weight: 800" ><b>FLIGHT LIST</b></h1> 
+                    <h1 class="text-center"style="color: #fff;font-size: 48px;font-weight: 800;color: #46185F" ><b>FLIGHT LIST</b></h1> 
                     <div class="table-wrapper">
                         <div class="table-title">
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <h2 style="color: #ffffff;">Flight Information</h2> <!-- Điều chỉnh màu sắc cho tiêu đề -->
-                                </div>
+                                
                                 <div class="col-sm-6">
 
                                 </div>
@@ -269,147 +329,8 @@
 
                     </div>
                 </div>
-                <!-- Add Modal HTML -->
-                <div id="addEmployeeModal" class="modal fade">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <form action="flightController" method="get">
-                                <input type="hidden" value="add" name="command" />
-                                <div class="modal-header">						
-                                    <h4 class="modal-title">Add new Flight</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                </div>
-                                <div class="modal-body">					
-                                    <div class="form-group">
-                                        <label>Flight ID</label>
-                                        <input type="text" class="form-control" name="flightID"  required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>From city</label>
-                                        <select id="inputState" class="form-control" name="fromCity">
-                                            <c:forEach var="f" items="${flightList.getAll()}">
-                                                <option>${f.fromCity}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>To city</label>
-                                        <select id="inputState" class="form-control" name="toCity">
-                                            <c:forEach var="f" items="${flightList.getAll()}">
-                                                <option>${f.toCity}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Departure Date</label>
-                                        <input type="date" class="form-control" name="departureDate" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Arrival Date</label>
-                                        <input type="date" class="form-control" name="arrivalDate" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Departure Time</label>
-                                        <input type="time" class="form-control" name="departureTime" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Arrival Time</label>
-                                        <input type="time" class="form-control" name="arrivalTime" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Seat Economy</label>
-                                        <input type="number" class="form-control" name="seatEconomy" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Seat Business</label>
-                                        <input type="number" class="form-control" name="seatBusiness" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Price Economy</label>
-                                        <input type="number" class="form-control" name="priceEconomy" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Price Business</label>
-                                        <input type="number" class="form-control" name="priceBusiness" required>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                    <input type="submit" class="btn btn-success" value="Add">
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <!-- Edit Modal HTML -->
-                <div id="editEmployeeModal" class="modal fade">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <form>
-                                <div class="modal-header">						
-                                    <h4 class="modal-title">Edit Flight</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                </div>
-                                <div class="modal-body">					
-                                    <div class="form-group">
-                                        <label>Flight ID</label>
-                                        <input type="text" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>From City</label>
-                                        <input type="email" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>To city</label>
-                                        <textarea class="form-control" required></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Departure Date</label>
-                                        <input type="text" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Arrival Date</label>
-                                        <input type="text" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>departure Time</label>
-                                        <input type="text" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Arrival Time</label>
-                                        <input type="text" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Seat Economy</label>
-                                        <input type="text" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Seat Business</label>
-                                        <input type="text" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Price Economy</label>
-                                        <input type="text" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Price Business</label>
-                                        <input type="text" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Jet ID</label>
-                                        <input type="text" class="form-control" required>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" >
-                                    <input type="submit" class="btn btn-info" value="Save" style="background-color: #52452b">
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <!-- Delete Modal HTML -->
-                <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal" style="background-color: #7e57c2;"><i class="material-icons">&#xE147;</i> <span>Add New Flight</span></a> <!-- Điều chỉnh màu sắc cho nút -->
+               
+                <a href="addFlight.jsp" class="btn btn-success" style="background-color: #7e57c2;"><i class="material-icons">&#xE147;</i> <span>Add New Flight</span></a> <!-- Điều chỉnh màu sắc cho nút -->
 
             </div>
             <!-- Footer -->
