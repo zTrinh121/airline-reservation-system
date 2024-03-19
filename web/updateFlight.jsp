@@ -213,8 +213,8 @@
                 </div>
 
             </div>
-            <c:set var="flightController" value="${requestScope.flight}" />
-            <form action="flightController" method="get">
+            <c:set var="flightController" value="${sessionScope.flight}" />
+            <form action="flightController" method="post">
                 <input type="hidden" value="update" name="command" />
                 <div class="modal-body">					
                     <div class="form-group">
@@ -224,16 +224,16 @@
                     <div class="form-group">
                         <label>From City</label>
                         <select id="fromCity" class="form-control" name="fromCity" style="height: 3.5rem;">
-                            <c:forEach var="f" items="${flightList.getAll()}">
-                                <option value="${f.fromCity}" ${f.fromCity eq flight.fromCity ? 'selected' : ''}>${f.fromCity}</option>
+                            <c:forEach var="f" items="${flightList.getUniqueCity()}">
+                                <option value="${f}" <c:if test="${f eq flight.fromCity}">selected</c:if>>${f}</option>
                             </c:forEach>
                         </select>
                     </div>
                     <div class="form-group">
                         <label>To city</label>
                         <select id="toCity" class="form-control" name="toCity" style="height: 3.5rem;">
-                            <c:forEach var="f" items="${flightList.getAll()}">
-                                <option value="${f.toCity}" ${f.toCity eq flight.toCity ? 'selected' : ''}>${f.toCity}</option>
+                            <c:forEach var="f" items="${flightList.getUniqueCity()}">
+                                <option value="${f}" ${f eq flight.toCity ? 'selected' : ''}>${f}</option>
                             </c:forEach>
                         </select>
                     </div>

@@ -100,7 +100,42 @@ public class FlightServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        String command = request.getParameter("command");
+        if (command == null) {
+            command = "list";
+        }
+        try {
+            switch (command) {
+                case "list":
+                    listFlight(request, response);
+                    break;
+                case "add":
+                    addFlight(request, response);
+                    break;
+                case "update":
+                    updateFlight(request, response);
+                    break;
+                case "delete":
+                    deleteFlight(request, response);
+                    break;
+                case "load":
+                    loadFlight(request, response);
+                    break;
+                case "search":
+                    searchFlight(request, response);
+                    break;
+                case "result":
+                    bookFlight(request, response);
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+        } catch (Exception e) {
+            // Xử lý ngoại lệ ở đây, ví dụ:
+            e.printStackTrace(); // In stack trace để xem chi tiết lỗi trong log
+            request.setAttribute("errorMessage", e.getMessage()); // Truyền thông điệp lỗi đến trang error.jsp hoặc trang khác
+            request.getRequestDispatcher("error.jsp").forward(request, response); // Chuyển hướng đến trang error.jsp hoặc trang khác để hiển thị thông điệp lỗi
+        }
     }
 
     /**
@@ -116,9 +151,6 @@ public class FlightServlet extends HttpServlet {
     private void listFlight(HttpServletRequest request, HttpServletResponse response) throws Exception {
         ArrayList<Flight> list = flightDAO.getAll();
         request.setAttribute("list", list);
-        for (Flight flight : list) {
-            System.out.println(flight);
-        }
         request.getRequestDispatcher("listFlightAdmin.jsp").forward(request, response);
     }
 
@@ -187,7 +219,8 @@ public class FlightServlet extends HttpServlet {
     private void loadFlight(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String flightID = request.getParameter("flightID");
         Flight f = flightDAO.getFlightById(flightID);
-        request.setAttribute("flight", f);
+        HttpSession session = request.getSession();
+        session.setAttribute("flight", f);
         request.getRequestDispatcher("updateFlight.jsp").forward(request, response);
     }
 

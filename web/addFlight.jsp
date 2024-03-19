@@ -223,7 +223,7 @@
 
             </div>
             <h4 style="color: red; margin-left: 10px; margin-top: 10px;">${err}</h4>
-            <form action="flightController" method="get">
+            <form action="flightController" method="post">
                 <input type="hidden" value="add" name="command" />
                 <div class="modal-body">					
                     <div class="form-group">
