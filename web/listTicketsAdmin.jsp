@@ -33,9 +33,7 @@
 
             <div class="grid-container">
                 <c:forEach var="ticket" items="${list}">
-                    <%
-                        FlightDAO flightDAO = new FlightDAO();
-                    %>
+
                     <c:set var="flight" value="${flightDAO.getFlightById(ticket.flightID)}" />
                     <c:url value="ticketController" var="loadLink">
                         <c:param name="command" value="load"></c:param>
@@ -52,14 +50,20 @@
                         </div>
 
                         <div class="ticket airline">
-                            <div class="top">
+                            <div class="top" 
+                                 style="    height: max-content;
+                                 padding-top: 50px;
+                                 ">
                                 <h1>Ticket Airline</h1>
-                                <div class="big">
-                                    <p class="from">${flight.fromCity}</p>
-                                    <p class="to"><i class="fas fa-arrow-right"></i> ${flight.toCity}</p>
+                                <div class="big" style="left: 5%;
+                                     position: relative;
+                                     top: 15%;">
+                                    <p class="from" style="position: relative"> ${flight.fromCity}</p>    
+                                    <p class="to" style="font-size: 16px; left: 100px;"><i class="fas fa-arrow-right"></i> ${flight.toCity}</p>
+                                    <img style="    position: relative;
+                                         left: 10%;
+                                         bottom: 15px;" src="images/icon_2.png" alt="travelt"  >
                                 </div>
-
-                                <img src="images/icon_2.png" alt="travelt" style="margin: 20px" >
 
                                 <a href="${deleteLink}" onclick="return confirm('Are you sure to delete?')">
                                     <img src="images/trash-solid.svg" alt="delete" height="20px" style="left: 90%; position: absolute; top: 10px;">

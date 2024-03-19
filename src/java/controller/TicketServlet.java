@@ -5,7 +5,9 @@
  */
 package controller;
 
+import dao.FlightDAO;
 import dao.TicketDAO;
+import static dao.TicketDAO.getTicketsByAccount;
 import model.Ticket;
 
 import javax.servlet.ServletException;
@@ -17,10 +19,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
-import javax.servlet.RequestDispatcher;
-import model.Account;
 import model.Flight;
 import model.Passenger;
 
@@ -269,7 +270,10 @@ public class TicketServlet extends HttpServlet {
 
     private void listTickets(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException {
         ArrayList<Ticket> tickets = TicketDAO.getAllTickets();
+        FlightDAO flightDAO = new FlightDAO();
         request.setAttribute("list", tickets);
+        request.setAttribute("flightDAO", flightDAO);
+
         request.getRequestDispatcher("listTicketsAdmin.jsp").forward(request, response);
     }
 
@@ -300,11 +304,15 @@ public class TicketServlet extends HttpServlet {
 
     private void ticketBooked(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        int accountId = (int) session.getAttribute("accountId");
-
         try {
-            List<Ticket> bookedTickets = TicketDAO.getTicketsByAccount(accountId);
-            request.setAttribute("bookedTickets", bookedTickets);
+            int accountId = (int) session.getAttribute("accountId");
+            FlightDAO flightDAO = new FlightDAO();
+
+            List<Ticket> list = TicketDAO.getTicketsByAccount(accountId);
+                       System.out.println(list);
+
+            request.setAttribute("list", list);
+            request.setAttribute("flightDAO", flightDAO);
             request.getRequestDispatcher("ticketBooked.jsp").forward(request, response);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

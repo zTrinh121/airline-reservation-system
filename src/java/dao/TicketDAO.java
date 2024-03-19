@@ -336,12 +336,8 @@ public class TicketDAO {
     }
 
     public static void main(String[] args) throws ClassNotFoundException {
-        ArrayList<Ticket> a = getAllTickets();
-        System.out.println(a);
-        deleteTicket("sa");
-        ArrayList<Ticket> b = getAllTickets();
-        System.out.println(b);
-
+     
+        System.out.println(getTicketsByAccount(1));
     }
 
 }
