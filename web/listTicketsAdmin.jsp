@@ -29,8 +29,6 @@
             <h4 style="color: red;">${error}</h4>
             <h4 style="color: green;">${msg}</h4>
 
-
-
             <div class="grid-container">
                 <c:forEach var="ticket" items="${list}">
 
@@ -55,7 +53,8 @@
                                  padding-top: 50px;
                                  ">
                                 <h1>Ticket Airline</h1>
-                                <div class="big" style="left: 5%;
+                                <div class="big" 
+                                     style="left: 5%;
                                      position: relative;
                                      top: 15%;">
                                     <p class="from" style="position: relative"> ${flight.fromCity}</p>    

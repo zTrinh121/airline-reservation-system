@@ -13,7 +13,8 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Passenger Information</h1>
+        <jsp:include page="header.jsp"/>
+        <h1>Confirm information passenger</h1>
         <form action="ticketController" method="get">
             <input type="hidden" value="checkout" name="command" />
 
@@ -37,5 +38,7 @@
             </table>
             <button type="submit" class="btn btn-primary">Confirm</button>
         </form>
+        <jsp:include page="footer.jsp" />
+
     </body>
 </html>

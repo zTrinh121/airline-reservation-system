@@ -239,6 +239,11 @@ public class TicketServlet extends HttpServlet {
         String[] passengerGenders = request.getParameterValues("passengerGender");
         Flight flight = (Flight) request.getSession().getAttribute("flight");
         String ticketType = (String) request.getSession().getAttribute("ticketType");
+        System.out.println("flight");
+        System.out.println(flight);
+        System.out.println("ticketType");
+        System.out.println(ticketType);
+
         float payAmount = TicketDAO.calculatePricePerPersion(flight, ticketType);
         HttpSession session = request.getSession();
         System.out.println("In ra cho nay khong");
@@ -309,7 +314,7 @@ public class TicketServlet extends HttpServlet {
             FlightDAO flightDAO = new FlightDAO();
 
             List<Ticket> list = TicketDAO.getTicketsByAccount(accountId);
-                       System.out.println(list);
+            System.out.println(list);
 
             request.setAttribute("list", list);
             request.setAttribute("flightDAO", flightDAO);

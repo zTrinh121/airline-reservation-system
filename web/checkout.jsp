@@ -42,6 +42,8 @@
     </head>
 
     <body>
+        <%--<jsp:include page="header.jsp"/>--%>
+
         <form action="PaymentServlet" method="post">
             <input type="hidden" name="command" value="authorize" />
             <div class="container">
