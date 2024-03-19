@@ -120,7 +120,7 @@
                                         <li class="main_nav_item"><a href="flightController">Flight</a></li>
                                         <li class="main_nav_item"><a href="customer.jsp">Customer</a></li>
 
-                                        <li class="main_nav_item"><a href="ticket.jsp">Ticket</a></li>
+                                        <li class="main_nav_item"><a href="ticketController">Ticket</a></li>
                                     </ul>
                                 </div>
                                 

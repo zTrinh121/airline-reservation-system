@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import javax.servlet.RequestDispatcher;
+import model.Account;
 import model.Flight;
 import model.Passenger;
 
@@ -240,8 +241,7 @@ public class TicketServlet extends HttpServlet {
         float payAmount = TicketDAO.calculatePricePerPersion(flight, ticketType);
         HttpSession session = request.getSession();
         System.out.println("In ra cho nay khong");
-//        int accountID = (int) session.getAttribute("accountID");
-        int accountID = 6;
+        int accountID = (int) session.getAttribute("accountId");
 
         Random random = new Random();
         String pnrSuffix = String.format("%03d", random.nextInt(1000));
@@ -270,7 +270,7 @@ public class TicketServlet extends HttpServlet {
     private void listTickets(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException {
         ArrayList<Ticket> tickets = TicketDAO.getAllTickets();
         request.setAttribute("list", tickets);
-        request.getRequestDispatcher("listTickets.jsp").forward(request, response);
+        request.getRequestDispatcher("listTicketsAdmin.jsp").forward(request, response);
     }
 
     private void checkout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -300,9 +300,10 @@ public class TicketServlet extends HttpServlet {
 
     private void ticketBooked(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        int accountID = (int) session.getAttribute("accountID");
+        int accountId = (int) session.getAttribute("accountId");
+
         try {
-            List<Ticket> bookedTickets = TicketDAO.getTicketsByAccount(accountID);
+            List<Ticket> bookedTickets = TicketDAO.getTicketsByAccount(accountId);
             request.setAttribute("bookedTickets", bookedTickets);
             request.getRequestDispatcher("ticketBooked.jsp").forward(request, response);
         } catch (ClassNotFoundException e) {
