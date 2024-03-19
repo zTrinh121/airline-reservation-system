@@ -11,12 +11,14 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+       
     </head>
     <body>
         <jsp:include page="header.jsp"/>
-        <h1>Confirm information passenger</h1>
         <form action="ticketController" method="get">
-            <input type="hidden" value="checkout" name="command" />
+
+            <!-- Font Awesome -->
+  <input type="hidden" value="checkout" name="command" />
 
             <table border="1">
                 <thead>
@@ -37,6 +39,10 @@
                 </tbody>
             </table>
             <button type="submit" class="btn btn-primary">Confirm</button>
+
+           
+
+
         </form>
         <jsp:include page="footer.jsp" />
 
