@@ -59,22 +59,21 @@
 
                 <c:set var="flight" value="${sessionScope.flight}"/>
                 <c:set var="type" value="${sessionScope.ticketType}"/>
-
                 <c:if test="${not empty sessionScope.passengers}">
 
                     <div class="left-side" style="background-image:url(images/offer_1.jpg)">
                         <div class="text-box">
                             <h1 class="home-heading">${flight.getFlightID()}         ${type}</h1>
-                        
-                        
-                              <p class="home-desc"><em>${flight.getArrivalDate() } </em></p>
-                           
+
+
+                            <p class="home-desc"><em>${flight.getArrivalDate() } </em></p>
+
                             <p class="home-price"><em>${pricePer}USD </em>/ 1 person</p>
                             <hr class="left-hr" />
-                             <p class="home-desc">
+                            <p class="home-desc">
                                 <em>${flight.getFromCity() }</em> to <em>${flight.getToCity() }</em>
                             </p>
-                          
+
                         </div>
                     </div>
                     <div class="right-side">
@@ -97,19 +96,15 @@
                                     </tr>
                                     <tr class="total">
                                         <td>Total</td>
-                                        <td class="price">
-                                            <input  class="price" style="    border: none;" readonly="" type="text" name="total" value="${totalPrice} USD"/>
-                                        </td>
+                                        <td class="price"> ${totalPrice} USD</td>
                                     </tr>
                                 </table>
                             </div>
                         </div>
+                        <input hidden  class="price" style="    border: none;" readonly="" type="text" name="total" value="${totalPrice}"/>
 
                     </c:if>
-                    <button class="btn">
-                        <i class="fa-solid fa-lock"></i>Payment
-                    </button>
-                    </form>
+                    <button type="submit" class="btn"> <i class="fa-solid fa-lock"></i>Payment</button>
 
                     <p class="footer-text">
                         <i class="fa-solid fa-lock"></i>
@@ -117,11 +112,10 @@
                     </p>
                 </div>
             </div>
-        </div>
 
-        <jsp:include page="footer.jsp"/>
+            <jsp:include page="footer.jsp"/>
 
-    </form>
-</body>
+        </form>
+    </body>
 
 </html>
