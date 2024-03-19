@@ -33,14 +33,7 @@
                 <c:forEach var="ticket" items="${list}">
 
                     <c:set var="flight" value="${flightDAO.getFlightById(ticket.flightID)}" />
-                    <c:url value="ticketController" var="loadLink">
-                        <c:param name="command" value="load"></c:param>
-                        <c:param name="pNameRecord" value="${ticket.pNameRecord}"></c:param>
-                    </c:url>
-                    <c:url value="ticketController" var="deleteLink">
-                        <c:param name="command" value="delete"></c:param>
-                        <c:param name="pNameRecord" value="${ticket.pNameRecord}"></c:param>
-                    </c:url>
+
 
                     <div class="container_ticket">
                         <div class="ticket basic">
@@ -62,14 +55,6 @@
                                          left: 10%;
                                          bottom: 15px;" src="images/icon_2.png" alt="travelt"  >
                                 </div>
-
-                                <a href="${deleteLink}" onclick="return confirm('Are you sure to delete?')">
-                                    <img src="images/trash-solid.svg" alt="delete" height="20px" style="left: 90%; position: absolute; top: 10px;">
-                                </a>
-                                <a href="${loadLink}" >
-                                    <img src="images/pen-to-square-sharp-solid.svg" alt="load" height="20px" style="left: 76%; position: absolute; top: 10px;">
-                                </a>
-
                             </div>
 
                             <div class="bottom">

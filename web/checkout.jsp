@@ -42,13 +42,13 @@
     </head>
 
     <body>
-        <%--<jsp:include page="header.jsp"/>--%>
+        <jsp:include page="header.jsp"/>
 
         <form action="PaymentServlet" method="post">
             <input type="hidden" name="command" value="authorize" />
             <div class="container">
                 <h1 class="mt-5">Checkout Information</h1>
-                <input type="text" name="total" value="120"/></p>
+                <!--<input type="text" name="total" value="120"/></p>-->
                 <c:if test="${not empty sessionScope.passengers}">
                     <div class="mt-3">
                         <p><strong>Total Number of Passengers:</strong> ${totalPassengers}</p>
@@ -59,7 +59,7 @@
                             7.5%
                         </p>
                         <p><strong>Total:</strong>
-                            <!--<input type="text" name="total" value="${totalPrice}"/></p>-->
+                            <input readonly="" type="text" name="total" value="${totalPrice}"/></p>
                     </div>
                 </c:if>
             </div>
