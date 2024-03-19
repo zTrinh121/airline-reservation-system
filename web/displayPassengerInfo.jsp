@@ -11,7 +11,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-       
+        <link rel="stylesheet" type="text/css" href="styles/checkout.scss">
+        <script
+            src="https://kit.fontawesome.com/bb515311f9.js"
+            crossorigin="anonymous"
+        ></script>
     </head>
     <body>
         <jsp:include page="header.jsp"/>
