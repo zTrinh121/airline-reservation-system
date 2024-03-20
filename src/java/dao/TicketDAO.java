@@ -33,7 +33,7 @@ public class TicketDAO {
 
         addTicket(pNameRecord, dateReservation, flightID, journeyDate, ticketClass, bookingStatus, noPassengers, accountID, payAmount);
     }
-
+ 
     public static void addTicket(String pNameRecord, Date dateReservation, String flightID, Date journeyDate, String ticketClass, String bookingStatus, int noPassengers, int accountID, float payAmount) throws ClassNotFoundException {
         String sql = "INSERT INTO [dbo].[ticketDetails]\n"
                 + "           ([pNameRecord]\n"

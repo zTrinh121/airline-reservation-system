@@ -63,7 +63,8 @@
                                         <p><span>Flight</span>${ticket.flightID}</p>
                                         <p class="row--right"><span>Ticket class</span>${ticket.ticketClass}</p>
 
-                                        <p class="row--right"><span>NO passengers</span>${ticket.noPassengers}</p>
+                                        <p class="row--right"><span>Name Record</span>${ticket.pNameRecord}</p>
+
 
                                     </div>
                                     <div class="row row-2">

@@ -40,7 +40,7 @@ public class PaymentServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -133,6 +133,7 @@ public class PaymentServlet extends HttpServlet {
         double sum = Double.parseDouble(total);
         PaymentDetails paymentDetails = new PaymentDetails("PAY001", "PNR001", sqlToday, sum, "paypal");
         System.out.println(paymentDetails);
+
         try {
             PaymentServices paymentServices = new PaymentServices();
             String approvalLink = paymentServices.authorizePayment(paymentDetails);
@@ -164,7 +165,6 @@ public class PaymentServlet extends HttpServlet {
 //            request.getRequestDispatcher("error.jsp").forward(request, response);
 //        }
 //    }
-
 //    private void ReviewPaymentServlet(HttpServletRequest request, HttpServletResponse response) throws Exception {
 //        String paymentId = request.getParameter("paymentId");
 //        String payerId = request.getParameter("PayerID");
@@ -188,5 +188,4 @@ public class PaymentServlet extends HttpServlet {
 //            request.getRequestDispatcher("error.jsp").forward(request, response);
 //        }
 //    }
-
 }

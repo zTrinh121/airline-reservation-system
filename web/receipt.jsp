@@ -25,8 +25,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <div style="text-align: center;">
             <h1 style="padding-top: 10px;">Payment Done. Thanks for booking ticket(s)</h1>
 
-            <form action="" method="">
-                <input type="hidden" name="command" value="" />
+            <form action="ticketController" method="get">
+                <input type="hidden" name="command" value="ticketBooked" />
                 <!--                <table>
                                     <tr>
                                         <td>Merchant:</td>
