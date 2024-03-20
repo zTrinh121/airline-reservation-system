@@ -5,7 +5,7 @@
 <html lang="en">
 
 <head>
-    <title>Travelix</title>
+    <title>Change Password</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Travelix Project">
@@ -19,6 +19,8 @@
     <link rel="stylesheet" type="text/css" href="styles/responsive.css">
     <link rel="stylesheet" href="decorate/style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-..." crossorigin="anonymous">
+     <link rel="icon" type="image/png" href="images/flight3.jpg"/>
+    
     <style>
         body {
             background-color: #6f42c1;

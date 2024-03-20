@@ -5,15 +5,15 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.Arrays;
 import java.util.List;
 
@@ -46,54 +46,53 @@ public class LoginFilter implements Filter {
 
         if (debug) {
             log("LoginFilter: doFilter()");
-        } 
-        
-        
+        }
+
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-         if (!req.getRequestURI().endsWith("login.jsp")) {
-            // Thiết lập các headers để ngăn chặn lưu trữ vào bộ nhớ cache
+        if (!req.getRequestURI().endsWith("login.jsp")) {
+
             res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
             res.setHeader("Pragma", "no-cache");
             res.setHeader("Expires", "0");
         }
-         String requestURI = req.getRequestURI();
-          
+        String requestURI = req.getRequestURI();
+
         HttpSession session = req.getSession(false);
-          
-     
-       
-        String password = (String) session.getAttribute("password");
-         String username = (String) session.getAttribute("username");
+        String password = null;
+        String username = null;
+        if (session != null) {
+            password = (String) session.getAttribute("password");
+            username = (String) session.getAttribute("username");
+        }
+
         AccountDao accountDao = new AccountDao();
         String userRole = accountDao.getUserRole(username, password);
 
         boolean isLoggedIn = session != null && session.getAttribute("username") != null;
 
-     
-
-        if (isLoggedIn ) {
+        if (isLoggedIn) {
             System.out.println(userRole);
             if ("admin".equals(userRole)) {
-                List<String> adminPages = Arrays.asList("profile_a.jsp","password_a.jsp","admin.jsp", "addFlight.jsp", "addFlightPassenger.jsp", "addTicketAdmin.jsp", "flight.jsp", "listFlightAdmin.jsp", "listFlightSearchAdmin.jsp", "listTicket.jsp", "searchFlight.jsp", "searchResult.jsp", "updateFlight.jsp", "updateTicket.jsp");
+                List<String> adminPages = Arrays.asList("profile_a.jsp", "password_a.jsp", "admin.jsp", "addFlight.jsp", "addFlightPassenger.jsp", "addTicketAdmin.jsp", "flight.jsp", "listFlightAdmin.jsp", "listFlightSearchAdmin.jsp", "listTicket.jsp", "searchFlight.jsp", "searchResult.jsp", "updateFlight.jsp", "updateTicket.jsp");
 
                 if (adminPages.stream().anyMatch(req.getRequestURI()::contains)) {
                     chain.doFilter(request, response);
 
-                }else{
-                    res.sendRedirect("admin.jsp");
-                    
+                } else {
+                    res.sendRedirect("error.jsp");
+
                 }
             } else if ("user".equals(userRole)) {
-                System.out.println("hihih");
-                List<String> userPages = Arrays.asList("user.jsp", "offers", "contact.jsp","profile.jsp","password.jsp");
+               
+                List<String> userPages = Arrays.asList("user.jsp", "offers", "contact.jsp", "profile.jsp", "password.jsp");
 
                 if (userPages.stream().anyMatch(req.getRequestURI()::contains)) {
 
                     chain.doFilter(request, response);
 
-                }else{
-                    res.sendRedirect("user.jsp");
+                } else {
+                    res.sendRedirect("error.jsp");
                 }
 
             }

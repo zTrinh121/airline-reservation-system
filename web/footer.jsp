@@ -22,6 +22,7 @@
         <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
         <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
         <link rel="stylesheet" type="text/css" href="styles/responsive.css">
+           <link rel="icon" type="image/png" href="images/flight3.jpg"/>
     </head>
     <body>
         <!-- Footer -->
@@ -35,7 +36,7 @@
                             <div class="footer_col">
                                 <div class="footer_content footer_about">
                                     <div class="logo_container footer_logo">
-                                        <div class="logo"><a href="#"><img src="images/logo.png" alt="">travelix</a></div>
+                                        <div class="logo"><a href="#"><img src="images/logo.png" alt="">HomeFlight</a></div>
                                     </div>
                                     <p class="footer_about_text">No one realized how beautiful the trip was until they got home and fell on an old, familiar pillow.</p>
                                     <ul class="footer_social_list">

@@ -20,6 +20,7 @@
         <link rel="stylesheet" type="text/css" href="styles/responsive.css">
         <link rel="stylesheet" type="text/css" href="styles/ticket.scss">
         <link rel="stylesheet" type="text/css" href="styles/updateTicket.scss">
+         <link rel="icon" type="image/png" href="images/flight3.jpg"/>
 
     </head>
 

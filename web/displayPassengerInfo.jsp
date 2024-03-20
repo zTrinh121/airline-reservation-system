@@ -10,7 +10,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Passenger info </title>
+        <link rel="icon" type="image/png" href="images/flight3.jpg"/>
     </head>
     <body>
         <h1>Passenger Information</h1>

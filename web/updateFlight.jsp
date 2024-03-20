@@ -7,6 +7,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="flightList" class="dao.FlightDAO" />
+ <link rel="icon" type="image/png" href="images/flight3.jpg"/>
+
 <!DOCTYPE html>
 <html>
     <head>

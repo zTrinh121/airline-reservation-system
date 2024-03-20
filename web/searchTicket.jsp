@@ -15,6 +15,7 @@
         <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
         <link rel="stylesheet" type="text/css" href="styles/responsive.css">
         <link rel="stylesheet" type="text/css" href="styles/searchTicket.scss">
+           <link rel="icon" type="image/png" href="images/flight3.jpg"/>
 
     </head>
 

@@ -9,48 +9,49 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Ticket Bboked</title>
+        <link rel="icon" type="image/png" href="images/flight3.jpg"/>
     </head>
     <body>
         <div class="super_container">
-                <jsp:include page="header.jsp"/>
-           
-        <h2>Your Booked Tickets</h2>
+            <jsp:include page="header.jsp"/>
 
-        <table>
-            
-            <thead>
-                <tr>
-                    <th>Name Record</th>
-                    <th>Flight ID</th>
-                    <th>Journey Date</th>
-                    <th>Ticket Class</th>
-                    <th>Booking Status</th>
-                    <th>No. of Passengers</th>
-                    <th>Pay Amount</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-            <c:forEach var="ticket" items="${bookedTickets}">
-                <tr>
-                    <td>${ticket.pNameRecord}</td>
-                    <td>${ticket.flightID}</td>
-                    <td>${ticket.journeyDate}</td>
-                    <td>${ticket.ticketClass}</td>
-                    <td>${ticket.bookingStatus}</td>
-                    <td>${ticket.noPassengers}</td>
-                    <td>${ticket.payAmount}</td>
-                    <td>
-                        <button type="submit">Cancel</button>
-                        <button type="submit">Refund</button>
-                        </form>
-                    </td>
-                </tr>
-            </c:forEach>
-        </tbody>
-    </table>
- </div>
+            <h2>Your Booked Tickets</h2>
 
-</body>
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Name Record</th>
+                        <th>Flight ID</th>
+                        <th>Journey Date</th>
+                        <th>Ticket Class</th>
+                        <th>Booking Status</th>
+                        <th>No. of Passengers</th>
+                        <th>Pay Amount</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="ticket" items="${bookedTickets}">
+                    <tr>
+                        <td>${ticket.pNameRecord}</td>
+                        <td>${ticket.flightID}</td>
+                        <td>${ticket.journeyDate}</td>
+                        <td>${ticket.ticketClass}</td>
+                        <td>${ticket.bookingStatus}</td>
+                        <td>${ticket.noPassengers}</td>
+                        <td>${ticket.payAmount}</td>
+                        <td>
+                            <button type="submit">Cancel</button>
+                            <button type="submit">Refund</button>
+                            </form>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+
+    </body>
 </html>

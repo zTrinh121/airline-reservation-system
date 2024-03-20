@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Travelix</title>
+        <title>Register</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="Travelix Project">
@@ -21,6 +21,7 @@
         <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
         <link rel="stylesheet" type="text/css" href="styles/responsive.css">    
         <link rel="stylesheet" href="decorate/style.css"/>
+        <link rel="icon" type="image/png" href="images/flight3.jpg"/>
     </head>
 
     <body>
@@ -41,35 +42,41 @@
             <form  action="register" method="post" class="login d-flex flex-column align-items-center justify-content-between ">
                 <div class="form-group">
                     <div>Full Name</div>
-                    <input type="text" name="fullname" >
+                    <input type="text" name="fullname" required >
                 </div>
                 <div class="form-group">
                     <div>Username</div>
-                    <input type="text" name="username" >
+                    <input type="text" name="username" required>
                 </div>
                 <div class="form-group ">
                     <div>Password</div>
-                    <input type="password" name="password" >
+                    <input type="password" name="password" required >
 
                 </div>
                 <div class="form-group ">
                     <div>Email</div>
-                    <input type="email" name="email" >
+                    <input type="email" name="email" required>
                 </div>
-                <div class="form-group ">
+                <div class="form-group" >
                     <div>Phone Number</div>
-                    <input type="tel"  name="phoneNumber" >
+                    <input type="tel" style=" font-size: 16px;
+                           color: #333;
+                         
+                           padding: 8px;
+                           border: 1px solid #ccc;
+                           
+                           box-sizing: border-box"  name="phoneNumber" required>
                 </div>
                 <div class="form-group ">
                     <div>Addresss</div>
-                    <input type="text"  name="address">
+                    <input type="text"  name="address" required>
                 </div>
                 <div class=" remember">
                     <div class="user_box_register user_box_link">
                         <a href="login.jsp" style="font-size: 12px;">Already have an account</a>
                     </div>
                 </div>
-                <button type="submit" class="button search_button">Register</button>
+                <button type="submit" class="button search_button" >Register</button>
             </form>
             <!--Login-->
         </div>
@@ -79,6 +86,6 @@
         <script src="styles/bootstrap4/bootstrap.min.js"></script>
         <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
         <script src="plugins/easing/easing.js"></script>
-        <script src="js/custom.js"></script>
+        <script src="js/custom.js></script>
 
     </body>
