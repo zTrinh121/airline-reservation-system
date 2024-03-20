@@ -115,7 +115,7 @@ public class PaymentServices {
     private RedirectUrls getReirectUrls() {
         RedirectUrls redirecturls = new RedirectUrls();
         redirecturls.setCancelUrl("http://localhost:8080/airline-reservation-system/cancel.jsp");
-        redirecturls.setReturnUrl("http://localhost:8080/airline-reservation-system/receipt.jsp");
+        redirecturls.setReturnUrl("http://localhost:8080/airline-reservation-system/PaymentServlet");
         return redirecturls;
     }
 }

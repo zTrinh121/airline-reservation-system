@@ -33,7 +33,7 @@ public class TicketDAO {
 
         addTicket(pNameRecord, dateReservation, flightID, journeyDate, ticketClass, bookingStatus, noPassengers, accountID, payAmount);
     }
- 
+
     public static void addTicket(String pNameRecord, Date dateReservation, String flightID, Date journeyDate, String ticketClass, String bookingStatus, int noPassengers, int accountID, float payAmount) throws ClassNotFoundException {
         String sql = "INSERT INTO [dbo].[ticketDetails]\n"
                 + "           ([pNameRecord]\n"
@@ -59,6 +59,25 @@ public class TicketDAO {
             st.executeUpdate();
 
             System.out.println("Add ticket " + pNameRecord + " success!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void updateStatus(String pNameRecord) throws ClassNotFoundException {
+        String sql = "UPDATE ticketDetails SET bookingStatus = ? WHERE pNameRecord = ?";
+
+        try (Connection con = ConnectDB.getInstance().openConnection(); PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, "Confirmed");
+            st.setString(2, pNameRecord);
+
+            int rowsUpdated = st.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                System.out.println("Update successful!");
+            } else {
+                System.out.println("No ticket found with Name Record: " + pNameRecord);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -171,6 +190,24 @@ public class TicketDAO {
         return tickets;
     }
 
+    public static Ticket getTicketByPNR(String pNameRecord) throws ClassNotFoundException {
+        Ticket ticket = new Ticket();
+        String sql = "SELECT * FROM ticketDetails WHERE pNameRecord = ?";
+
+        try (Connection con = ConnectDB.getInstance().openConnection(); PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, pNameRecord);
+
+            try (ResultSet resultSet = st.executeQuery()) {
+                while (resultSet.next()) {
+                    ticket = mapResultSetToTicket(resultSet);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ticket;
+    }
+
     // Order ticket
     public static boolean orderTicket(Ticket ticket, PaymentDetails paymentDetails) {
         Connection con = null;
@@ -179,7 +216,6 @@ public class TicketDAO {
             con = ConnectDB.getInstance().openConnection();
             con.setAutoCommit(false);
             addTicket(ticket);
-            savePaymentDetailsToDatabase(con, paymentDetails);
             con.commit();
             return true;
         } catch (Exception e) {
@@ -201,9 +237,6 @@ public class TicketDAO {
                 }
             }
         }
-    }
-
-    private static void savePaymentDetailsToDatabase(Connection connection, PaymentDetails paymentDetails) throws SQLException {
     }
 
     private static Ticket mapResultSetToTicket(ResultSet resultSet) throws SQLException {
@@ -336,8 +369,8 @@ public class TicketDAO {
     }
 
     public static void main(String[] args) throws ClassNotFoundException {
-     
-        System.out.println(getTicketsByAccount(1));
+        updateStatus("PNR007");
+        System.out.println(getTicketByPNR("PNR190"));
     }
 
 }
