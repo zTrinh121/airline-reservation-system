@@ -23,18 +23,18 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
     <body>
         <jsp:include page="header.jsp"/>
         <div style="text-align: center;">
-            <h1>Please Review before Paying</h1>
+            <h1 style="color: #000;">Please Review before Paying</h1>
             <div class="search">
                 <div class="search_inner">
                     <div class="container fill_height">
                         <div class="row fill_height">
                             <div class="col fill_height">
-                                <div class="search_panel active" style="margin-top: 10px; margin-bottom: 20px;">
+                                <div class="search_panel active" style="margin-top: 10px; margin-bottom: 20px; justify-content: center;">
                                     <form action="ticketController" method="get">
                                         <input type="hidden" value="updateStatus" name="command" />
-                                        <table>
+                                        <table class="table">
                                             <tr>
-                                                <td colspan="2"><b>Transaction Details:</b></td>
+                                                <td colspan="2"><b style="color: #000;">Transaction Details:</b></td>
                                                 <td>
                                                     <input type="hidden" name="paymentId" value="${param.paymentId}"/>
                                                     <input type="hidden" name="PayerID" value="${param.PayerID}"/>
@@ -48,7 +48,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                                             </tr>
 
                                             <tr>
-                                                <td colspan="2"><b>Payer Information:</b></td>
+                                                <td colspan="2"><b style="color: #000;">Payer Information:</b></td>
                                                 <td></td>
                                             </tr>
                                             <tr>
@@ -65,7 +65,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                                             </tr>
 
                                             <tr>
-                                                <td colspan="2"><b> Address:</b></td>
+                                                <td colspan="2"><b style="color: #000;"> Address:</b></td>
                                                 <td></td>
                                             </tr>
                                             <tr>
@@ -94,7 +94,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                                             </tr>
 
                                             <tr>
-                                                <td colspan="2" align="center"><input type="submit" value="Pay Now"/></td>
+                                                <td colspan="2" align="center"><button class="button search_button"/>Pay Now</button></td>
                                             </tr>
 
 

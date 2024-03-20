@@ -30,7 +30,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
     <body>
         <jsp:include page="header.jsp"/>
         <div style="text-align: center;">
-            <h1 style="padding-top: 10px;">Payment Done. Thanks for booking ticket(s)</h1>
+            <h1 style="padding-top: 10px; color: #000; text-align: center;">Payment Done. Thanks for booking</h1>
 
             <form action="ticketController" method="get">
                 <input type="hidden" name="command" value="ticketBooked" />

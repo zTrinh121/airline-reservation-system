@@ -349,7 +349,7 @@
             <h1 class="text-center mt-5">Welcome to admin page</h1>
             <h3 class="text-center mt-5">Flight Reservation Date vs Revenue</h3>
             <h4  class="text-center">Revenue trends over time based on flight reservation dates</h4>
-            <div id="linechart_material" style="width: 900px; height: 500px; display: flex; justify-content: center;"></div>
+            <div id="linechart_material" style="width: 900px; height: 500px; display: flex; justify-content: center; margin-left: 100px;"></div>
 
         </div>
         <!-- Footer -->

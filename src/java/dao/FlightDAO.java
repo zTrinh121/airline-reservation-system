@@ -258,13 +258,13 @@ public class FlightDAO {
         }
     }
 
-    public static void main(String[] args) {
-        ArrayList<Flight> list = new FlightDAO().getAll();
-//        for (Flight flight : list) {
-//            System.out.println(flight);
-//        }
-        FlightDAO dao = new FlightDAO();
-        System.out.println(dao.getFlightById("VN101"));
-
-    }
+//    public static void main(String[] args) {
+//        ArrayList<Flight> list = new FlightDAO().getAll();
+////        for (Flight flight : list) {
+////            System.out.println(flight);
+////        }
+//        FlightDAO dao = new FlightDAO();
+//        System.out.println(dao.getFlightById("VN101"));
+//
+//    }
 }
