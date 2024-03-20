@@ -1,5 +1,10 @@
 
 
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.sql.Date"%>
+<%@page import="model.TicketChart"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="model.Ticket"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="flightList" class="dao.FlightDAO" />
@@ -27,12 +32,75 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="stylesheet" type="text/css" href="decorate/profile.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-..." crossorigin="anonymous">
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <%
+            ArrayList<Ticket> list = new TicketChart().getAllConfirmedTickets();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//            String formattedDate = formatter.format(t.getDateReservation());
+        %>
+        <script type="text/javascript">
+            google.charts.load('current', {'packages': ['line']});
+            google.charts.setOnLoadCallback(drawChart);
 
+            function drawChart() {
+
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', 'Reservation Date');
+                data.addColumn('number', 'Amount');
+
+//                data.addRows([
+//                    [1, 37.8, 80.8, 41.8],
+//                    [2, 30.9, 69.5, 32.4],
+//                    [3, 25.4, 57, 25.7],
+//                    [4, 11.7, 18.8, 10.5],
+//                    [5, 11.9, 17.6, 10.4],
+//                    [6, 8.8, 13.6, 7.7],
+//                    [7, 7.6, 12.3, 9.6],
+//                    [8, 12.3, 29.2, 10.6],
+//                    [9, 16.9, 42.9, 14.8],
+//                    [10, 12.8, 30.9, 11.6],
+//                    [11, 5.3, 7.9, 4.7],
+//                    [12, 6.6, 8.4, 5.2],
+//                    [13, 4.8, 6.3, 3.6],
+//                    [14, 4.2, 6.2, 3.4]
+//                ]);
+
+                data.addRows([
+            <% if (list.size() != 0) {
+                    for (Ticket t : list) {
+
+            %>
+                    ['<%=t.getDateReservation().toString()%>',
+            <%= new TicketChart().getTotalPayAmountByReservationDay((Date) t.getDateReservation())%>],
+
+            <%}
+                }%>
+                ]);
+
+                var options = {
+                    chart: {
+                        title: '',
+                        subtitle: ''
+                    },
+                    width: 800,
+                    height: 500,
+                    vAxis: {
+                        title: 'Pay Amount',
+                        minValue: 0, // Set the minimum value for the y-axis
+                        maxValue: 1500  // Set the maximum value for the y-axis
+                    }
+                };
+
+                var chart = new google.charts.Line(document.getElementById('linechart_material'));
+
+                chart.draw(data, google.charts.Line.convertOptions(options));
+            }
+        </script> 
     </head>
 
     <body>
 
-        <div class="super_container">
+        <div class="super_container" style="margin-bottom: 20px;">
 
             <!-- Header -->
 
@@ -57,7 +125,7 @@
                                 </div>
                                 <div class="user_box ml-auto justify-content-end" style="display: flex; align-items: center; position: relative;">
                                     <% if (session != null && session.getAttribute("username") != null) {
-                                        String username = (String) session.getAttribute("username");
+                                            String username = (String) session.getAttribute("username");
                                     %>
                                     <p style="color: #fff; font-family: 'Open Sans', 'sans-serif'; font-size: 16px; display: flex; align-items: center;">Welcome, <%= username%> ! <i id="avatarIcon" class="fa-solid fa-user" style="cursor: pointer; margin-left: 5px;"></i></p>
 
@@ -123,7 +191,7 @@
                                         <li class="main_nav_item"><a href="ticket.jsp">Ticket</a></li>
                                     </ul>
                                 </div>
-                                
+
                                 <script>
 
                                     var modal = document.getElementById('avatarModal');
@@ -275,26 +343,29 @@
                     </div>
 
                 </div>
-<!--Main Content-->
+                <!--Main Content-->
             </div>
-            
-            
-               
-            </div>
-            <!-- Footer -->
 
-            <jsp:include page="footer.jsp" />
+            <h1 class="text-center mt-5">Welcome to admin page</h1>
+            <h3 class="text-center mt-5">Flight Reservation Date vs Revenue</h3>
+            <h4  class="text-center">Revenue trends over time based on flight reservation dates</h4>
+            <div id="linechart_material" style="width: 900px; height: 500px; display: flex; justify-content: center;"></div>
 
         </div>
+        <!-- Footer -->
 
-        <script src="js/jquery-3.2.1.min.js"></script>
-        <script src="styles/bootstrap4/popper.js"></script>
-        <script src="styles/bootstrap4/bootstrap.min.js"></script>
-        <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-        <script src="plugins/easing/easing.js"></script>
-        <script src="js/custom.js"></script>
+        <jsp:include page="footer.jsp" />
 
-    </body>
+    </div>
+
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="styles/bootstrap4/popper.js"></script>
+    <script src="styles/bootstrap4/bootstrap.min.js"></script>
+    <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+    <script src="plugins/easing/easing.js"></script>
+    <script src="js/custom.js"></script>
+
+</body>
 
 </html>
 
