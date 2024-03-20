@@ -19,18 +19,18 @@
         <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
         <link rel="stylesheet" type="text/css" href="styles/responsive.css">
         <style>
-        button{
-            display: block;
-            font-size: 13px;
-            font-weight: 700;
-            color: #fff;
-            text-transform: uppercase;
-            line-height: 53px;
-            padding-left: 46px;
-            padding-right: 46px;
-            white-space: nowrap;
-        }
-    </style>
+            button{
+                display: block;
+                font-size: 13px;
+                font-weight: 700;
+                color: #fff;
+                text-transform: uppercase;
+                line-height: 53px;
+                padding-left: 46px;
+                padding-right: 46px;
+                white-space: nowrap;
+            }
+        </style>
     </head>
 
     <body>
@@ -45,7 +45,7 @@
                                 <c:if test="${ empty searchList}">
                                     <h3 class="text-center" style="color: black; margin-top: 50px;"> No available flights    </h3>
                                 </c:if>
-                                    <a href="user.jsp" class="btn btn-default text-center" >Back to Home</a>
+                                <a href="user.jsp" class="btn btn-default text-center" >Back to Home</a>
                                 <!-- Offers -->
 
                                 <div class="offers" style="padding-top: 10px; background: #fff;">
@@ -66,35 +66,40 @@
 
                                                     <c:if test="${not empty searchList}">
                                                         <c:forEach var="f" items="${searchList}">
-                                                            <form action="flightController" method="get" class="offers_item rating_4">
-                                                                <input  type="hidden" value="result" name="command" />
+                                                            <!--<form action="flightController" method="get" class="offers_item rating_4">-->
+                                                            <!--<input  type="hidden" value="result" name="command" />-->
+                                                            <c:url value="flightController" var="bookLink">
+                                                                <c:param name="command" value="result"></c:param>
+                                                                <c:param name="flightID" value="${f.flightID}"></c:param>
+                                                            </c:url>
+                                                            <div class="row">
+                                                                <div class="col-lg-1 temp_col"></div>
+                                                                <div class="col-lg-3 col-1680-4">
+                                                                    <div class="offers_image_container">
+                                                                        <div class="offers_image_background" style="background-image:url(images/offer_1.jpg)"></div>
 
-                                                                <div class="row">
-                                                                    <div class="col-lg-1 temp_col"></div>
-                                                                    <div class="col-lg-3 col-1680-4">
-                                                                        <div class="offers_image_container">
-                                                                            <div class="offers_image_background" style="background-image:url(images/offer_1.jpg)"></div>
-
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-8">
-                                                                        <div class="offers_content">
-                                                                            <div class="offers_price">${f.flightID}<span>${f.fromCity}-${f.toCity}</span></div>
-
-                                                                            <p class="offers_text">${f.departureDate} <br>
-                                                                                ${f.departureTime}-${f.arrivalTime} <br>
-                                                                                <c:if  test="${ticketType=='Economy'}">
-                                                                                <th scope="col">Economy Price: ${f.priceEconomy}</th>
-                                                                                </c:if>
-                                                                                <c:if  test="${ticketType=='Business'}">
-                                                                                <th scope="col">Business price: ${f.priceBusiness}</th>
-                                                                                </c:if>
-                                                                            </p>
-                                                                            <button class="button search_button">Book<span></span><span></span><span></span></button>
-                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </form>
+                                                                <div class="col-lg-8">
+                                                                    <div class="offers_content">
+                                                                        <div class="offers_price">${f.flightID}<span>${f.fromCity}-${f.toCity}</span></div>
+
+                                                                        <p class="offers_text">${f.departureDate} <br>
+                                                                            ${f.departureTime}-${f.arrivalTime} <br>
+                                                                            <c:if  test="${ticketType=='Economy'}">
+                                                                            <th scope="col">Economy Price: ${f.priceEconomy}</th>
+                                                                            </c:if>
+                                                                            <c:if  test="${ticketType=='Business'}">
+                                                                            <th scope="col">Business price: ${f.priceBusiness}</th>
+                                                                            </c:if>
+                                                                        </p>
+                                                                        <a href="${bookLink}" >
+                                                                            <button type="submit" class="button search_button">Book<span></span><span></span><span></span></button>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--</form>-->
                                                         </c:forEach>
                                                     </c:if>
                                                 </div>

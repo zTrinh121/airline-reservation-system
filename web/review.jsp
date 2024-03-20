@@ -30,9 +30,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                         <div class="row fill_height">
                             <div class="col fill_height">
                                 <div class="search_panel active" style="margin-top: 10px; margin-bottom: 20px;">
-
-                                    <form action="PaymentServlet" method="post">
-                                        <input type="hidden" name="command" value="execute" />
+                                    <form action="ticketController" method="get">
+                                        <input type="hidden" value="updateStatus" name="command" />
                                         <table>
                                             <tr>
                                                 <td colspan="2"><b>Transaction Details:</b></td>
