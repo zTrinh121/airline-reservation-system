@@ -19,7 +19,6 @@ import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
 import java.util.ArrayList;
 import java.util.List;
-import model.PaymentDetails;
 
 /**
  *
@@ -114,8 +113,9 @@ public class PaymentServices {
 
     private RedirectUrls getReirectUrls() {
         RedirectUrls redirecturls = new RedirectUrls();
-        redirecturls.setCancelUrl("http://localhost:9999/airline-reservation-system/cancel.jsp");
-        redirecturls.setReturnUrl("http://localhost:9999/airline-reservation-system/receipt.jsp");
+        redirecturls.setCancelUrl("http://localhost:9999/airline-reservation-system/cancel.html");
+        redirecturls.setReturnUrl("http://localhost:9999/airline-reservation-system/PaymentServlet");
         return redirecturls;
     }
 }
+ 

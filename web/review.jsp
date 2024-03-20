@@ -23,19 +23,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
     <body>
         <jsp:include page="header.jsp"/>
         <div style="text-align: center;">
-             <h1>Please Review before Paying</h1>
+            <h1>Please Review before Paying</h1>
             <div class="search">
                 <div class="search_inner">
                     <div class="container fill_height">
                         <div class="row fill_height">
                             <div class="col fill_height">
-
-
-
-
                                 <div class="search_panel active" style="margin-top: 10px; margin-bottom: 20px;">
-                                   
+
                                     <form action="PaymentServlet" method="post">
+                                        <input type="hidden" name="command" value="execute" />
                                         <table>
                                             <tr>
                                                 <td colspan="2"><b>Transaction Details:</b></td>
@@ -98,7 +95,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                                             </tr>
 
                                             <tr>
-                                                <td colspan="2" align="center"><button type="submit" class="btn btn-search">Pay Now</button></td>
+                                                <td colspan="2" align="center"><input type="submit" value="Pay Now"/></td>
                                             </tr>
 
 
