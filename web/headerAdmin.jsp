@@ -1,13 +1,14 @@
-
+<%-- 
+    Document   : headerAdmin
+    Created on : Mar 19, 2024, 5:24:13 PM
+    Author     : ThanhThuy
+--%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
-        <title>HomeFlight</title>
-        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="Travelix Project">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,22 +19,14 @@
         <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
         <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
         <link rel="stylesheet" type="text/css" href="styles/responsive.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-          <link rel="stylesheet" type="text/css" href="decorate/profile.css">
+        <link rel="stylesheet" type="text/css" href="decorate/profile.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-..." crossorigin="anonymous">
-        
+
+        <title>JSP Page</title>
     </head>
-
     <body>
-
+        <!-- Header -->
         <div class="super_container">
-
-            <!-- Header -->
 
             <header class="header">
 
@@ -56,7 +49,7 @@
                                 </div>
                                 <div class="user_box ml-auto justify-content-end" style="display: flex; align-items: center; position: relative;">
                                     <% if (session != null && session.getAttribute("username") != null) {
-                                        String username = (String) session.getAttribute("username");
+                                            String username = (String) session.getAttribute("username");
                                     %>
                                     <p style="color: #fff; font-family: 'Open Sans', 'sans-serif'; font-size: 16px; display: flex; align-items: center;">Welcome, <%= username%> ! <i id="avatarIcon" class="fa-solid fa-user" style="cursor: pointer; margin-left: 5px;"></i></p>
 
@@ -99,7 +92,6 @@
 
 
 
-
                             </div>
                         </div>
                     </div>		
@@ -112,7 +104,7 @@
                         <div class="row">
                             <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start">
                                 <div class="logo_container">
-                                    <div class="logo"><a href="#"><img src="images/logo.png" alt="">travelix</a></div>
+                                    <div class="logo"><a href="#"><img src="images/logo.png" alt="">HomeFlight</a></div>
                                 </div>
                                 <div class="main_nav_container ml-auto">
                                     <ul class="main_nav_list">
@@ -120,10 +112,38 @@
                                         <li class="main_nav_item"><a href="flightController">Flight</a></li>
                                         <li class="main_nav_item"><a href="customer.jsp">Customer</a></li>
 
-                                        <li class="main_nav_item"><a href="ticket.jsp">Ticket</a></li>
+                                        <li class="main_nav_item"><a href="ticketController">Ticket</a></li>
                                     </ul>
                                 </div>
-                                
+
+                                <script>
+
+                                    var modal = document.getElementById('avatarModal');
+
+
+                                    var icon = document.getElementById("avatarIcon");
+
+
+                                    icon.onclick = function () {
+                                        var dropdown = document.getElementById("avatarDropdown");
+                                        dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+                                    }
+
+
+                                    window.onclick = function (event) {
+                                        if (!event.target.matches('#avatarIcon')) {
+                                            var dropdowns = document.getElementsByClassName("dropdown-content");
+                                            for (var i = 0; i < dropdowns.length; i++) {
+                                                var openDropdown = dropdowns[i];
+                                                if (openDropdown.style.display === "block") {
+                                                    openDropdown.style.display = "none";
+                                                }
+                                            }
+                                        }
+                                    }
+                                </script>
+
+
                                 <div class="hamburger">
                                     <i class="fa fa-bars trans_200"></i>
                                 </div>
@@ -147,9 +167,6 @@
                     </ul>
                 </div>
             </div>
-
-            <!-- Home -->
-
             <div class="home">
 
                 <!-- Home Slider -->
@@ -247,61 +264,11 @@
                     </div>
 
                 </div>
-
+                <!--Main Content-->
             </div>
-            <h4 style="color: red;">${err}</h4>
-            <div>
-                <div class="container">
-                    <h1 class="text-center"style="color: #fff;font-size: 48px;font-weight: 800 ;color:#46185F " ><b>TICKET LIST</b></h1> 
-                    <div class="table-wrapper">
-                        <div class="table-title">
-                            <div class="row">
-                                
-                                <div class="col-sm-6">
 
-                                </div>
-                            </div>
-                        </div>
-                        <table class="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>pNameRecord</th>
-                                    <th>dateReservation</th>
-                                    <th>flightID</th>
-                                    <th>journeyDate</th>
-                                    <th>bookingStatus</th>
-                                    <th>noPassengers</th>
-                                     <th>payID</th>
-                                        <th>accountID</th>
-                                     
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                <c:forEach var="f" items="${list}">
-                                   
-                                    </tr>
-                                </c:forEach>
-
-                            </tbody>
-                        </table>
-
-                    </div>
-                </div>
-              
-               
-            <jsp:include page="footer.jsp" />
 
         </div>
 
-        <script src="js/jquery-3.2.1.min.js"></script>
-        <script src="styles/bootstrap4/popper.js"></script>
-        <script src="styles/bootstrap4/bootstrap.min.js"></script>
-        <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-        <script src="plugins/easing/easing.js"></script>
-        <script src="js/custom.js"></script>
-
     </body>
-
 </html>
-

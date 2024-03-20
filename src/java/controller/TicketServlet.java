@@ -5,7 +5,9 @@
  */
 package controller;
 
+import dao.FlightDAO;
 import dao.TicketDAO;
+import static dao.TicketDAO.getTicketsByAccount;
 import model.Ticket;
 
 import javax.servlet.ServletException;
@@ -17,9 +19,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
-import javax.servlet.RequestDispatcher;
 import model.Flight;
 import model.Passenger;
 
@@ -75,6 +77,9 @@ public class TicketServlet extends HttpServlet {
                     break;
                 case "ticketBooked":
                     ticketBooked(request, response);
+                    break;
+                case "updateStatus":
+                    updateStatus(request, response);
                     break;
                 default:
                     System.err.println("Unexpected command: " + command);
@@ -237,40 +242,50 @@ public class TicketServlet extends HttpServlet {
         String[] passengerGenders = request.getParameterValues("passengerGender");
         Flight flight = (Flight) request.getSession().getAttribute("flight");
         String ticketType = (String) request.getSession().getAttribute("ticketType");
+        System.out.println("flight");
+        System.out.println(flight);
+        System.out.println("ticketType");
+        System.out.println(ticketType);
+
         float payAmount = TicketDAO.calculatePricePerPersion(flight, ticketType);
         HttpSession session = request.getSession();
         System.out.println("In ra cho nay khong");
-//        int accountID = (int) session.getAttribute("accountID");
-        int accountID = 6;
-
-        Random random = new Random();
-        String pnrSuffix = String.format("%03d", random.nextInt(1000));
-        String pnr = "PNR" + pnrSuffix;
-
+        int accountID = (int) session.getAttribute("accountId");
         String bookingStatus = "pending";
         Date dateReservation = new java.sql.Date(System.currentTimeMillis());
         TicketDAO dao = new TicketDAO();
         List<Passenger> passengers = new ArrayList<>();
+        List<String> PNR = new ArrayList<>();
 
         for (int i = 0; i < passengerNames.length; i++) {
             String passengerName = passengerNames[i];
             int passengerAge = Integer.parseInt(passengerAges[i]);
             String passengerGender = passengerGenders[i];
-
+            Random random = new Random();
+            String pnrSuffix = String.format("%03d", random.nextInt(1000));
+            String pnr = "PNR" + pnrSuffix;
             Ticket ticketDetails = new Ticket(pnr, dateReservation, flight.getFlightID(), flight.getDepartureDate(), ticketType, bookingStatus, 1, accountID, payAmount);
+            PNR.add(pnr);
             Passenger passenger = new Passenger(accountID, pnr, passengerName, passengerAge, passengerGender);
             dao.addTicket(ticketDetails);
             passengers.add(passenger);
+            System.out.println("PNR");
+            System.out.println(pnr);
+
         }
 
         session.setAttribute("passengers", passengers);
+        session.setAttribute("PNR", PNR);
         response.sendRedirect("displayPassengerInfo.jsp");
     }
 
     private void listTickets(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException {
         ArrayList<Ticket> tickets = TicketDAO.getAllTickets();
+        FlightDAO flightDAO = new FlightDAO();
         request.setAttribute("list", tickets);
-        request.getRequestDispatcher("listTickets.jsp").forward(request, response);
+        request.setAttribute("flightDAO", flightDAO);
+
+        request.getRequestDispatcher("listTicketsAdmin.jsp").forward(request, response);
     }
 
     private void checkout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -300,13 +315,38 @@ public class TicketServlet extends HttpServlet {
 
     private void ticketBooked(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        int accountID = (int) session.getAttribute("accountID");
         try {
-            List<Ticket> bookedTickets = TicketDAO.getTicketsByAccount(accountID);
-            request.setAttribute("bookedTickets", bookedTickets);
+            int accountId = (int) session.getAttribute("accountId");
+            FlightDAO flightDAO = new FlightDAO();
+            List<Ticket> list = TicketDAO.getTicketsByAccount(accountId);
+            System.out.println(list);
+
+            request.setAttribute("list", list);
+            request.setAttribute("flightDAO", flightDAO);
             request.getRequestDispatcher("ticketBooked.jsp").forward(request, response);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
+
+    private void updateStatus(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException {
+        HttpSession session = request.getSession();
+        TicketDAO ticket = new TicketDAO();
+        List<String> PNR = (List<String>) session.getAttribute("PNR");
+        List<Ticket> list = new ArrayList<Ticket>();
+        FlightDAO flightDAO = new FlightDAO();
+
+        for (String object : PNR) {
+            ticket.updateStatus(object);
+            list.add(ticket.getTicketByPNR(object));
+        }
+
+        System.out.println(list);
+        System.out.println(flightDAO);
+        request.setAttribute("infor", " Payment Done. Thanks for booking ticket (s)");
+        request.setAttribute("flightDAO", flightDAO);
+        request.setAttribute("list", list);
+        request.getRequestDispatcher("ticketBooked.jsp").forward(request, response);
+    }
+
 }

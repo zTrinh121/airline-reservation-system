@@ -115,8 +115,7 @@
                                     <ul class="main_nav_list">
                                         <li class="main_nav_item"><a href="user.jsp">home</a></li>
 
-                                        <li class="main_nav_item"><a href="ticketBooked.jsp">ticket</a></li>
-
+                                        <li class="main_nav_item"><a href="ticketController?command=ticketBooked">ticket</a></li>
                                         <li class="main_nav_item"><a href="contact.jsp">contact</a></li>
                                     </ul>
                                 </div>
@@ -125,7 +124,7 @@
                                          width="17px" height="17px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
                                     <g>
                                     <g>
-                                   
+
                                     </g>
                                     <g>
 
@@ -170,7 +169,7 @@
                     <div class="logo menu_logo"><a href="#"><img src="images/logo.png" alt=""></a></div>
                     <ul>
                         <li class="menu_item"><a href="#">home</a></li>
-                        <li class="menu_item"><a href="ticketBooked.jsp">ticket</a></li>
+                        <li class="menu_item"><a href="ticketController?command=ticketBooked">ticket</a></li>
                         <li class="menu_item"><a href="contact.html">contact</a></li>
                     </ul>
                 </div>

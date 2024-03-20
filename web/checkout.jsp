@@ -37,31 +37,83 @@
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="styles/checkout.scss">
+        <script
+            src="https://kit.fontawesome.com/bb515311f9.js"
+            crossorigin="anonymous"
+        ></script>
         <title>Checkout</title>
 
     </head>
 
     <body>
+        <jsp:include page="header.jsp"/>
+
         <form action="PaymentServlet" method="post">
             <input type="hidden" name="command" value="authorize" />
-            <div class="container">
-                <h1 class="mt-5">Checkout Information</h1>
-                <input type="text" name="total" value="120"/></p>
+
+            <body>
+
+            </body>
+            <div class="checkout-container">
+
+                <c:set var="flight" value="${sessionScope.flight}"/>
+                <c:set var="type" value="${sessionScope.ticketType}"/>
                 <c:if test="${not empty sessionScope.passengers}">
-                    <div class="mt-3">
-                        <p><strong>Total Number of Passengers:</strong> ${totalPassengers}</p>
-                        <p><strong>Price per Person:</strong>
-                            ${pricePer}
-                        </p>
-                        <p><strong>Tax:</strong>
-                            7.5%
-                        </p>
-                        <p><strong>Total:</strong>
-                            <!--<input type="text" name="total" value="${totalPrice}"/></p>-->
+
+                    <div class="left-side" style="background-image:url(images/offer_1.jpg)">
+                        <div class="text-box">
+                            <h1 class="home-heading">${flight.getFlightID()}         ${type}</h1>
+
+
+                            <p class="home-desc"><em>${flight.getArrivalDate() } </em></p>
+
+                            <p class="home-price"><em>${pricePer}USD </em>/ 1 person</p>
+                            <hr class="left-hr" />
+                            <p class="home-desc">
+                                <em>${flight.getFromCity() }</em> to <em>${flight.getToCity() }</em>
+                            </p>
+
+                        </div>
                     </div>
-                </c:if>
+                    <div class="right-side">
+                        <div class="receipt">
+                            <h2 class="receipt-heading">Receipt Summary</h2>
+                            <div>
+                                <table class="table">
+                                    <tr>
+                                        <td>Total Number of Passengers</td>
+                                        <td class="price">${totalPassengers}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Price per Person</td>
+                                        <td class="price"> ${pricePer} USD</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Tax</td>
+                                        <td class="price">7.5%</td>
+                                    </tr>
+                                    <tr class="total">
+                                        <td>Total</td>
+                                        <td class="price"> ${totalPrice} USD</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <input hidden  class="price" style="    border: none;" readonly="" type="text" name="total" value="${totalPrice}"/>
+
+                    </c:if>
+                    <button type="submit" class="btn"> <i class="fa-solid fa-lock"></i>Payment</button>
+
+                    <p class="footer-text">
+                        <i class="fa-solid fa-lock"></i>
+                        Your credit card infomration is encrypted
+                    </p>
+                </div>
             </div>
-            <button type="submit" class="btn btn-warning">Payment</button>
+
+            <jsp:include page="footer.jsp"/>
 
         </form>
     </body>
