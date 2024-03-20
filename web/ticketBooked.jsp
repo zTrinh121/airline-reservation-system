@@ -29,17 +29,19 @@
     <body>
         <div class="super_container">
             <jsp:include page="header.jsp"/>
+            <c:if test="${not empty infor}">
+                <h1 style="padding-top: 10px;">${infor}</h1>
+            </c:if>
             <div class="grid-container">
+
                 <c:forEach var="ticket" items="${list}">
 
                     <c:set var="flight" value="${flightDAO.getFlightById(ticket.flightID)}" />
-
-
                     <div class="container_ticket">
+
                         <div class="ticket basic">
                             <p>${ticket.pNameRecord}</p>
                         </div>
-
                         <div class="ticket airline">
                             <div class="top" 
                                  style="    height: max-content;
