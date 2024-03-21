@@ -8,6 +8,7 @@
 <html>
 
     <head>
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="img/favicon.ico" rel="icon">
 
@@ -43,7 +44,7 @@
             crossorigin="anonymous"
         ></script>
         <title>Checkout</title>
-
+        <link rel="icon" type="image/png" href="images/flight3.jpg"/>
     </head>
 
     <body>

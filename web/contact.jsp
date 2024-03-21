@@ -22,8 +22,8 @@
         <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
         <link rel="stylesheet" type="text/css" href="styles/responsive.css">
         <link rel="stylesheet" type="text/css" href="decorate/profile.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-..." crossorigin="anonymous">
-
+         <link rel="icon" type="image/png" href="images/flight3.jpg"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-..." crossorigin="an
     </head>
 
     <body>

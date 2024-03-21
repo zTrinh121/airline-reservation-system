@@ -1006,7 +1006,7 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${file.reference.jstl-api.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.sqljdbc42.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.javax.mail.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <!--<copyfiles files="${file.reference.jakarta.servlet.jsp.jstl-api-2.0.0.jar-1}" todir="${build.web.dir}/WEB-INF/lib"/>-->
+        <copyfiles files="${file.reference.jakarta.servlet.jsp.jstl-api-2.0.0.jar-1}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.gson-2.2.2.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.rest-api-sdk-1.14.0.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.slf4j-api-1.7.21.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
